@@ -1,6 +1,18 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
+import { dark, neobrutalism } from "@clerk/themes";
+import { LuArrowLeft } from "react-icons/lu";
+
 import "./globals.css";
+import Link from "next/link";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +27,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <html lang="en">
+        <body className={inter.className}>
+          <div className="flex justify-between m-4 z-50 ">
+            <Link href="/">
+              <LuArrowLeft />
+            </Link>
+            <UserButton />
+          </div>
+          {children}
+          <Toaster />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

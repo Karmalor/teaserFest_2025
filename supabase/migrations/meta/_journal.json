@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1724000897058,
+      "tag": "0000_simple_black_bird",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1724000970646,
+      "tag": "0001_round_gunslinger",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1724001186611,
+      "tag": "0002_loud_slayback",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1724001300262,
+      "tag": "0003_chubby_kid_colt",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1724001334146,
+      "tag": "0004_daffy_anthem",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1724013500606,
+      "tag": "0005_marvelous_wonder_man",
+      "breakpoints": true
+    }
+  ]
+}
