@@ -8,10 +8,9 @@ import { LuPlay, LuX } from "react-icons/lu";
 import VideoModal from "@/components/modals/videoModal";
 import { useState } from "react";
 
-import muxBlurHash from "@mux/blurhash";
 import MuxPlayer from "@mux/mux-player-react/lazy";
 
-export default function Home({ blurHashBase64 }: { blurHashBase64: any }) {
+export default function Home() {
   const { user } = useUser();
   const [modal, setModal] = useState(false);
 
