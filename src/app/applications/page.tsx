@@ -123,7 +123,7 @@ const ApplicationsPage = () => {
                     />
                   </FormControl>
                   <FormDescription>
-                    This is how you'd like to be introduced on stage
+                    This is how you would like to be introduced on stage
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
