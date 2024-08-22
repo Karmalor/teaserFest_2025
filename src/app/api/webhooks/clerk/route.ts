@@ -55,30 +55,32 @@ export async function POST(req: Request) {
   console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
   console.log('Webhook body:', body)
 
-//   if (eventType === 'user.created'){
-//     const {id, email_addresses, image_url, first_name, last_name, username, } = evt.data
+  if (eventType === 'user.created'){
+    const {id, email_addresses, image_url, first_name, last_name, username, } = evt.data
 
-//     const user = {
-//         clerkId: id,
-//         email: email_addresses[0].email_address,
-//         username: username!,
-//         firstName: first_name!,
-//         lastName: last_name!,
-//         photo: image_url
-//     }
+    console.log(evt.data)
 
-//     const newUser = await createUser(user)
-// 9
-//     if(newUser) {
-//         await clerkClient.users.updateUserMetadata(id, {
-//             publicMetadata: {
-//                 userId: newUser.id
-//             }
-//         })
-//     }
+    const user = {
+        clerkId: id,
+        email: email_addresses[0].email_address,
+        username: username!,
+        firstName: first_name!,
+        lastName: last_name!,
+        photo: image_url
+    }
 
-//     return NextResponse.json({ message: 'OK', user: newUser})
-//   }
+    const newUser = await createUser(user)
+
+    if(newUser) {
+        await clerkClient.users.updateUserMetadata(id, {
+            publicMetadata: {
+                userId: newUser.id
+            }
+        })
+    }
+
+    return NextResponse.json({ message: 'OK', user: newUser})
+  }
 
   return new Response('', { status: 200 })
 }
