@@ -43,6 +43,13 @@
       "when": 1724013500606,
       "tag": "0005_marvelous_wonder_man",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1724378978755,
+      "tag": "0006_open_living_mummy",
+      "breakpoints": true
     }
   ]
 }
