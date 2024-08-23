@@ -1,20 +1,20 @@
 import { integer, pgTable, serial, text, timestamp, boolean } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users_table', {
-  clerkId: serial('id').primaryKey(),
+  clerkId: text('id').primaryKey(),
   email: text('email').notNull().unique(),
   username: text('username'),
   firstName: text('firstName'),
   lastName: text('lastName'),
   photo: text('imageUrl'),
-  orders: integer("orders").references(() => applicationOrders.id)
+  // orders: integer("orders").references(() => applicationOrders.id)
 });
 
 export const formSubmissionsTable = pgTable('form_submissions', {
     user: text('user'),
     stageName: text('stageName').notNull(),
     tagline: text('tagline')
-})
+}) 
 
 export const applicationOrders = pgTable("application_orders", {
   id: serial('id').primaryKey(),

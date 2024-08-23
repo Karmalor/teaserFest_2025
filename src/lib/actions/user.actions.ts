@@ -5,7 +5,7 @@ import { handleError } from "../utils";
 import { db } from "@/db";
 import { usersTable } from "@/db/schema";
 
-export const createUser = async (user: any) => {
+export const createUser = async (user: CreateUserParams) => {
     try {
         const newUser = await db.insert(usersTable).values(user);
 
