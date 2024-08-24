@@ -9,7 +9,7 @@ import { db } from "@/db"
 
 export const createOrder = async (order: CreateOrderParams) => {
     try {
-        const newOrder = await db.insert(applicationOrdersTable).values(order)
+        const newOrder = await db.insert(applicationOrdersTable).values({...order})
 
         return JSON.parse(JSON.stringify(newOrder))
     } catch (error) {
