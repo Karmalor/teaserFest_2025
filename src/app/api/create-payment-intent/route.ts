@@ -1,9 +1,7 @@
-import { useUser } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request: NextRequest) {
-  const {user} = useUser()
 
   try {
     const { amount } = await request.json();
@@ -12,9 +10,6 @@ export async function POST(request: NextRequest) {
       amount: amount,
       currency: "usd",
       automatic_payment_methods: { enabled: true },
-      metadata: {
-        buyerId: user?.id
-      },
     });
 
     return NextResponse.json({ clientSecret: paymentIntent.client_secret });

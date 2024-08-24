@@ -1,9 +1,11 @@
 import stripe from 'stripe'
 import { NextResponse } from 'next/server'
 import { createOrder } from '@/lib/actions/order.actions'
+import { useUser } from '@clerk/nextjs'
 
 
 export async function POST(request: Request) {
+    const {user} = useUser()
     const body = await request.text()
   
     const sig = request.headers.get('stripe-signature') as string
@@ -22,12 +24,12 @@ export async function POST(request: Request) {
   
     // CREATE
     if (eventType === 'payment_intent.succeeded') {
-      const { id, amount, metadata , customer} = event.data.object
+      const { id, amount, metadata} = event.data.object
    console.log(event.data.object)
 
       const order = {
         stripeId: id,
-        buyerId: metadata?.buyerId || '',
+        buyerId: user?.id || '',
         totalAmount: amount ? (amount / 100).toString() : '0',
         applicationSubmitted: false,
       }
