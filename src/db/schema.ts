@@ -1,4 +1,4 @@
-import { integer, pgTable, serial, text, timestamp, boolean } from 'drizzle-orm/pg-core';
+import { integer, pgTable, serial, text, timestamp, boolean, date } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users_table', {
   clerkId: text('id').primaryKey(),
@@ -16,9 +16,11 @@ export const formSubmissionsTable = pgTable('form_submissions', {
     tagline: text('tagline')
 }) 
 
-export const applicationOrders = pgTable("application_orders", {
-  id: serial('id').primaryKey(),
-  applicationSubmitted: boolean('applicationSubmitted')
+export const applicationOrdersTable = pgTable("application_orders", {
+  stripeId: text('id').primaryKey(),
+  applicationSubmitted: boolean('applicationSubmitted').default(false),
+  amount: text('amount'),
+  buyerId: text('buyer').references(() => usersTable.clerkId)
 })
 
 export type InsertUser = typeof usersTable.$inferInsert;
@@ -27,5 +29,5 @@ export type SelectUser = typeof usersTable.$inferSelect;
 export type InsertFormSubmission = typeof formSubmissionsTable.$inferInsert;
 export type SelectFormSubmission = typeof formSubmissionsTable.$inferSelect;
 
-export type InsertApplicationOrder = typeof applicationOrders.$inferInsert;
-export type SelectApplicationOrder = typeof applicationOrders.$inferSelect;
+export type InsertApplicationOrder = typeof applicationOrdersTable.$inferInsert;
+export type SelectApplicationOrder = typeof applicationOrdersTable.$inferSelect;

@@ -50,6 +50,27 @@
       "when": 1724378978755,
       "tag": "0006_open_living_mummy",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1724517086395,
+      "tag": "0007_ancient_lady_deathstrike",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1724517203159,
+      "tag": "0008_green_robin_chapel",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1724535985545,
+      "tag": "0009_natural_rattler",
+      "breakpoints": true
     }
   ]
 }
