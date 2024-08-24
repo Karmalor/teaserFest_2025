@@ -16,14 +16,3 @@ export const createOrder = async (order: CreateOrderParams) => {
         handleError(error)
     }
 }
-
-// export const createUser = async (user: CreateUserParams) => {
-//     try {
-//         const newUser = await db.insert(usersTable).values(user);
-
-//         return JSON.parse(JSON.stringify(newUser))
-
-//     } catch (error) {
-//         handleError(error)
-//     }
-// }

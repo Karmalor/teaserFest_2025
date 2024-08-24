@@ -21,13 +21,13 @@ export async function POST(request: Request) {
     const eventType = event.type
   
     // CREATE
-    if (eventType === 'checkout.session.completed') {
-      const { id, amount_total, metadata } = event.data.object
+    if (eventType === 'payment_intent.succeeded') {
+      const { id, amount, metadata } = event.data.object
   
       const order = {
         stripeId: id,
         buyerId: metadata?.buyerId || '',
-        totalAmount: amount_total ? (amount_total / 100).toString() : '0',
+        totalAmount: amount ? (amount / 100).toString() : '0',
         applicationSubmitted: false,
       }
   
