@@ -25,12 +25,14 @@ export async function POST(request: Request) {
       const { id, amount, metadata , customer} = event.data.object
    console.log(event.data.object)
 
-    //   const order = {
-    //     stripeId: id,
-    //     buyerId: metadata?.buyerId || '',
-    //     totalAmount: amount ? (amount / 100).toString() : '0',
-    //     applicationSubmitted: false,
-    //   }
+      const order = {
+        stripeId: id,
+        buyerId: metadata?.buyerId || '',
+        totalAmount: amount ? (amount / 100).toString() : '0',
+        applicationSubmitted: false,
+      }
+
+      console.log(order)
   
     //   const newOrder = await createOrder(order)
     //   return NextResponse.json({ message: 'OK', order: newOrder })
