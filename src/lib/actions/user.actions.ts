@@ -19,9 +19,10 @@ export const createUser = async (user: CreateUserParams) => {
 
  export const updateUser = async (id: SelectUser['clerkId'], user: UpdateUserParams) => {
     try {
-        const updatedUser =     await db.update(usersTable).set(user).where(eq(usersTable.clerkId, id));
+        const updatedUser = await db.update(usersTable).set(user).where(eq(usersTable.clerkId, id));
 
-        return JSON.parse(JSON.stringify(updateUser))
+        if (!updatedUser) throw new Error("User update failed");
+        return JSON.parse(JSON.stringify(updatedUser))
     } catch (error) {
         handleError(error)
     }
