@@ -9,6 +9,7 @@ import {
 import convertToSubcurrency from "@/lib/convertToSubcurrency";
 
 import { Button } from "../ui/button";
+import { useUser } from "@clerk/nextjs";
 
 const CheckoutPage = ({
   amount,
@@ -22,6 +23,9 @@ const CheckoutPage = ({
   const [errorMessage, setErrorMessage] = useState<string>();
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
+  const { user } = useUser();
+
+  buyerId = user?.id!;
 
   useEffect(() => {
     fetch("/api/create-payment-intent", {
@@ -33,7 +37,7 @@ const CheckoutPage = ({
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-  }, [amount, buyerId]);
+  }, [amount]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
