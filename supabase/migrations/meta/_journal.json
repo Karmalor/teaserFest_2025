@@ -71,6 +71,13 @@
       "when": 1724535985545,
       "tag": "0009_natural_rattler",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1724603673550,
+      "tag": "0010_neat_orphan",
+      "breakpoints": true
     }
   ]
 }
