@@ -10,7 +10,13 @@ import convertToSubcurrency from "@/lib/convertToSubcurrency";
 
 import { Button } from "../ui/button";
 
-const CheckoutPage = ({ amount }: { amount: number }) => {
+const CheckoutPage = ({
+  amount,
+  userId,
+}: {
+  amount: number;
+  userId: string;
+}) => {
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -32,6 +38,9 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
+    const order = {
+      buyerId: userId,
+    };
 
     if (!stripe || !elements) {
       return;
