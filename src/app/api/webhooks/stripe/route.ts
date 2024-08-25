@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       const order = {
         stripeId: id,
         buyerId: metadata?.buyerId || '',
-        totalAmount: amount ? (amount / 100).toString() : '0',
+        amount: amount ? (amount / 100).toString() : '0',
         applicationSubmitted: false,
       }
 

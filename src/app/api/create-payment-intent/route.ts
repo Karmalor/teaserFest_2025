@@ -23,7 +23,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
       }
     });
 
-    console.log("Metadata", paymentIntent.metadata)
+    console.log("Metadata", amount)
 
     return NextResponse.json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {

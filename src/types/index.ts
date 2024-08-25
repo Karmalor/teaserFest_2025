@@ -29,7 +29,7 @@ export type CreateUserParams = {
   export type CreateOrderParams = {
     stripeId: string;
     buyerId: string;
-    totalAmount: string;
+    amount: string;
     applicationSubmitted: boolean
   };
   
