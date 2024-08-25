@@ -7,7 +7,6 @@ export async function POST(request: NextRequest) {
 
   try {
     const { amount } = await request.json();
-    const {user} = useUser()
 
     const paymentIntent = await stripe.paymentIntents.create({
 
@@ -15,7 +14,7 @@ export async function POST(request: NextRequest) {
       currency: "usd",
       automatic_payment_methods: { enabled: true },
       metadata: {
-        buyerId: user?.id!
+        buyerId: "pee"
       }
     });
 
