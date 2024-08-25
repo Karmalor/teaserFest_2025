@@ -25,15 +25,16 @@ const CheckoutPage = ({
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
 
-  buyerId = user?.id!;
-
   useEffect(() => {
     fetch("/api/create-payment-intent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: convertToSubcurrency(amount), buyerId }),
+      body: JSON.stringify({
+        amount: convertToSubcurrency(amount),
+        buyerId: user?.id!,
+      }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
