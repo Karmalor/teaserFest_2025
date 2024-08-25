@@ -1,11 +1,9 @@
 import stripe from 'stripe'
 import { NextResponse } from 'next/server'
 import { createOrder } from '@/lib/actions/order.actions'
-import { useUser } from '@clerk/nextjs'
 
 
 export async function POST(request: Request) {
-    const {user} = useUser()
     const body = await request.text()
   
     const sig = request.headers.get('stripe-signature') as string
@@ -29,7 +27,7 @@ export async function POST(request: Request) {
 
       const order = {
         stripeId: id,
-        buyerId: user?.id || '',
+        buyerId: metadata?.buyerId || '',
         totalAmount: amount ? (amount / 100).toString() : '0',
         applicationSubmitted: false,
       }
