@@ -14,7 +14,7 @@ export async function POST(request: NextRequest, {order}: {order: CreateOrderPar
       currency: "usd",
       automatic_payment_methods: { enabled: true },
       metadata: {
-        buyerId: order.buyerId
+        buyerId: "pee"
       }
     });
 
