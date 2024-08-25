@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const { amount } = await request.json();
-    const buyerId = await request.json()
+    const {buyerId} = await request.json()
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
