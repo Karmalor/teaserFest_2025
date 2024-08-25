@@ -41,11 +41,14 @@ const CheckoutPage = ({
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
+
+    console.log("amount", amount);
   }, [amount]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
+    setCurrentUser(user?.id!);
 
     if (!stripe || !elements) {
       return;
