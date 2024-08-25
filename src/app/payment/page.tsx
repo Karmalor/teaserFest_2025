@@ -36,7 +36,7 @@ const Payment = () => {
           currency: "usd",
         }}
       >
-        <CheckoutPage amount={amount} userId={user?.id!} />
+        <CheckoutPage amount={amount} buyerId={user?.id!} />
       </Elements>
     </main>
   );

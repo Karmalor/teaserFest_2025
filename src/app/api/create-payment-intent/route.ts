@@ -6,7 +6,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const {user} = useUser()
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest, buyerId: string) {
 
   try {
     const { amount } = await request.json();
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       currency: "usd",
       automatic_payment_methods: { enabled: true },
       metadata: {
-        buyerId: user?.id
+        buyerId: buyerId
       }
     });
 

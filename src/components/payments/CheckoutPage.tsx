@@ -12,10 +12,10 @@ import { Button } from "../ui/button";
 
 const CheckoutPage = ({
   amount,
-  userId,
+  buyerId,
 }: {
   amount: number;
-  userId: string;
+  buyerId: string;
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -29,18 +29,15 @@ const CheckoutPage = ({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: convertToSubcurrency(amount) }),
+      body: JSON.stringify({ amount: convertToSubcurrency(amount), buyerId }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-  }, [amount]);
+  }, [amount, buyerId]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
-    const order = {
-      buyerId: userId,
-    };
 
     if (!stripe || !elements) {
       return;
