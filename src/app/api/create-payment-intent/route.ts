@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       currency: "usd",
       automatic_payment_methods: { enabled: true },
       metadata: {
-        buyerId: user?.id
+        buyerId: `${user?.id}`
       }
     });
 
