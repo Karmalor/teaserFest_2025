@@ -3,7 +3,7 @@ import { useUser } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest,) {
 
   try {
     const { amount, buyerId } = await request.json();

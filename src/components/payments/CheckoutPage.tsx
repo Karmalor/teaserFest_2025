@@ -24,8 +24,11 @@ const CheckoutPage = ({
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
+  const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
+    setCurrentUser(user?.id!);
+
     fetch("/api/create-payment-intent", {
       method: "POST",
       headers: {
@@ -33,12 +36,12 @@ const CheckoutPage = ({
       },
       body: JSON.stringify({
         amount: convertToSubcurrency(amount),
-        buyerId: user?.id!,
+        buyerId: currentUser,
       }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
-  }, [amount, buyerId]);
+  }, [amount]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
