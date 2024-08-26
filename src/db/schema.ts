@@ -11,11 +11,10 @@ export const usersTable = pgTable('users_table', {
 });
 
 export  const formSubmissionsTable = pgTable('form_submissions', {
-    applicant: text('applicant').references(() => usersTable.clerkId),
-    stageName: text('stageName').notNull(),
+    applicant: text('applicant').references(() => usersTable.email),
+    stageName: text('stageName'),
     tagline: text('tagline'),
     applicationSubmitted: boolean('applicationSubmitted').default(false),
-
 }) 
 
 export const applicationOrdersTable = pgTable("application_orders", {

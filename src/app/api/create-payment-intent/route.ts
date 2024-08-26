@@ -19,7 +19,8 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
       currency: "usd",
       automatic_payment_methods: { enabled: true },
       metadata: {
-        buyerId: user?.id
+        buyerId: user?.id,
+        applicant: user?.primaryEmailAddress?.emailAddress
       }
     });
 

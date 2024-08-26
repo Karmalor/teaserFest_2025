@@ -33,7 +33,7 @@ export async function POST(request: Request) {
       }
 
       const application = {
-        applicant: metadata?.buyerId || '',
+        applicant: metadata?.applicant || '',
         stageName: "",
         tagline: "",
         applicationSubmitted: false,
