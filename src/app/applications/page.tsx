@@ -56,7 +56,7 @@ const ApplicationsPage = () => {
       user: user?.primaryEmailAddress?.emailAddress,
     };
 
-    console.log(formData2);
+    // console.log(formData2);
     // console.log("DATA", { data });
 
     // const stageName = data.stageName;
