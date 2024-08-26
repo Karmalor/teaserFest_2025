@@ -10,10 +10,12 @@ export const usersTable = pgTable('users_table', {
   // orders: integer("orders").references(() => applicationOrders.id)
 });
 
-export const formSubmissionsTable = pgTable('form_submissions', {
-    user: text('user'),
+export  const formSubmissionsTable = pgTable('form_submissions', {
+    applicant: text('applicant').references(() => usersTable.clerkId),
     stageName: text('stageName').notNull(),
-    tagline: text('tagline')
+    tagline: text('tagline'),
+    applicationSubmitted: boolean('applicationSubmitted').default(false),
+
 }) 
 
 export const applicationOrdersTable = pgTable("application_orders", {

@@ -27,7 +27,7 @@ export default function Home() {
       >
         {user ? (
           <Link
-            href="/applications"
+            href="/applicantDashboard"
             className="md:absolute flex top-[600px] md:top-[520px] md:right-24 mt-16 md:mt-8 mx-4 md:mx-0 right-0 border-[#FE3D02] border-2 border-r-8 px-6 z-30 bg-[#FFF0F0]"
           >
             <h1 className="text-black cursor-pointer hover:text-red-600">

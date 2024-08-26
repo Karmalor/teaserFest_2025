@@ -1,3 +1,5 @@
+// "use client";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import {
@@ -11,8 +13,8 @@ import { dark, neobrutalism } from "@clerk/themes";
 import { LuArrowLeft } from "react-icons/lu";
 
 import "./globals.css";
-import Link from "next/link";
 import { Toaster } from "@/components/ui/toaster";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 

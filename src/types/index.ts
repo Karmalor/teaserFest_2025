@@ -43,3 +43,11 @@ export type CreateUserParams = {
     limit?: number;
     page: string | number | null;
   };
+
+  // ====== APPLICATION PARAMS
+  export type CreateApplicationParams = {
+    applicant: string;
+    stageName: string;
+    tagline: string;
+    applicationSubmitted: string;
+  };

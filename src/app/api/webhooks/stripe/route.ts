@@ -1,6 +1,7 @@
 import stripe from 'stripe'
 import { NextResponse } from 'next/server'
 import { createOrder } from '@/lib/actions/order.actions'
+import { createFormSubmission } from '@/lib/actions/application.actions'
 
 
 export async function POST(request: Request) {
@@ -23,7 +24,6 @@ export async function POST(request: Request) {
     // CREATE
     if (eventType === 'payment_intent.succeeded') {
       const { id, amount, metadata} = event.data.object
-   console.log(event.data.object)
 
       const order = {
         stripeId: id,
@@ -32,10 +32,19 @@ export async function POST(request: Request) {
         applicationSubmitted: false,
       }
 
+      const application = {
+        applicant: metadata?.buyerId || '',
+        stageName: "",
+        tagline: "",
+        applicationSubmitted: false,
+      }
+
       console.log(order)
+      console.log(application)
   
       const newOrder = await createOrder(order)
-      return NextResponse.json({ message: 'OK', order: newOrder })
+      const newApplication = await createFormSubmission(application)
+      return NextResponse.json({ message: 'OK', order: newOrder, application: newApplication })
     }
   
     return new Response('', { status: 200 })
