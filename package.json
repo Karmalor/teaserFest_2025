@@ -31,6 +31,7 @@
     "drizzle": "",
     "drizzle-orm": "^0.33.0",
     "next": "^14.2.6",
+    "node": "^22.7.0",
     "postgres": "^3.4.4",
     "query-string": "^9.1.0",
     "react": "^18.3.1",
