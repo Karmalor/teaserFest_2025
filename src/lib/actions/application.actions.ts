@@ -1,14 +1,19 @@
 'use server'
 
 import { db } from "@/db";
-import { formSubmissionsTable, InsertFormSubmission } from "@/db/schema";
+import { formSubmissionsTable, InsertFormSubmission, SelectFormSubmission } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 
 
 export async function createFormSubmission(
-    formData2: InsertFormSubmission,
+    formData: InsertFormSubmission,
    ) {
 
-    await db.insert(formSubmissionsTable).values(formData2)
+    await db.insert(formSubmissionsTable).values(formData)
     
   }
+
+export async function updateFormSubmission(id: SelectFormSubmission['uuid'], formData: Partial<Omit<SelectFormSubmission, 'uuid'>>) {
+  await db.update(formSubmissionsTable).set(formData).where(eq(formSubmissionsTable.uuid, id));
+}

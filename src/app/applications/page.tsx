@@ -18,7 +18,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
-import { createFormSubmission } from "@/lib/actions/application.actions";
+import {
+  createFormSubmission,
+  updateFormSubmission,
+} from "@/lib/actions/application.actions";
 
 const ApplicationsPage = () => {
   const { user } = useUser();
@@ -50,19 +53,19 @@ const ApplicationsPage = () => {
     // const fullFormData = JSON.parse('{"stageName":${data.stageName}}');
     // console.log("FORMDATA", { fullFormData });
 
-    const formData2 = {
+    const formData = {
       stageName: data.stageName,
       tagline: data.tagline,
       user: user?.primaryEmailAddress?.emailAddress,
     };
 
-    // console.log(formData2);
+    console.log(formData);
     // console.log("DATA", { data });
 
     // const stageName = data.stageName;
     // const tagline = data.tagline;
 
-    createFormSubmission(formData2);
+    updateFormSubmission("bbe02438-d196-4511-8bb8-44b346c1ec4f", formData);
 
     toast({
       title: "You submitted the following values:",
