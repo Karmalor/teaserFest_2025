@@ -1,0 +1,1 @@
+ALTER TABLE "form_submissions" ADD COLUMN "id" serial PRIMARY KEY NOT NULL;

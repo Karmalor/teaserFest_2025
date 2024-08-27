@@ -1,1 +1,0 @@
-ALTER TABLE "application_orders" RENAME COLUMN "createAt" TO "createdAt";

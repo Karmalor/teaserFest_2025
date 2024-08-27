@@ -2,6 +2,7 @@ import stripe from 'stripe'
 import { NextResponse } from 'next/server'
 import { createOrder } from '@/lib/actions/order.actions'
 import { createFormSubmission } from '@/lib/actions/application.actions'
+import { v4 } from 'uuid'
 
 
 export async function POST(request: Request) {
@@ -33,6 +34,7 @@ export async function POST(request: Request) {
       }
 
       const application = {
+        uuid: v4(),
         applicant: metadata?.applicant || '',
         stageName: "",
         tagline: "",

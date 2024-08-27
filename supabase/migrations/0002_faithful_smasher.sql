@@ -1,5 +1,3 @@
-ALTER TABLE "form_submissions" RENAME COLUMN "user" TO "applicant";--> statement-breakpoint
-ALTER TABLE "form_submissions" ADD COLUMN "applicationSubmitted" boolean DEFAULT false;--> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "form_submissions" ADD CONSTRAINT "form_submissions_applicant_users_table_id_fk" FOREIGN KEY ("applicant") REFERENCES "public"."users_table"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION

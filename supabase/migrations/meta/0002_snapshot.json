@@ -1,6 +1,6 @@
 {
-  "id": "9734ac7f-741d-496a-981b-b409518cca7c",
-  "prevId": "0a72f900-ab61-4bd5-8a8f-bc1918234fa3",
+  "id": "da03b0e7-99e0-4b84-b8f5-b6af064f38d5",
+  "prevId": "445c97d5-5b23-44bb-98b0-36b7fe7919f2",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -10,7 +10,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -18,11 +18,38 @@
           "name": "applicationSubmitted",
           "type": "boolean",
           "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "amount": {
+          "name": "amount",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "buyerId": {
+          "name": "buyerId",
+          "type": "text",
+          "primaryKey": false,
           "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "application_orders_buyerId_users_table_id_fk": {
+          "name": "application_orders_buyerId_users_table_id_fk",
+          "tableFrom": "application_orders",
+          "tableTo": "users_table",
+          "columnsFrom": [
+            "buyerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -30,8 +57,14 @@
       "name": "form_submissions",
       "schema": "",
       "columns": {
-        "user": {
-          "name": "user",
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "applicant": {
+          "name": "applicant",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -40,17 +73,38 @@
           "name": "stageName",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "tagline": {
           "name": "tagline",
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "applicationSubmitted": {
+          "name": "applicationSubmitted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "form_submissions_applicant_users_table_id_fk": {
+          "name": "form_submissions_applicant_users_table_id_fk",
+          "tableFrom": "form_submissions",
+          "tableTo": "users_table",
+          "columnsFrom": [
+            "applicant"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -60,14 +114,8 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "fullName": {
-          "name": "fullName",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "email": {
@@ -75,6 +123,24 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "firstName": {
+          "name": "firstName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastName": {
+          "name": "lastName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "imageUrl": {
           "name": "imageUrl",
