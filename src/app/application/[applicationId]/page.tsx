@@ -43,7 +43,7 @@ const ApplicationsPage = () => {
     fetchData();
   }, []);
 
-  console.log(prefilledData);
+  // console.log(prefilledData);
 
   // function onSubmit(values: z.infer<typeof formSchema>) {
   //   // Do something with the form values.

@@ -28,29 +28,35 @@ const page = async () => {
       <div className="justify-center">
         <h1 className="text-4xl mb-10">Welcome {user.firstName}</h1>
 
-        {applications.map((application, index) => (
-          <div
-            key={index}
-            className="flex flex-row gap-4 p-4 items-center justify-between"
-          >
-            <div className="flex flex-row gap-4 p-4 items-center">
-              <h1>Application #{index + 1}</h1>
-              {!application.applicationSubmitted ? (
-                <h1>- In progress</h1>
-              ) : (
-                <h1>- Submitted!</h1>
-              )}
+        {applications ? (
+          <div>
+            {applications.map((application, index) => (
+              <div
+                key={index}
+                className="flex flex-row gap-4 p-4 items-center justify-between"
+              >
+                <div className="flex flex-row gap-4 p-4 items-center">
+                  <h1>Application #{index + 1}</h1>
+                  {!application.applicationSubmitted ? (
+                    <h1>- In progress</h1>
+                  ) : (
+                    <h1>- Submitted!</h1>
+                  )}
+                </div>
+                <Link href={`/application/${application.uuid}`}>
+                  <Button>Continue</Button>
+                </Link>
+              </div>
+            ))}
+            <div className="flex pt-8 justify-center">
+              <Link href="/payment">
+                <Button>Click to purchase a Application submission</Button>
+              </Link>
             </div>
-            <Link href={`/application/${application.uuid}`}>
-              <Button>Continue</Button>
-            </Link>
           </div>
-        ))}
-        <div className="flex pt-8 justify-center">
-          <Link href="/payment">
-            <Button>Click to purchase a Application submission</Button>
-          </Link>
-        </div>
+        ) : (
+          <div>Loading application link...</div>
+        )}
       </div>
     </div>
   );

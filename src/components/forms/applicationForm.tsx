@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/nextjs";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -24,6 +24,8 @@ import {
   updateFormSubmission,
 } from "@/lib/actions/application.actions";
 
+import { Autosave, useAutosave } from "react-autosave";
+
 // type ApplicationFormProps = {
 //   prefilledData:
 //     | {
@@ -32,11 +34,11 @@ import {
 //       }
 //     | undefined;
 // };
-
 const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const { user } = useUser();
   const { toast } = useToast();
   const params = useParams();
+
   //   const [prefilledData, setPrefilledData] = useState();
 
   const applicationId = params.applicationId as string;
@@ -70,7 +72,6 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
       user: user?.primaryEmailAddress?.emailAddress,
     };
 
-    console.log(formData);
     // console.log("DATA", { data });
 
     // const stageName = data.stageName;
@@ -87,6 +88,69 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
       ),
     });
   }
+
+  // function useAutoSave(data: z.infer<typeof formSchema>, delay = 1000) {
+  //   useEffect(() => {
+  //     const formData = {
+  //       stageName: data.stageName,
+  //       tagline: data.tagline,
+  //       user: user?.primaryEmailAddress?.emailAddress,
+  //     };
+  //     setTimeout(() => {
+  //       updateFormSubmission(applicationId, formData);
+
+  //       toast({
+  //         title: "You submitted the following values:",
+  //         description: (
+  //           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+  //             <code className="text-white">
+  //               {JSON.stringify(data, null, 2)}
+  //             </code>
+  //           </pre>
+  //         ),
+  //       });
+  //     }, delay);
+  //   }, []);
+  // }
+
+  const values = form.getValues();
+
+  // == My AutoSave function using form.watch
+  const watch = form.watch();
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      updateFormSubmission(applicationId, values);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [watch]);
+
+  // const other = form.
+  // const saveFormData = (values) => updateFormSubmission(applicationId, values);
+
+  // useAutosave({ data: values, onSave: saveFormData });
+
+  // == AutoSave using useRef()
+  // const delay = 1000;
+  // const prevValues = useRef(values);
+
+  // const hasDataChanged = prevValues.current !== values;
+
+  // useEffect(() => {
+  //   if (hasDataChanged) {
+  //     prevValues.current = values;
+  //   }
+  //   const timeoutId = setTimeout(() => {
+  //     updateFormSubmission(applicationId, values);
+  //   }, delay);
+
+  //   return () => {
+  //     clearTimeout(timeoutId);
+  //   };
+  // }, [delay, hasDataChanged, values]);
 
   return (
     <div>
