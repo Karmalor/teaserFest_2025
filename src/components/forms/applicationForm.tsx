@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
-import { usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import {
   getFormSubmissionById,
   updateFormSubmission,
@@ -36,8 +36,10 @@ import {
 const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const { user } = useUser();
   const { toast } = useToast();
-  const pathname = usePathname();
+  const params = useParams();
   //   const [prefilledData, setPrefilledData] = useState();
+
+  const applicationId = params.applicationId as string;
 
   const formSchema = z.object({
     stageName: z.string().min(2, {
@@ -74,7 +76,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     // const stageName = data.stageName;
     // const tagline = data.tagline;
 
-    updateFormSubmission("bbe02438-d196-4511-8bb8-44b346c1ec4f", formData);
+    updateFormSubmission(applicationId, formData);
 
     toast({
       title: "You submitted the following values:",
