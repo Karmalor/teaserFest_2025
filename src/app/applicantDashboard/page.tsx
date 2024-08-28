@@ -24,7 +24,7 @@ const page = async () => {
     );
 
   return (
-    <div className="max-w-xl md:mx-auto py-4 px-2 md:p-10 text-black text-center  m-10 rounded-md  shadow-[8px_8px_0_0_#FE3D02] border-black border-2">
+    <div className="max-w-xl md:mx-auto py-4 px-2 md:p-10 text-black text-center  m-10  shadow-[8px_8px_0_0_#FE3D02] border-black border-2">
       <div className="justify-center">
         <h1 className="text-4xl mb-10">Welcome {user.firstName}</h1>
 

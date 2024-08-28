@@ -98,14 +98,14 @@ const CheckoutPage = ({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-2 rounded-md">
+    <form onSubmit={handleSubmit} className="bg-white p-2 ">
       {clientSecret && <PaymentElement />}
 
       {errorMessage && <div>{errorMessage}</div>}
 
       <Button
         disabled={!stripe || loading}
-        className="text-white w-full p-5 bg-black mt-2 rounded-md fondt-bold disabled:opacity-50 disabled:animate-pulse"
+        className="text-white w-full p-5 bg-black mt-2  fondt-bold disabled:opacity-50 disabled:animate-pulse"
       >
         {!loading ? `Pay $${amount}` : "Processing..."}
       </Button>

@@ -1,5 +1,3 @@
-// "use client";
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import {
@@ -15,6 +13,7 @@ import { LuArrowLeft } from "react-icons/lu";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Link from "next/link";
+import BackButton from "@/components/navigation/BackButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,9 +36,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <div className="flex justify-between m-4 z-50 ">
-            <Link href="/">
-              <LuArrowLeft />
-            </Link>
+            <BackButton />
             <UserButton />
           </div>
           {children}

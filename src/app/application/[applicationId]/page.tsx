@@ -43,11 +43,6 @@ const ApplicationsPage = () => {
     fetchData();
   }, []);
 
-  //   const prefilled = {
-  //     stageName: "Herber",
-  //     tagline: "Derbert",
-  //   };
-
   console.log(prefilledData);
 
   // function onSubmit(values: z.infer<typeof formSchema>) {
