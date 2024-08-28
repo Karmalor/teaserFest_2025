@@ -11,8 +11,8 @@
     "db:push": "npx drizzle-kit push"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.3.3",
-    "@clerk/themes": "^2.1.21",
+    "@clerk/nextjs": "^5.3.4",
+    "@clerk/themes": "^2.1.22",
     "@hookform/resolvers": "^3.9.0",
     "@mux/blurhash": "^0.1.2",
     "@mux/blurup": "^0.2.3",
@@ -30,7 +30,7 @@
     "dotenv": "^16.4.5",
     "drizzle": "",
     "drizzle-orm": "^0.33.0",
-    "next": "^14.2.6",
+    "next": "^14.2.7",
     "node": "^22.7.0",
     "postgres": "^3.4.4",
     "query-string": "^9.1.0",

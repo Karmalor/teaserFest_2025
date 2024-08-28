@@ -12,70 +12,49 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/nextjs";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
+import { useParams } from "next/navigation";
 import {
-  createFormSubmission,
+  getFormSubmissionById,
   updateFormSubmission,
 } from "@/lib/actions/application.actions";
+import ApplicationForm from "@/components/forms/applicationForm";
 
 const ApplicationsPage = () => {
   const { user } = useUser();
   const { toast } = useToast();
+  const [prefilledData, setPrefilledData] = useState<{} | null>(null);
+  const params = useParams();
 
-  const formSchema = z.object({
-    stageName: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-    tagline: z.string(),
-  });
+  const applicationId = params.applicationId as string;
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      stageName: "",
-      tagline: "",
-    },
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getFormSubmissionById(applicationId);
+      //   then((res) => res.json());
+      //   console.log(result[0]);
+      setPrefilledData(result[0]);
+    };
+    fetchData();
+  }, []);
+
+  //   const prefilled = {
+  //     stageName: "Herber",
+  //     tagline: "Derbert",
+  //   };
+
+  console.log(prefilledData);
 
   // function onSubmit(values: z.infer<typeof formSchema>) {
   //   // Do something with the form values.
   //   // ✅ This will be type-safe and validated.
   //   console.log(values);
   // }
-
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    // const formData = JSON.stringify(data);
-    // const fullFormData = JSON.parse('{"stageName":${data.stageName}}');
-    // console.log("FORMDATA", { fullFormData });
-
-    const formData = {
-      stageName: data.stageName,
-      tagline: data.tagline,
-      user: user?.primaryEmailAddress?.emailAddress,
-    };
-
-    console.log(formData);
-    // console.log("DATA", { data });
-
-    // const stageName = data.stageName;
-    // const tagline = data.tagline;
-
-    updateFormSubmission("bbe02438-d196-4511-8bb8-44b346c1ec4f", formData);
-
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
 
   return (
     <div className="flex justify-center  border-black border-2  m-12 mt-12 lg:mx-48 shadow-[8px_8px_0_0_#FE3D02]">
@@ -85,8 +64,12 @@ const ApplicationsPage = () => {
           Please fill out the form below. Your progress will be saved, so you
           can edit the information before submitting
         </p>
-
-        <Form {...form}>
+        {prefilledData ? (
+          <ApplicationForm prefilledData={prefilledData} />
+        ) : (
+          <div>Loading...</div>
+        )}
+        {/* <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8 mt-6"
@@ -150,10 +133,10 @@ const ApplicationsPage = () => {
                 </FormItem>
               )}
             /> */}
-
+        {/* 
             <Button type="submit">Submit</Button>
           </form>
-        </Form>
+        </Form> */}
         <div className="mt-6 justify-end flex w-full"></div>
       </div>
     </div>
