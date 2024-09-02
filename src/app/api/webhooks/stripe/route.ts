@@ -39,6 +39,7 @@ export async function POST(request: Request) {
         stageName: "",
         tagline: "",
         applicationSubmitted: false,
+        applicantResponse: {}
       }
 
       console.log(order)
