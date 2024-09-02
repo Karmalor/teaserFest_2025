@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 // ====== USER PARAMS
@@ -49,5 +50,17 @@ export type CreateUserParams = {
     applicant: string;
     stageName: string;
     tagline: string;
-    applicationSubmitted: string;
+    applicationSubmitted: boolean;
+
   };
+
+  export type applicantResponse = {
+    tagline:   string;
+    stageName: string;
+  }
+
+  export type fileUploaderProps = {
+    imageUrl: string
+    onFieldChange: (value: string) => void
+    setFiles: Dispatch<SetStateAction<File[]>>
+  }

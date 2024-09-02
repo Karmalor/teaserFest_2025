@@ -37,8 +37,7 @@ const ApplicationsPage = () => {
     const fetchData = async () => {
       const result = await getFormSubmissionById(applicationId);
       //   then((res) => res.json());
-      //   console.log(result[0]);
-      setPrefilledData(result[0]);
+      setPrefilledData(result[0].applicantResponse);
     };
     fetchData();
   }, []);

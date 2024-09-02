@@ -12,8 +12,10 @@ const page = async () => {
   if (!user) {
     return;
   }
+  // let jsonData = [];
 
   const applications = await db
+
     .select()
     .from(formSubmissionsTable)
     .where(
@@ -22,6 +24,10 @@ const page = async () => {
         user!.primaryEmailAddress!.emailAddress
       )
     );
+
+  if (!applications) {
+    throw new Error("Form not found");
+  }
 
   return (
     <div className="max-w-xl md:mx-auto py-4 px-2 md:p-10 text-black text-center  m-10  shadow-[8px_8px_0_0_#FE3D02] border-black border-2">
@@ -46,6 +52,7 @@ const page = async () => {
                 <Link href={`/application/${application.uuid}`}>
                   <Button>Continue</Button>
                 </Link>
+                <h1>{application.applicantResponse.stageName!}</h1>
               </div>
             ))}
             <div className="flex pt-8 justify-center">

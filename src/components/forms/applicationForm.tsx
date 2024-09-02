@@ -25,6 +25,10 @@ import {
 } from "@/lib/actions/application.actions";
 
 import { Autosave, useAutosave } from "react-autosave";
+import { applicationFormSchema } from "@/lib/validator";
+import { FileUploader } from "../shared/FileUploader";
+import { useUploadThing } from "@/lib/uploadthing";
+import { handleError } from "@/lib/utils";
 
 // type ApplicationFormProps = {
 //   prefilledData:
@@ -38,20 +42,39 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const { user } = useUser();
   const { toast } = useToast();
   const params = useParams();
+  const [files, setFiles] = useState<File[]>([]);
 
-  //   const [prefilledData, setPrefilledData] = useState();
+  const { startUpload } = useUploadThing("imageUploader", {
+    onUploadError: (error: Error) => {
+      // alert(`ERROR! ${error.message}`);
+      toast({
+        title: "Error:",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">File could not upload</code>
+            <br />
+            <code className="text-white">File Must be less than 4MB</code>
+          </pre>
+        ),
+      });
+    },
+    onUploadBegin: () => {
+      // alert("upload has begun");
+      toast({
+        title: "",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">Upload has begun</code>
+          </pre>
+        ),
+      });
+    },
+  });
 
   const applicationId = params.applicationId as string;
 
-  const formSchema = z.object({
-    stageName: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-    tagline: z.string(),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof applicationFormSchema>>({
+    resolver: zodResolver(applicationFormSchema),
     defaultValues: prefilledData,
   });
 
@@ -61,7 +84,22 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   //     console.log(values);
   //   }
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  // const values = form.getValues();
+
+  // // == My AutoSave function using form.watch
+  // const watch = form.watch();
+
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     updateFormSubmission(applicationId, values);
+  //   }, 2000);
+
+  //   return () => {
+  //     clearTimeout(timeoutId);
+  //   };
+  // }, [watch]);
+
+  async function onSubmit(data: z.infer<typeof applicationFormSchema>) {
     // const formData = JSON.stringify(data);
     // const fullFormData = JSON.parse('{"stageName":${data.stageName}}');
     // console.log("FORMDATA", { fullFormData });
@@ -70,7 +108,13 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
       stageName: data.stageName,
       tagline: data.tagline,
       user: user?.primaryEmailAddress?.emailAddress,
+      applicantResponse: data,
+      applicationSubmitted: true,
     };
+
+    console.log(formData);
+
+    // const applicantResponse = JSON.stringify(data, null, 2);
 
     // console.log("DATA", { data });
 
@@ -83,11 +127,38 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
       title: "You submitted the following values:",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
+          <code className="text-white">
+            `Good Job!: ${JSON.stringify(formData)}``
+          </code>
         </pre>
       ),
     });
   }
+
+  const handleUpload = async (imageUrl: any) => {
+    imageUrl.preventDefault();
+    let uploadedImageUrl = imageUrl;
+
+    if (files.length > 0) {
+      const uploadedImages = await startUpload(files);
+
+      if (!uploadedImages) return;
+
+      uploadedImageUrl = uploadedImages[0].url;
+      // updateFormSubmission(applicationId);
+
+      toast({
+        title: "Congratulations!",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
+            <code className="text-white">Image uploaded successfully</code>
+          </pre>
+        ),
+      });
+    }
+  };
 
   // function useAutoSave(data: z.infer<typeof formSchema>, delay = 1000) {
   //   useEffect(() => {
@@ -112,21 +183,6 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   //     }, delay);
   //   }, []);
   // }
-
-  const values = form.getValues();
-
-  // == My AutoSave function using form.watch
-  const watch = form.watch();
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      updateFormSubmission(applicationId, values);
-    }, 2000);
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [watch]);
 
   // const other = form.
   // const saveFormData = (values) => updateFormSubmission(applicationId, values);
@@ -192,6 +248,33 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                 </FormControl>
                 <FormDescription>
                   This is how you would like to be introduced on stage
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Photo</FormLabel>
+                <FormControl>
+                  <div className="border-black border rounded-md flex items-center justify-center">
+                    <FileUploader
+                      onFieldChange={field.onChange}
+                      imageUrl={field.value}
+                      setFiles={setFiles}
+                    />
+                  </div>
+                </FormControl>
+                <FormDescription>
+                  {files.length > 0 && (
+                    <div>
+                      <Button onClick={handleUpload}>Upload Image</Button>
+                    </div>
+                  )}
                 </FormDescription>
                 <FormMessage />
               </FormItem>

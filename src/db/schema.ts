@@ -1,4 +1,4 @@
-import { integer, pgTable, serial, text, timestamp, boolean, date, uuid } from 'drizzle-orm/pg-core';
+import { pgTable, text, boolean, uuid, json, jsonb } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users_table', {
   clerkId: text('id').primaryKey(),
@@ -15,6 +15,7 @@ export  const formSubmissionsTable = pgTable('form_submissions', {
     applicant: text('applicant').references(() => usersTable.clerkId),
     stageName: text('stageName'),
     tagline: text('tagline'),
+    applicantResponse: jsonb('applicantResponse').notNull(),
     applicationSubmitted: boolean('applicationSubmitted').default(false),
 }) 
 
