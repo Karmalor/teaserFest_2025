@@ -46,10 +46,7 @@ const ApplicationsPage = () => {
       const result: any = await getFormSubmissionById(applicationId);
       //   then((res) => res.json());
 
-      if (result.applicantResponse)
-        // const ress = JSON.parse(JSON.stringify(result[0].applicantResponse))
-
-        setPrefilledData(result.applicantResponse);
+      setPrefilledData(result[0].applicantResponse);
     };
     fetchData();
   }, []);
