@@ -53,6 +53,8 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
             <code className="text-white">File could not upload</code>
             <br />
+            <code className="text-white">{error.message}</code>
+            <br />
             <code className="text-white">File Must be less than 4MB</code>
           </pre>
         ),
