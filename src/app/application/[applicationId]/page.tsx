@@ -24,10 +24,18 @@ import {
   updateFormSubmission,
 } from "@/lib/actions/application.actions";
 import ApplicationForm from "@/components/forms/applicationForm";
+import { CreateApplicationParams } from "@/types";
+
+interface applicationParams {
+  applicant: string;
+  stageName: string;
+  tagline: string;
+  applicationSubmitted: boolean;
+  applicantResponse: {} | null;
+}
 
 const ApplicationsPage = () => {
   const { user } = useUser();
-  const { toast } = useToast();
   const [prefilledData, setPrefilledData] = useState<{} | null>(null);
   const params = useParams();
 
@@ -35,9 +43,13 @@ const ApplicationsPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getFormSubmissionById(applicationId);
+      const result: any = await getFormSubmissionById(applicationId);
       //   then((res) => res.json());
-      setPrefilledData(result[0].applicantResponse);
+
+      if (result.applicantResponse)
+        // const ress = JSON.parse(JSON.stringify(result[0].applicantResponse))
+
+        setPrefilledData(result.applicantResponse);
     };
     fetchData();
   }, []);

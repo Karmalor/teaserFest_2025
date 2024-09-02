@@ -51,7 +51,7 @@ export type CreateUserParams = {
     stageName: string;
     tagline: string;
     applicationSubmitted: boolean;
-
+    applicantResponse: {} | null
   };
 
   export type applicantResponse = {
