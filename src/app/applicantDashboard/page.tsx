@@ -52,7 +52,6 @@ const page = async () => {
                 <Link href={`/application/${application.uuid}`}>
                   <Button>Continue</Button>
                 </Link>
-                <h1>{application.applicantResponse.stageName!}</h1>
               </div>
             ))}
             <div className="flex pt-8 justify-center">
