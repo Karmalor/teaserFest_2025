@@ -26,14 +26,6 @@ import {
 import ApplicationForm from "@/components/forms/applicationForm";
 import { CreateApplicationParams } from "@/types";
 
-interface applicationParams {
-  applicant: string;
-  stageName: string;
-  tagline: string;
-  applicationSubmitted: boolean;
-  applicantResponse: {} | null;
-}
-
 const ApplicationsPage = () => {
   const { user } = useUser();
   const [prefilledData, setPrefilledData] = useState<{} | null>(null);

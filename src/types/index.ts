@@ -60,7 +60,7 @@ export type CreateUserParams = {
   }
 
   export type fileUploaderProps = {
-    imageUrl: string
+    imageUrl: string | undefined
     onFieldChange: (value: string) => void
     setFiles: Dispatch<SetStateAction<File[]>>
   }

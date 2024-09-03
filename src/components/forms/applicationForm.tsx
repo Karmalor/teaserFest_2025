@@ -43,6 +43,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const { toast } = useToast();
   const params = useParams();
   const [files, setFiles] = useState<File[]>([]);
+  const [uploadedImage, setUploadedImage] = useState("");
 
   const { startUpload } = useUploadThing("imageUploader", {
     onUploadError: (error: Error) => {
@@ -86,57 +87,27 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   //     console.log(values);
   //   }
 
-  // const values = form.getValues();
-
   // // == My AutoSave function using form.watch
-  // const watch = form.watch();
+  const values = form.getValues();
 
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     updateFormSubmission(applicationId, values);
-  //   }, 2000);
+  const watch = form.watch();
 
-  //   return () => {
-  //     clearTimeout(timeoutId);
-  //   };
-  // }, [watch]);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const formData = {
+        stageName: values.stageName,
+        tagline: values.tagline,
+        user: user?.primaryEmailAddress?.emailAddress,
+        applicantResponse: values,
+        applicationSubmitted: true,
+      };
+      updateFormSubmission(applicationId, formData);
+    }, 2000);
 
-  async function onSubmit(data: z.infer<typeof applicationFormSchema>) {
-    // const formData = JSON.stringify(data);
-    // const fullFormData = JSON.parse('{"stageName":${data.stageName}}');
-    // console.log("FORMDATA", { fullFormData });
-
-    const formData = {
-      stageName: data.stageName,
-      tagline: data.tagline,
-      user: user?.primaryEmailAddress?.emailAddress,
-      applicantResponse: data,
-      applicationSubmitted: true,
+    return () => {
+      clearTimeout(timeoutId);
     };
-
-    console.log(formData);
-
-    // const applicantResponse = JSON.stringify(data, null, 2);
-
-    // console.log("DATA", { data });
-
-    // const stageName = data.stageName;
-    // const tagline = data.tagline;
-
-    updateFormSubmission(applicationId, formData);
-
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
-          <code className="text-white">
-            `Good Job!: ${JSON.stringify(formData)}``
-          </code>
-        </pre>
-      ),
-    });
-  }
+  }, [watch]);
 
   const handleUpload = async (imageUrl: any) => {
     imageUrl.preventDefault();
@@ -147,8 +118,13 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
 
       if (!uploadedImages) return;
 
+      console.log("uploaded image", uploadedImages);
+
       uploadedImageUrl = uploadedImages[0].url;
       // updateFormSubmission(applicationId);
+
+      console.log("uploaded image URL", uploadedImageUrl);
+      setUploadedImage(uploadedImageUrl);
 
       toast({
         title: "Congratulations!",
@@ -161,6 +137,45 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
       });
     }
   };
+
+  async function onSubmit(data: z.infer<typeof applicationFormSchema>) {
+    // const formData = JSON.stringify(data);
+    // const fullFormData = JSON.parse('{"stageName":${data.stageName}}');
+    // console.log("FORMDATA", { fullFormData });
+
+    // data.imageUrl = uploadedImage;
+
+    // const { stageName, tagline, imageUrl } = data;
+    // console.log("peee", data);
+    const formData = {
+      ...data,
+    };
+
+    const formData2 = { ...formData, imageUrl: uploadedImage }; // { x: 42, foo: "baz", y: 9 }
+
+    console.log(applicationFormSchema.parse(formData2));
+
+    // const applicantResponse = JSON.stringify(data, null, 2);
+
+    // console.log("DATA", { data });
+
+    // const stageName = data.stageName;
+    // const tagline = data.tagline;
+
+    await updateFormSubmission(applicationId, formData2);
+
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
+          <code className="text-white">
+            `Good Job!: ${JSON.stringify(formData, null, 2)}``
+          </code>
+        </pre>
+      ),
+    });
+  }
 
   // function useAutoSave(data: z.infer<typeof formSchema>, delay = 1000) {
   //   useEffect(() => {
@@ -260,7 +275,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
             control={form.control}
             name="imageUrl"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-full">
                 <FormLabel>Photo</FormLabel>
                 <FormControl>
                   <div className="border-black border rounded-md flex items-center justify-center">

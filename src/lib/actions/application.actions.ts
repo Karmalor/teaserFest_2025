@@ -18,7 +18,7 @@ export async function updateFormSubmission(id: SelectFormSubmission['uuid'], for
   await db.update(formSubmissionsTable).set(formData).where(eq(formSubmissionsTable.uuid, id));
 }
 
-  export async function getFormSubmissionById(uuid: SelectFormSubmission['uuid']): Promise<
+export async function getFormSubmissionById(uuid: SelectFormSubmission['uuid']): Promise<
   Array<{
    
   }>

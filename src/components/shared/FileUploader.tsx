@@ -1,22 +1,25 @@
 import { fileUploaderProps } from "@/types";
-import React, { useCallback, useState } from "react";
+import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 
+import type { FileWithPath } from "@uploadthing/react";
 import { useDropzone } from "@uploadthing/react";
 import { generateClientDropzoneAccept } from "uploadthing/client";
 
 import { Button } from "../ui/button";
 import { convertFileToUrl } from "@/lib/utils";
-import { useUploadThing } from "@/lib/uploadthing";
-import { toast } from "../ui/use-toast";
+
+type FileUploaderProps = {
+  onFieldChange: (url: string) => void;
+  imageUrl: string;
+  setFiles: Dispatch<SetStateAction<File[]>>;
+};
 
 export function FileUploader({
   imageUrl,
   onFieldChange,
   setFiles,
-}: fileUploaderProps) {
-  //   const [files, setFiles] = useState<File[]>([]);
-
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+}: FileUploaderProps) {
+  const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
     setFiles(acceptedFiles);
     onFieldChange(convertFileToUrl(acceptedFiles[0]));
   }, []);
