@@ -171,14 +171,12 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     // console.log("peee", data);
     const formData = {
       ...data,
+      applicationSubmitted: true,
       applicantResponse: {
         ...values,
         imageUrl: uploadedImage,
       },
-      applcationSubmitted: true,
     };
-
-    console.log(applicationFormSchema.parse(formData));
 
     // const applicantResponse = JSON.stringify(data, null, 2);
 
@@ -190,12 +188,12 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     await updateFormSubmission(applicationId, formData);
 
     toast({
-      title: "You submitted the following values:",
+      title: "You submitted your application!",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
           <code className="text-white">
-            `Good Job!: ${JSON.stringify(formData, null, 2)}
+            `${JSON.stringify(formData, null, 2)}
           </code>
         </pre>
       ),
