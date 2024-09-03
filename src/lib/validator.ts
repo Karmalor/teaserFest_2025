@@ -6,10 +6,10 @@ export const applicationFormSchema = z.object({
     }),
     tagline: z.string(),
     imageUrl: z.string(),
-    applicantResponse: z.object({
-        stageName: z.string(),
-        tagline: z.string(),
-        imageUrl: z.string(),
-      })
+    // applicantResponse: z.object({
+    //     stageName: z.string(),
+    //     tagline: z.string(),
+    //     imageUrl: z.string(),
+    //   })
   });
 
