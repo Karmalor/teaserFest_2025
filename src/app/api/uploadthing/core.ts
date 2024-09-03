@@ -1,12 +1,12 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { useUser } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
  
 const f = createUploadthing();
 
-const user = currentUser()
+const {user} = useUser()
  
-const auth = (req: Request) => ({ id: `${user}` }); // Fake auth function
+const auth = (req: Request) => ({ id: `${user?.id}` }); // Fake auth function
  
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
