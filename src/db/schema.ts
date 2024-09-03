@@ -15,6 +15,7 @@ export  const formSubmissionsTable = pgTable('form_submissions', {
     applicant: text('applicant').references(() => usersTable.clerkId),
     stageName: text('stageName'),
     tagline: text('tagline'),
+    // imageUrl: text('photo'),
     applicantResponse: jsonb('applicantResponse').notNull(),
     applicationSubmitted: boolean('applicationSubmitted').default(false),
 }) 

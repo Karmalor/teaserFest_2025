@@ -43,7 +43,12 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const { toast } = useToast();
   const params = useParams();
   const [files, setFiles] = useState<File[]>([]);
-  const [uploadedImage, setUploadedImage] = useState("");
+  const [uploadedImage, setUploadedImage] = useState();
+
+  useEffect(() => {
+    const deata = JSON.parse(JSON.stringify(prefilledData));
+    setUploadedImage(deata.imageUrl);
+  }, [prefilledData]);
 
   const { startUpload } = useUploadThing("imageUploader", {
     onUploadError: (error: Error) => {
@@ -98,9 +103,12 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
         stageName: values.stageName,
         tagline: values.tagline,
         user: user?.primaryEmailAddress?.emailAddress,
-        applicantResponse: values,
-        applicationSubmitted: true,
+        applicantResponse: {
+          ...values,
+          imageUrl: uploadedImage,
+        },
       };
+
       updateFormSubmission(applicationId, formData);
     }, 2000);
 
@@ -126,6 +134,20 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
       console.log("uploaded image URL", uploadedImageUrl);
       setUploadedImage(uploadedImageUrl);
 
+      console.log("doobie", uploadedImage);
+
+      const formData = {
+        ...values,
+        applicantResponse: {
+          ...values,
+          imageUrl: uploadedImage,
+        },
+      };
+
+      console.log("forgm", formData);
+
+      updateFormSubmission(applicationId, formData);
+
       toast({
         title: "Congratulations!",
         description: (
@@ -149,11 +171,14 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     // console.log("peee", data);
     const formData = {
       ...data,
+      applicantResponse: {
+        ...values,
+        imageUrl: uploadedImage,
+      },
+      applcationSubmitted: true,
     };
 
-    const formData2 = { ...formData, imageUrl: uploadedImage }; // { x: 42, foo: "baz", y: 9 }
-
-    console.log(applicationFormSchema.parse(formData2));
+    console.log(applicationFormSchema.parse(formData));
 
     // const applicantResponse = JSON.stringify(data, null, 2);
 
@@ -162,7 +187,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     // const stageName = data.stageName;
     // const tagline = data.tagline;
 
-    await updateFormSubmission(applicationId, formData2);
+    await updateFormSubmission(applicationId, formData);
 
     toast({
       title: "You submitted the following values:",
@@ -170,7 +195,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
           <code className="text-white">
-            `Good Job!: ${JSON.stringify(formData2, null, 2)}``
+            `Good Job!: ${JSON.stringify(formData, null, 2)}
           </code>
         </pre>
       ),
