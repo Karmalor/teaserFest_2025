@@ -170,7 +170,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
           <code className="text-white">
-            `Good Job!: ${JSON.stringify(formData, null, 2)}``
+            `Good Job!: ${JSON.stringify(formData2, null, 2)}``
           </code>
         </pre>
       ),
