@@ -88,7 +88,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const applicationId = params.applicationId as string;
 
   const form = useForm<z.infer<typeof applicantResponseSchema>>({
-    resolver: zodResolver(applicantResponseSchema),
+    resolver: zodResolver(applicantResponseSchema.partial()),
     defaultValues: prefilledData,
   });
 
@@ -150,8 +150,6 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
         },
       };
 
-      console.log("forgm", formData);
-
       updateFormSubmission(applicationId, formData);
 
       toast({
@@ -166,14 +164,23 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     }
   };
 
-  async function handleSubmitForm(data: z.infer<typeof applicationFormSchema>) {
+  // async function handleSubmitForm(
+  //   data: z.infer<typeof applicantResponseSchema>
+  // ) {
+  //   console.log("congrations!");
+  // }
+
+  async function onSubmit(data: z.infer<typeof applicantResponseSchema>) {
+    console.log("congrations!");
+
     const formData = {
+      ...data,
       applicationSubmitted: true,
       submittedAt: new Date().toISOString().toLocaleString(),
-      applicantResponse: {
-        ...values,
-        imageUrl: uploadedImage,
-      },
+      // applicantResponse: {
+      //   ...data,
+      imageUrl: uploadedImage,
+      // },
     };
 
     await updateFormSubmission(applicationId, formData);
@@ -242,7 +249,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   return (
     <div>
       <Form {...form}>
-        <form className="space-y-8 mt-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-6">
           <FormField
             control={form.control}
             name="stageName"
@@ -594,7 +601,10 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
             )}
           />
 
-          <Button type="button" onClick={handleSubmitForm}>
+          <Button
+            type="submit"
+            // onClick={handleSubmitForm}
+          >
             Submit
           </Button>
         </form>

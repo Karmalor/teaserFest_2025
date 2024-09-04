@@ -14,8 +14,8 @@ export const applicantResponseSchema = z.object({
     nameOfAct: z.string(),
     imageUrl: z.string(),
     music: z.string().optional(),
-    performanceVideo: z.string().url(),
-    techNotes: z.string(),
+    performanceVideo: z.string(),
+    techNotes: z.string().optional(),
     descriptionOfAct: z.string(),
     lightingRequests: z.string().optional(),
     soundCues: z.string().optional(),
@@ -41,9 +41,9 @@ export const applicationFormSchema = z.object({
     // }),
     // imageUrl: z.string(),
     // createdAt: z.date(),
-    submittedAt: z.string(),
+    // submittedAt: z.string(),
     applicantResponse: applicantResponseSchema,
-    applicationSubmitted: z.boolean().default(false)
+    // applicationSubmitted: z.boolean().default(false)
   })
 
   
