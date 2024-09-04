@@ -32,6 +32,7 @@ export type CreateUserParams = {
     buyerId: string;
     amount: string;
     applicationSubmitted: boolean
+    createdAt: Date
   };
   
   // export type GetOrdersByEventParams = {
@@ -51,7 +52,8 @@ export type CreateUserParams = {
     stageName: string;
     tagline: string;
     applicationSubmitted: boolean;
-    applicantResponse: {} | null
+    applicantResponse: {} | null;
+    createdAt: Date
   };
 
   export type applicantResponse = {

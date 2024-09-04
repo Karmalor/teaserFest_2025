@@ -57,81 +57,14 @@ const ApplicationsPage = () => {
         <h1 className="text-xl font-bold">Welcome {user?.fullName},</h1>
         <p>
           Please fill out the form below. Your progress will be saved, so you
-          can edit the information before submitting
+          can leave this page and edit the information before submitting
         </p>
         {prefilledData ? (
           <ApplicationForm prefilledData={prefilledData} />
         ) : (
           <div>Loading...</div>
         )}
-        {/* <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 mt-6"
-          >
-            <FormField
-              control={form.control}
-              name="stageName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Stage name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="enter name..."
-                      {...field}
-                      className="border border-black"
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
-            <FormField
-              control={form.control}
-              name="tagline"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tagline</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="enter tagline..."
-                      {...field}
-                      className="border border-black"
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    This is how you would like to be introduced on stage
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* <FormField
-              control={form.control}
-              name="music"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Music</FormLabel>
-                  <br />
-                  <FormControl>
-                    <Button type="button">Upload a music file</Button>
-                  </FormControl>
-                  <FormDescription>
-                    Select a file from your device
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-        {/* 
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form> */}
         <div className="mt-6 justify-end flex w-full"></div>
       </div>
     </div>

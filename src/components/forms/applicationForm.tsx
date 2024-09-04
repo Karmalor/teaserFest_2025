@@ -18,17 +18,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   getFormSubmissionById,
   updateFormSubmission,
 } from "@/lib/actions/application.actions";
 
 import { Autosave, useAutosave } from "react-autosave";
-import { applicationFormSchema } from "@/lib/validator";
+import {
+  applicantResponseSchema,
+  applicationFormSchema,
+} from "@/lib/validator";
 import { FileUploader } from "../shared/FileUploader";
 import { useUploadThing } from "@/lib/uploadthing";
 import { handleError } from "@/lib/utils";
+import { Textarea } from "../ui/textarea";
+import { Checkbox } from "../ui/checkbox";
 
 // type ApplicationFormProps = {
 //   prefilledData:
@@ -44,6 +49,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const params = useParams();
   const [files, setFiles] = useState<File[]>([]);
   const [uploadedImage, setUploadedImage] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     const deata = JSON.parse(JSON.stringify(prefilledData));
@@ -81,8 +87,8 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
 
   const applicationId = params.applicationId as string;
 
-  const form = useForm<z.infer<typeof applicationFormSchema>>({
-    resolver: zodResolver(applicationFormSchema),
+  const form = useForm<z.infer<typeof applicantResponseSchema>>({
+    resolver: zodResolver(applicantResponseSchema),
     defaultValues: prefilledData,
   });
 
@@ -160,30 +166,15 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     }
   };
 
-  async function onSubmit(data: z.infer<typeof applicationFormSchema>) {
-    // const formData = JSON.stringify(data);
-    // const fullFormData = JSON.parse('{"stageName":${data.stageName}}');
-    // console.log("FORMDATA", { fullFormData });
-
-    // data.imageUrl = uploadedImage;
-
-    // const { stageName, tagline, imageUrl } = data;
-    // console.log("peee", data);
+  async function handleSubmitForm(data: z.infer<typeof applicationFormSchema>) {
     const formData = {
-      ...data,
       applicationSubmitted: true,
+      submittedAt: new Date().toISOString().toLocaleString(),
       applicantResponse: {
         ...values,
         imageUrl: uploadedImage,
       },
     };
-
-    // const applicantResponse = JSON.stringify(data, null, 2);
-
-    // console.log("DATA", { data });
-
-    // const stageName = data.stageName;
-    // const tagline = data.tagline;
 
     await updateFormSubmission(applicationId, formData);
 
@@ -198,6 +189,8 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
         </pre>
       ),
     });
+
+    router.push("/applicantDashboard");
   }
 
   // function useAutoSave(data: z.infer<typeof formSchema>, delay = 1000) {
@@ -224,12 +217,10 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   //   }, []);
   // }
 
-  // const other = form.
-  // const saveFormData = (values) => updateFormSubmission(applicationId, values);
-
   // useAutosave({ data: values, onSave: saveFormData });
 
   // == AutoSave using useRef()
+
   // const delay = 1000;
   // const prevValues = useRef(values);
 
@@ -251,7 +242,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-6">
+        <form className="space-y-8 mt-6">
           <FormField
             control={form.control}
             name="stageName"
@@ -260,14 +251,31 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                 <FormLabel>Stage name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="enter name..."
+                    placeholder="enter stage name..."
                     {...field}
                     className="border border-black"
                   />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="legalName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Legal name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="enter legal name..."
+                    {...field}
+                    className="border border-black"
+                  />
+                </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -289,6 +297,43 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                 <FormDescription>
                   This is how you would like to be introduced on stage
                 </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="preferredPronouns"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Preferred Pronouns</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="enter pronouns..."
+                    {...field}
+                    className="border border-black"
+                  />
+                </FormControl>
+                <FormDescription>optional</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="nameOfAct"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name of your Act</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="enter act name..."
+                    {...field}
+                    className="border border-black"
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -321,25 +366,237 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
             )}
           />
 
-          {/* <FormField
-              control={form.control}
-              name="music"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Music</FormLabel>
-                  <br />
-                  <FormControl>
-                    <Button type="button">Upload a music file</Button>
-                  </FormControl>
-                  <FormDescription>
-                    Select a file from your device
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
+          <FormField
+            control={form.control}
+            name="music"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Music</FormLabel>
+                <br />
+                <FormControl>
+                  <Button type="button">Upload a music file</Button>
+                </FormControl>
+                <FormDescription>
+                  Select a file from your device
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <Button type="submit">Submit</Button>
+          <FormField
+            control={form.control}
+            name="performanceVideo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Link to Video Performance</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="ex: www.youtube.com..."
+                    {...field}
+                    className="border border-black"
+                  />
+                </FormControl>
+                <FormDescription>
+                  Share an example of your performance
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="techNotes"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>List any Tech Notes</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="enter tech notes..."
+                    {...field}
+                    className="border border-black"
+                  />
+                </FormControl>
+                <FormDescription>optional</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="lightingRequests"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Any lighting requests</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="enter tech notes..."
+                    {...field}
+                    className="border border-black"
+                  />
+                </FormControl>
+                <FormDescription>optional</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="soundCues"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Any sound cues</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="enter tech notes..."
+                    {...field}
+                    className="border border-black"
+                  />
+                </FormControl>
+                <FormDescription>optional</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="setupForAct"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Setup details for act</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="enter tech notes..."
+                    {...field}
+                    className="border border-black"
+                  />
+                </FormControl>
+                <FormDescription>optional</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="breakdownForAct"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Breakdown detials for act</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="enter tech notes..."
+                    {...field}
+                    className="border border-black"
+                  />
+                </FormControl>
+                <FormDescription>optional</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="socialMediaLinks"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Any social media accounts?</FormLabel>
+                <FormControl>
+                  <div className="flex flex-col">
+                    <FormField
+                      control={form.control}
+                      name="socialMediaLinks.instagram"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel></FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Instagram @..."
+                              {...field}
+                              className="border border-black"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="socialMediaLinks.faceBook"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel></FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="FaceBook username..."
+                              {...field}
+                              className="border border-black"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="socialMediaLinks.tikTok"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel></FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="tikTok username..."
+                              {...field}
+                              className="border border-black"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="submitToCompetition"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Would you like to submit this act for competition in the
+                  "Queen of the Striptease" Competition?
+                </FormLabel>
+                <br />
+                <FormControl>
+                  {/* <Textarea
+                    placeholder="enter tech notes..."
+                    {...field}
+                    className="border border-black"
+                  /> */}
+                  <Checkbox
+                    onCheckedChange={field.onChange}
+                    checked={field.value}
+                    id="submitToCompetition"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type="button" onClick={handleSubmitForm}>
+            Submit
+          </Button>
         </form>
       </Form>
     </div>

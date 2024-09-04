@@ -25,6 +25,8 @@ const page = async () => {
       )
     );
 
+  console.log(user.primaryEmailAddress?.emailAddress);
+
   if (!applications) {
     throw new Error("Form not found");
   }

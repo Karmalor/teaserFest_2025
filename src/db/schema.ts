@@ -1,4 +1,4 @@
-import { pgTable, text, boolean, uuid, json, jsonb } from 'drizzle-orm/pg-core';
+import { pgTable, text, boolean, uuid, json, jsonb, date } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users_table', {
   clerkId: text('id').primaryKey(),
@@ -18,6 +18,8 @@ export  const formSubmissionsTable = pgTable('form_submissions', {
     // imageUrl: text('photo'),
     applicantResponse: jsonb('applicantResponse').notNull(),
     applicationSubmitted: boolean('applicationSubmitted').default(false),
+    submittedAt: date('submittedAt'),
+    createdAt: date('createdAt')
 }) 
 
 export const applicationOrdersTable = pgTable("application_orders", {

@@ -31,6 +31,7 @@ export async function POST(request: Request) {
         buyerId: metadata?.buyerId || '',
         amount: amount ? (amount / 100).toString() : '0',
         applicationSubmitted: false,
+        createdAt: new Date()
       }
 
       const application = {
@@ -39,7 +40,8 @@ export async function POST(request: Request) {
         stageName: "",
         tagline: "",
         applicationSubmitted: false,
-        applicantResponse: {}
+        applicantResponse: {},
+        createdAt: new Date().toISOString().toLocaleString(),
       }
 
       console.log(order)
