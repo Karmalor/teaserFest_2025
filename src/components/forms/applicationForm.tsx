@@ -116,7 +116,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
       };
 
       updateFormSubmission(applicationId, formData);
-    }, 2000);
+    }, 1000);
 
     return () => {
       clearTimeout(timeoutId);
@@ -184,6 +184,14 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     };
 
     await updateFormSubmission(applicationId, formData);
+
+    await fetch("/api/email", {
+      method: "POST",
+      body: JSON.stringify({
+        firstName: data.stageName,
+        email: user?.primaryEmailAddress?.emailAddress,
+      }),
+    });
 
     toast({
       title: "You submitted your application!",
