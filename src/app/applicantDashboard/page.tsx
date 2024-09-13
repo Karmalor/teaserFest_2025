@@ -44,16 +44,18 @@ const page = async () => {
                 className="flex flex-row gap-4 p-4 items-center justify-between"
               >
                 <div className="flex flex-row gap-4 p-4 items-center">
-                  <h1>Application #{index + 1}</h1>
-                  {!application.applicationSubmitted ? (
-                    <h1>- In progress</h1>
-                  ) : (
-                    <h1>- Submitted!</h1>
-                  )}
+                  <h1>Application</h1>
+                  <h1>- {application.applicantResponse.nameOfAct}</h1>
                 </div>
-                <Link href={`/application/${application.uuid}`}>
-                  <Button>Continue</Button>
-                </Link>
+                {application.applicationSubmitted ? (
+                  <h1 className="bg-gray-600 p-2 rounded-md text-white">
+                    Submitted
+                  </h1>
+                ) : (
+                  <Link href={`/application/${application.uuid}`}>
+                    <Button>Continue</Button>
+                  </Link>
+                )}
               </div>
             ))}
             <div className="flex pt-8 justify-center">

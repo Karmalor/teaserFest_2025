@@ -30,10 +30,16 @@ import {
   applicationFormSchema,
 } from "@/lib/validator";
 import { FileUploader } from "../shared/FileUploader";
-import { useUploadThing } from "@/lib/uploadthing";
+import {
+  UploadButton,
+  UploadDropzone,
+  useUploadThing,
+} from "@/lib/uploadthing";
 import { handleError } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
 import { Checkbox } from "../ui/checkbox";
+import { MusicUploader } from "../shared/MusicUploder";
+import Link from "next/link";
 
 // type ApplicationFormProps = {
 //   prefilledData:
@@ -50,10 +56,14 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [uploadedImage, setUploadedImage] = useState();
   const router = useRouter();
+  const [musicUrl, setMusicUrl] = useState("");
+  const [musicName, setMusicName] = useState("");
 
   useEffect(() => {
     const deata = JSON.parse(JSON.stringify(prefilledData));
     setUploadedImage(deata.imageUrl);
+    setMusicName(deata.musicName);
+    setMusicUrl(deata.musicUrl);
   }, [prefilledData]);
 
   const { startUpload } = useUploadThing("imageUploader", {
@@ -88,6 +98,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const applicationId = params.applicationId as string;
 
   const form = useForm<z.infer<typeof applicantResponseSchema>>({
+    mode: "onBlur",
     resolver: zodResolver(applicantResponseSchema.partial()),
     defaultValues: prefilledData,
   });
@@ -112,6 +123,8 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
         applicantResponse: {
           ...values,
           imageUrl: uploadedImage,
+          musicUrl: musicUrl,
+          musicName: musicName,
         },
       };
 
@@ -156,7 +169,6 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
         title: "Congratulations!",
         description: (
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
             <code className="text-white">Image uploaded successfully</code>
           </pre>
         ),
@@ -164,11 +176,46 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     }
   };
 
-  // async function handleSubmitForm(
-  //   data: z.infer<typeof applicantResponseSchema>
-  // ) {
-  //   console.log("congrations!");
-  // }
+  // const handleMusicUpload = async (musicUrl: any) => {
+  //   musicUrl.preventDefault();
+  //   let uploadedMusicUrl = musicUrl;
+
+  //   if (files.length > 0) {
+  //     const uploadedImages = await startUpload(files);
+
+  //     if (!uploadedImages) return;
+
+  //     console.log("uploaded image", uploadedImages);
+
+  //     uploadedMusicUrl = uploadedImages[0].url;
+  //     // updateFormSubmission(applicationId);
+
+  //     console.log("uploaded image URL", uploadedMusicUrl);
+  //     // setUploadedImage(uploadedImageUrl);
+
+  //     console.log("doobie", uploadedMusicUrl);
+
+  //     const formData = {
+  //       ...values,
+  //       applicantResponse: {
+  //         ...values,
+  //         musicUrl: uploadedMusicUrl,
+  //       },
+  //     };
+
+  //     updateFormSubmission(applicationId, formData);
+
+  //     toast({
+  //       title: "Congratulations!",
+  //       description: (
+  //         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+  //           {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
+  //           <code className="text-white">Music uploaded successfully</code>
+  //         </pre>
+  //       ),
+  //     });
+  //   }
+  // };
 
   async function onSubmit(data: z.infer<typeof applicantResponseSchema>) {
     console.log("congrations!");
@@ -180,6 +227,8 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
       // applicantResponse: {
       //   ...data,
       imageUrl: uploadedImage,
+      musicUrl: musicUrl,
+      musicName: musicName,
       // },
     };
 
@@ -383,13 +432,60 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
 
           <FormField
             control={form.control}
-            name="music"
+            name="musicUrl"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Music</FormLabel>
                 <br />
+                <div className="pl-3">
+                  <a target="_blank" href={musicUrl} rel="noopener noreferrer">
+                    <h1 className="underline text-red-800">{musicName}</h1>
+                  </a>
+                </div>
                 <FormControl>
-                  <Button type="button">Upload a music file</Button>
+                  <div>
+                    {!musicUrl ? (
+                      <UploadDropzone
+                        className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black"
+                        endpoint="musicUploader"
+                        onClientUploadComplete={(res) => {
+                          console.log("Files", res[0]);
+                          toast({
+                            title: "Congratulations!",
+                            description: (
+                              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                                <code className="text-white">
+                                  Music uploaded successfully
+                                </code>
+                              </pre>
+                            ),
+                          });
+                          setMusicUrl(res[0].url);
+                          setMusicName(res[0].name);
+                        }}
+                      />
+                    ) : (
+                      <UploadButton
+                        className="ut-button:bg-black ut-button:ut-readying:bg-black ut-button:ut-uploading:bg-black"
+                        endpoint="musicUploader"
+                        onClientUploadComplete={(res) => {
+                          console.log("Files", res[0]);
+                          toast({
+                            title: "Congratulations!",
+                            description: (
+                              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                                <code className="text-white">
+                                  Music uploaded successfully
+                                </code>
+                              </pre>
+                            ),
+                          });
+                          setMusicUrl(res[0].url);
+                          setMusicName(res[0].name);
+                        }}
+                      />
+                    )}
+                  </div>
                 </FormControl>
                 <FormDescription>
                   Select a file from your device

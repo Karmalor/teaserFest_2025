@@ -4,7 +4,7 @@ export const applicantResponseSchema = z.object({
     stageName: z.string().min(1, {
       message: "Username must be at least 1 character.",
     }),
-    legalName: z.string().min(1, {
+    legalName: z.string().min(2, {
       message: "Username must be at least 1 character.",
     }),
     tagline: z.string().min(2, {
@@ -13,7 +13,8 @@ export const applicantResponseSchema = z.object({
     preferredPronouns: z.string().optional(),
     nameOfAct: z.string(),
     imageUrl: z.string(),
-    music: z.string().optional(),
+    musicUrl: z.string(),
+    musicName: z.string(),
     performanceVideo: z.string(),
     techNotes: z.string().optional(),
     descriptionOfAct: z.string(),
