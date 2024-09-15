@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 let fullfilled = false;
 let promise: Promise<void> | null = null;
@@ -16,6 +19,12 @@ const useTimeout = (ms: number) => {
   }
 };
 const ApplicationList = ({ applications }: { applications: any }) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, []);
+
   useTimeout(2000);
 
   return (
