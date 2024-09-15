@@ -68,7 +68,7 @@ const CheckoutPage = ({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `https://teaser-fest-2025.vercel.app/payment-success`,
+        return_url: `https://teaser-fest-2025.vercel.app/applicantDashboard`,
       },
     });
 
