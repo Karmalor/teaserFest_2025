@@ -26,7 +26,8 @@ export const applicationOrdersTable = pgTable("application_orders", {
   stripeId: text('id').primaryKey(),
   applicationSubmitted: boolean('applicationSubmitted').default(false),
   amount: text('amount'),
-  buyerId: text('buyerId').references(() => usersTable.clerkId)
+  buyerId: text('buyerId').references(() => usersTable.clerkId),
+  createdAt: date('createdAt')
 })
 
 export type InsertUser = typeof usersTable.$inferInsert;
