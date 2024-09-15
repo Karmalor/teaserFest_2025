@@ -6,6 +6,21 @@ import { eq } from "drizzle-orm";
 import Link from "next/link";
 import React from "react";
 
+interface User {
+  primaryEmailAddress?: { emailAddress?: string };
+  firstName: string;
+}
+
+interface Application {
+  uuid: string;
+  applicantResponse:
+    | {
+        nameOfAct?: string;
+      }
+    | unknown;
+  applicationSubmitted: boolean | null;
+}
+
 const page = async () => {
   const user = await currentUser();
 
@@ -14,21 +29,21 @@ const page = async () => {
   }
   // let jsonData = [];
 
-  const applications = await db
+  const applications: Application[] = await db
 
     .select()
     .from(formSubmissionsTable)
     .where(
       eq(
         formSubmissionsTable.applicant,
-        user!.primaryEmailAddress!.emailAddress
+        user!.primaryEmailAddress!.emailAddress ?? ""
       )
     );
 
   console.log(user.primaryEmailAddress?.emailAddress);
 
   if (!applications) {
-    throw new Error("Form not found");
+    throw new Error("Applications not found");
   }
 
   return (
@@ -38,7 +53,7 @@ const page = async () => {
 
         {applications ? (
           <div>
-            {applications.map((application, index) => (
+            {applications.map((application: any, index) => (
               <div
                 key={index}
                 className="flex flex-row gap-4 p-2 items-center justify-between "
