@@ -66,7 +66,7 @@ const CheckoutPage = ({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `http://www.localhost:3000/applicantDashboard`,
+        return_url: `/applicantDashboard`,
       },
     });
 
