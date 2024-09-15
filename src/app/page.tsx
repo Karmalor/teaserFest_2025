@@ -48,20 +48,20 @@ export default function Home() {
         )}
         <div className="md:flex justify-between  bg-[#FFF0F0] w-full">
           <div
-            className="pt-4 md:pt-12 pb-4
+            className="pt-4 md:pt-4 pb-4
          pb-200 z-20 relative md:mr-48 pointer-events-none"
           >
             <Image
-              src="/TeaserFest Vintage Logo 2025_v3.png"
+              src="/TeaserFest Vintage Logo 2025_v9.png"
               alt="hi"
-              width={1000}
+              width={1100}
               height={300}
             />
           </div>
 
           <div className="flex flex-col gap-4">
             <button onClick={toggleModal}>
-              <div className="md:absolute right-24 top-28 mx-4 md:m-0">
+              <div className="md:absolute right-24 top-28 mx-4 -m-36 md:m-0">
                 <VideoModal />
               </div>
             </button>
