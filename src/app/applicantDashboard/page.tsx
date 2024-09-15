@@ -46,7 +46,7 @@ const page = async () => {
   }
 
   return (
-    <div className="max-w-xl md:mx-auto py-4 px-0 md:p-8 text-black text-center  m-4 md:m-10 mt-10 shadow-[8px_8px_0_0_#FE3D02] border-black border-2">
+    <div className="max-w-xl md:mx-auto py-8 px-0 md:p-8 text-black text-center  m-4 md:m-10 mt-10 shadow-[8px_8px_0_0_#FE3D02] border-black border-2">
       <div className="justify-center">
         <h1 className="text-4xl mb-10">Welcome {user.firstName}</h1>
 

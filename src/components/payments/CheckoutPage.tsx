@@ -100,7 +100,7 @@ const CheckoutPage = ({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-2 ">
+    <form onSubmit={handleSubmit} className="bg-[#FFF0F0] p-2 ">
       {clientSecret && <PaymentElement />}
 
       {errorMessage && <div>{errorMessage}</div>}
