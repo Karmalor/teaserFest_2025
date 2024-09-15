@@ -26,18 +26,20 @@ export default function Home() {
         }`}
       >
         {user ? (
-          <Link
-            href="/applicantDashboard"
-            className="md:absolute flex top-[600px] md:top-[520px] md:right-24 mt-16 md:mt-8 mx-4 md:mx-0 right-0 border-[#FE3D02] border-2 border-r-8 px-6 z-30 bg-[#FFF0F0]"
-          >
-            <h1 className="text-black cursor-pointer hover:text-red-600">
-              {user && `Apply Now, ${user?.firstName}`}
-            </h1>
-          </Link>
+          <div className="flex justify-center">
+            <Link
+              href="/applicantDashboard"
+              className="md:absolute flex top-[600px] md:top-[520px] md:right-24 mt-8 mx-4 md:mx-0 right-0 border-[#FE3D02] border-2  px-6 z-30 bg-[#FFF0F0] justify-center rounded-sm"
+            >
+              <h1 className="text-black cursor-pointer hover:text-red-600">
+                {user && `Apply Now, ${user?.firstName}`}
+              </h1>
+            </Link>
+          </div>
         ) : (
           <Link
             href="/sign-in"
-            className="md:absolute flex top-[600px] md:top-[520px] md:right-24 mt-16 md:mt-8 mx-4 md:mx-0 right-0 border-[#FE3D02] border-2 border-r-8 px-6 z-30 bg-[#FFF0F0]"
+            className="md:absolute flex top-[600px] md:top-[520px] md:right-24 mt-8 mx-4 md:mx-0 right-0 border-[#FE3D02] border-2  px-6 z-30 bg-[#FFF0F0] justify-center rounded-sm"
           >
             <h1 className="text-black cursor-pointer hover:text-red-600">
               Apply Now
@@ -46,8 +48,8 @@ export default function Home() {
         )}
         <div className="md:flex justify-between  bg-[#FFF0F0] w-full">
           <div
-            className="pt-12
-         pb-200 z-20 relative mr-48 pointer-events-none"
+            className="pt-4 md:pt-12 pb-4
+         pb-200 z-20 relative md:mr-48 pointer-events-none"
           >
             <Image
               src="/TeaserFest Vintage Logo 2025_v3.png"
@@ -84,9 +86,14 @@ export default function Home() {
                 primaryColor="#FE3D02"
                 accentColor="#FFF0F0"
                 thumbnailTime={4}
-                style={{ aspectRatio: 16 / 9 }}
+                style={{
+                  aspectRatio: 16 / 9,
+                }}
               />
-              <button onClick={toggleModal} className="absolute top-2 left-2">
+              <button
+                onClick={toggleModal}
+                className="absolute top-2 left-2 opacity-30 hover:opacity-100"
+              >
                 <LuX size={24} color="#FFF0F0" />
               </button>
             </div>

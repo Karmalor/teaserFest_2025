@@ -52,7 +52,7 @@ const ApplicationsPage = () => {
   // }
 
   return (
-    <div className="flex justify-center  border-black border-2  m-12 mt-12 lg:mx-48 shadow-[8px_8px_0_0_#FE3D02]">
+    <div className="flex justify-center  border-black border-2  m-4 md:m-10 mt-10 lg:mx-48 shadow-[8px_8px_0_0_#FE3D02]">
       <div className="flex flex-col gap-2 items-start m-4 md:mx-48 mt-12">
         <h1 className="text-xl font-bold">Welcome {user?.fullName},</h1>
         <p>

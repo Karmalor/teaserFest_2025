@@ -14,6 +14,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Link from "next/link";
 import BackButton from "@/components/navigation/BackButton";
+import HomeButton from "@/components/navigation/HomeButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +37,10 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <div className="flex justify-between m-4 z-50 ">
-            <BackButton />
+            <div className="flex flex-row gap-2">
+              <BackButton />
+              <HomeButton />
+            </div>
             <UserButton />
           </div>
           {children}

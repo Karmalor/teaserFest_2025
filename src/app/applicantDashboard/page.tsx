@@ -32,7 +32,7 @@ const page = async () => {
   }
 
   return (
-    <div className="max-w-xl md:mx-auto py-4 px-2 md:p-10 text-black text-center  m-10  shadow-[8px_8px_0_0_#FE3D02] border-black border-2">
+    <div className="max-w-xl md:mx-auto py-4 px-0 md:p-8 text-black text-center  m-4 md:m-10 mt-10 shadow-[8px_8px_0_0_#FE3D02] border-black border-2">
       <div className="justify-center">
         <h1 className="text-4xl mb-10">Welcome {user.firstName}</h1>
 
@@ -41,11 +41,17 @@ const page = async () => {
             {applications.map((application, index) => (
               <div
                 key={index}
-                className="flex flex-row gap-4 p-4 items-center justify-between"
+                className="flex flex-row gap-4 p-2 items-center justify-between "
               >
-                <div className="flex flex-row gap-4 p-4 items-center">
-                  <h1>Application</h1>
-                  <h1>- {application.applicantResponse.nameOfAct}</h1>
+                <div className="flex flex-row gap-4 p-2">
+                  <h1>Application: </h1>
+                  {application.applicantResponse.nameOfAct ? (
+                    <h1 className="text-start">
+                      {application.applicantResponse.nameOfAct}
+                    </h1>
+                  ) : (
+                    "..."
+                  )}
                 </div>
                 {application.applicationSubmitted ? (
                   <h1 className="bg-gray-600 p-2 rounded-md text-white">
