@@ -685,7 +685,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
               <FormItem>
                 <FormLabel>
                   Would you like to submit this act for competition in the
-                  "Queen of the Striptease" Competition?
+                  &rsquo;Queen of the Striptease&rsquo; Competition?
                 </FormLabel>
                 <br />
                 <FormControl>
