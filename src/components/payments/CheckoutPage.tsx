@@ -10,6 +10,7 @@ import convertToSubcurrency from "@/lib/convertToSubcurrency";
 
 import { Button } from "../ui/button";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 const CheckoutPage = ({
   amount,
@@ -25,6 +26,7 @@ const CheckoutPage = ({
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const [currentUser, setCurrentUser] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     setCurrentUser(user?.id!);
@@ -66,7 +68,7 @@ const CheckoutPage = ({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `/applicantDashboard`,
+        return_url: `https://teaser-fest-2025.vercel.app/applicantDashboard`,
       },
     });
 
