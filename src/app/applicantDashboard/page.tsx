@@ -4,7 +4,7 @@ import { applicationOrdersTable, formSubmissionsTable } from "@/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 
 interface User {
   primaryEmailAddress?: { emailAddress?: string };
@@ -38,7 +38,8 @@ const page = async () => {
         formSubmissionsTable.applicant,
         user!.primaryEmailAddress!.emailAddress ?? ""
       )
-    );
+    )
+    .orderBy(formSubmissionsTable.createdAt);
 
   // console.log(user.primaryEmailAddress?.emailAddress);
 
@@ -53,32 +54,34 @@ const page = async () => {
 
         {applications ? (
           <div>
-            {applications.map((application: any, index) => (
-              <div
-                key={index}
-                className="flex flex-row gap-4 p-2 items-center justify-between "
-              >
-                <div className="flex flex-row gap-4 p-2">
-                  <h1>Application: </h1>
-                  {application.applicantResponse.nameOfAct ? (
-                    <h1 className="text-start">
-                      {application.applicantResponse.nameOfAct}
+            <Suspense fallback={<h1>Loading...</h1>}>
+              {applications.map((application: any, index) => (
+                <div
+                  key={index}
+                  className="flex flex-row gap-4 p-2 items-center justify-between "
+                >
+                  <div className="flex flex-row gap-4 p-2">
+                    <h1>Application: </h1>
+                    {application.applicantResponse.nameOfAct ? (
+                      <h1 className="text-start">
+                        {application.applicantResponse.nameOfAct}
+                      </h1>
+                    ) : (
+                      "..."
+                    )}
+                  </div>
+                  {application.applicationSubmitted ? (
+                    <h1 className="bg-gray-600 p-2 rounded-md text-white">
+                      Submitted
                     </h1>
                   ) : (
-                    "..."
+                    <Link href={`/application/${application.uuid}`}>
+                      <Button>Continue</Button>
+                    </Link>
                   )}
                 </div>
-                {application.applicationSubmitted ? (
-                  <h1 className="bg-gray-600 p-2 rounded-md text-white">
-                    Submitted
-                  </h1>
-                ) : (
-                  <Link href={`/application/${application.uuid}`}>
-                    <Button>Continue</Button>
-                  </Link>
-                )}
-              </div>
-            ))}
+              ))}
+            </Suspense>
             <div className="flex pt-8 justify-center">
               <Link href="/payment">
                 <Button>Click to purchase a Application submission</Button>
