@@ -31,7 +31,7 @@ export async function POST(request: Request) {
         buyerId: metadata?.buyerId || '',
         amount: amount ? (amount / 100).toString() : '0',
         applicationSubmitted: false,
-        createdAt: new Date()
+        createdAt: new Date().toISOString().toLocaleString(),
       }
 
       const application = {
@@ -44,8 +44,8 @@ export async function POST(request: Request) {
         createdAt: new Date().toISOString().toLocaleString(),
       }
 
-      console.log(order)
-      console.log(application)
+      // console.log(order)
+      // console.log(application)
   
       const newOrder = await createOrder(order)
       const newApplication = await createFormSubmission(application)

@@ -13,6 +13,8 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
     const { amount } = await request.json();
     const user = await currentUser()
 
+    console.log("Here is the current user id", user?.id)
+
     const paymentIntent = await stripe.paymentIntents.create({
 
       amount: amount,

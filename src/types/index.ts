@@ -32,7 +32,7 @@ export type CreateUserParams = {
     buyerId: string;
     amount: string;
     applicationSubmitted: boolean
-    createdAt: Date
+    createdAt: any
   };
   
   // export type GetOrdersByEventParams = {

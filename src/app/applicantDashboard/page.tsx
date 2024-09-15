@@ -40,7 +40,7 @@ const page = async () => {
       )
     );
 
-  console.log(user.primaryEmailAddress?.emailAddress);
+  // console.log(user.primaryEmailAddress?.emailAddress);
 
   if (!applications) {
     throw new Error("Applications not found");
