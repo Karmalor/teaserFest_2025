@@ -68,7 +68,7 @@ const CheckoutPage = ({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `http://localhost:3000/applicantDashboard`,
+        return_url: `https://teaser-fest-2025.vercel.app/applicantDashboard`,
       },
     });
 
