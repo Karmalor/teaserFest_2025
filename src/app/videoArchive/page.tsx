@@ -1,13 +1,15 @@
 "use client";
 
-import OurMuxPlayer from "@/components/shared/OurMuxPlayer";
 import ShowcaseSelector from "@/components/shared/ShowcaseSelector";
 import { Input } from "@/components/ui/input";
+import { useUser } from "@clerk/nextjs";
+import MuxPlayer from "@mux/mux-player-react/lazy";
 import Image from "next/image";
 import React, { useState } from "react";
 import { LuX } from "react-icons/lu";
 
-const videoArchive = async () => {
+const videoArchive = () => {
+  const user = useUser();
   const [modal, setModal] = useState(false);
 
   const toggleModal = () => {
@@ -232,7 +234,19 @@ const videoArchive = async () => {
               className="left-0 right-0 top-0 bottom-0 fixed z-20"
             ></div>
             <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full md:w-[80%]">
-              <OurMuxPlayer />
+              <MuxPlayer
+                theme="classic"
+                streamType="on-demand"
+                playbackId="VcdX65P6IlzEZyS6SUNcqGry1GZUm8padHHKpQ1CgdU"
+                metadataVideoTitle="TeaserFest 2025 Promo"
+                metadataViewerUserId={user?.primaryEmailAddress?.emailAddress}
+                primaryColor="#FE3D02"
+                accentColor="#FFF0F0"
+                thumbnailTime={4}
+                style={{
+                  aspectRatio: 16 / 9,
+                }}
+              />
               <button
                 onClick={toggleModal}
                 className="absolute top-2 left-2 opacity-30 hover:opacity-100"
