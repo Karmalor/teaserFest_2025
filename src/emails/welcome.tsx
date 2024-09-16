@@ -31,7 +31,7 @@ export const KoalaWelcomeEmail = ({
     </Preview>
     <Body style={main}>
       <Container style={container}>
-        <Image
+        <img
           src="https://utfs.io/f/664bd7b9-10c4-4224-8c35-4aa16da64930-qr0ytm.png"
           width={170}
           height={50}
