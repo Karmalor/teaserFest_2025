@@ -31,12 +31,14 @@ export const KoalaWelcomeEmail = ({
     </Preview>
     <Body style={main}>
       <Container style={container}>
-        <img
-          src="https://utfs.io/f/664bd7b9-10c4-4224-8c35-4aa16da64930-qr0ytm.png"
-          width={170}
-          alt="Teaser Fest Logo"
-          style={logo}
-        />
+        <div className="flex justify-center">
+          <img
+            src="https://utfs.io/f/664bd7b9-10c4-4224-8c35-4aa16da64930-qr0ytm.png"
+            width={170}
+            alt="Teaser Fest Logo"
+            style={logo}
+          />
+        </div>
         <Text style={paragraph}>Hi {userFirstname},</Text>
         <Text style={paragraph}>
           Thank you so much for applying to perform in Teaser Festival 2025.

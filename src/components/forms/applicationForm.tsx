@@ -54,10 +54,11 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const { toast } = useToast();
   const params = useParams();
   const [files, setFiles] = useState<File[]>([]);
-  const [uploadedImage, setUploadedImage] = useState();
+  const [uploadedImage, setUploadedImage] = useState("");
   const router = useRouter();
   const [musicUrl, setMusicUrl] = useState("");
   const [musicName, setMusicName] = useState("");
+  // const [imageUrl, setImageUrl] = useState("")
 
   useEffect(() => {
     const deata = JSON.parse(JSON.stringify(prefilledData));
@@ -411,10 +412,28 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                 <FormLabel>Photo</FormLabel>
                 <FormControl>
                   <div className="border-black border rounded-md flex items-center justify-center">
-                    <FileUploader
+                    {/* <FileUploader
                       onFieldChange={field.onChange}
                       imageUrl={field.value}
                       setFiles={setFiles}
+                    /> */}
+                    <UploadDropzone
+                      className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black"
+                      endpoint="imageUploader"
+                      onClientUploadComplete={(res) => {
+                        console.log("Files", res[0]);
+                        toast({
+                          title: "Congratulations!",
+                          description: (
+                            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                              <code className="text-white">
+                                Photo uploaded successfully
+                              </code>
+                            </pre>
+                          ),
+                        });
+                        setUploadedImage(res[0].url);
+                      }}
                     />
                   </div>
                 </FormControl>
