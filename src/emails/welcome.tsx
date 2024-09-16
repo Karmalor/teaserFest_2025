@@ -10,6 +10,7 @@ import {
   Section,
   Text,
 } from "@react-email/components";
+import Image from "next/image";
 import * as React from "react";
 
 interface KoalaWelcomeEmailProps {
@@ -30,11 +31,11 @@ export const KoalaWelcomeEmail = ({
     </Preview>
     <Body style={main}>
       <Container style={container}>
-        <Img
-          src={"/TeaserFest Vintage Logo 2025_v9.png"}
-          width="170"
-          height="50"
-          alt="Koala"
+        <Image
+          src="/TeaserFest Vintage Logo 2025_v9.png"
+          width={170}
+          height={50}
+          alt="Teaser Fest Logo"
           style={logo}
         />
         <Text style={paragraph}>Hi {userFirstname},</Text>
