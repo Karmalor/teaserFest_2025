@@ -3,13 +3,14 @@
 import ShowcaseSelector from "@/components/shared/ShowcaseSelector";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import MuxPlayer from "@mux/mux-player-react/lazy";
 import Image from "next/image";
 import React, { useState } from "react";
 import { LuX } from "react-icons/lu";
 
-const videoArchive = () => {
-  const { user } = useUser();
+const videoArchive = async () => {
+  const user = await currentUser();
 
   const [modal, setModal] = useState(false);
 
