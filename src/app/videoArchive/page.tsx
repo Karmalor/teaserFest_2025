@@ -239,7 +239,7 @@ const VideoArchive = () => {
                 streamType="on-demand"
                 playbackId="VcdX65P6IlzEZyS6SUNcqGry1GZUm8padHHKpQ1CgdU"
                 metadataVideoTitle="TeaserFest 2025 Promo"
-                metadataViewerUserId={user?.primaryEmailAddress?.emailAddress}
+                // metadataViewerUserId={user?.primaryEmailAddress?.emailAddress}
                 primaryColor="#FE3D02"
                 accentColor="#FFF0F0"
                 thumbnailTime={4}
