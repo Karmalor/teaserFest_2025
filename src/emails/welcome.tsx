@@ -31,7 +31,7 @@ export const KoalaWelcomeEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Img
-          src={`${baseUrl}/static/koala-logo.png`}
+          src={"/TeaserFest Vintage Logo 2025_v9.png"}
           width="170"
           height="50"
           alt="Koala"
@@ -39,30 +39,34 @@ export const KoalaWelcomeEmail = ({
         />
         <Text style={paragraph}>Hi {userFirstname},</Text>
         <Text style={paragraph}>
-          Welcome to Koala, the sales intelligence platform that helps you
-          uncover qualified leads and close deals faster.
+          Thank you so much for applying to perform in Teaser Festival 2025.
+          Your application is currently being reviewed and we let you know the
+          results by November 1st.
+        </Text>
+        <Text style={paragraph}>
+          You can stay up to date on details of the festival, as well as review
+          your application status and submit additional acts to the festival at
+          the link below:
         </Text>
         <Section style={btnContainer}>
-          <Button style={button} href="https://getkoala.com">
-            Get started
+          <Button style={button} href="https://teaser-fest-2025.vercel.app/">
+            More Details
           </Button>
         </Section>
         <Text style={paragraph}>
-          Best,
+          Sincerely,
           <br />
-          The Koala team
+          The Teaser Fest Crew
         </Text>
         <Hr style={hr} />
-        <Text style={footer}>
-          470 Noor Ave STE B #1148, South San Francisco, CA 94080
-        </Text>
+        <Text style={footer}>New Orleans, LA 70116</Text>
       </Container>
     </Body>
   </Html>
 );
 
 KoalaWelcomeEmail.PreviewProps = {
-  userFirstname: "Alan",
+  userFirstname: "Performer",
 } as KoalaWelcomeEmailProps;
 
 export default KoalaWelcomeEmail;
@@ -92,7 +96,7 @@ const btnContainer = {
 };
 
 const button = {
-  backgroundColor: "#5F51E8",
+  backgroundColor: "#000",
   borderRadius: "3px",
   color: "#fff",
   fontSize: "16px",
