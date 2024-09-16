@@ -8,7 +8,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { LuX } from "react-icons/lu";
 
-const videoArchive = () => {
+const VideoArchive = () => {
   const user = useUser();
   const [modal, setModal] = useState(false);
 
@@ -261,4 +261,4 @@ const videoArchive = () => {
   );
 };
 
-export default videoArchive;
+export default VideoArchive;
