@@ -418,7 +418,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                       setFiles={setFiles}
                     /> */}
                     <UploadDropzone
-                      className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black"
+                      className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black cursor-pointer"
                       endpoint="imageUploader"
                       onClientUploadComplete={(res) => {
                         console.log("Files", res[0]);
@@ -465,7 +465,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                   <div>
                     {!musicUrl ? (
                       <UploadDropzone
-                        className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black"
+                        className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black cursor-pointer"
                         endpoint="musicUploader"
                         onClientUploadComplete={(res) => {
                           console.log("Files", res[0]);
@@ -485,7 +485,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                       />
                     ) : (
                       <UploadButton
-                        className="ut-button:bg-black ut-button:ut-readying:bg-black ut-button:ut-uploading:bg-black"
+                        className="ut-button:bg-black ut-button:ut-readying:bg-black ut-button:ut-uploading:bg-black cursor-pointer"
                         endpoint="musicUploader"
                         onClientUploadComplete={(res) => {
                           console.log("Files", res[0]);
