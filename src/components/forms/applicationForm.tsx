@@ -411,7 +411,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
               <FormItem className="w-full">
                 <FormLabel>Photo</FormLabel>
                 <FormControl>
-                  <div className="border-black border rounded-md flex items-center justify-center">
+                  <div className="">
                     {/* <FileUploader
                       onFieldChange={field.onChange}
                       imageUrl={field.value}
