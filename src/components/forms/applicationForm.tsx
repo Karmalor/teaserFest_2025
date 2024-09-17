@@ -40,6 +40,7 @@ import { Textarea } from "../ui/textarea";
 import { Checkbox } from "../ui/checkbox";
 import { MusicUploader } from "../shared/MusicUploder";
 import Link from "next/link";
+import { LuMusic } from "react-icons/lu";
 
 // type ApplicationFormProps = {
 //   prefilledData:
@@ -99,8 +100,8 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const applicationId = params.applicationId as string;
 
   const form = useForm<z.infer<typeof applicantResponseSchema>>({
-    mode: "onBlur",
-    resolver: zodResolver(applicantResponseSchema.partial()),
+    mode: "onSubmit",
+    resolver: zodResolver(applicantResponseSchema),
     defaultValues: prefilledData,
   });
 
@@ -417,24 +418,50 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                       imageUrl={field.value}
                       setFiles={setFiles}
                     /> */}
-                    <UploadDropzone
-                      className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black cursor-pointer"
-                      endpoint="imageUploader"
-                      onClientUploadComplete={(res) => {
-                        console.log("Files", res[0]);
-                        toast({
-                          title: "Congratulations!",
-                          description: (
-                            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                              <code className="text-white">
-                                Photo uploaded successfully
-                              </code>
-                            </pre>
-                          ),
-                        });
-                        setUploadedImage(res[0].url);
-                      }}
-                    />
+                    {uploadedImage ? (
+                      <div
+                        className="mt-2 flex flex-col items-center justify-center rounded-lg border border-black text-center h-[245px] px-6 py-2 ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black cursor-pointer
+                      "
+                      >
+                        <div className="flex-center bg-dark-3 flex h-72 cursor-pointer flex-col overflow-hidden rounded-md bg-grey-50 items-center justify-center">
+                          <img
+                            src={uploadedImage}
+                            alt=""
+                            width={250}
+                            height={250}
+                          />
+                        </div>
+
+                        <Button
+                          type={"button"}
+                          onClick={() => setUploadedImage("")}
+                          className="group relative mt-4 mb-4 flex h-10 w-36 cursor-pointer items-center justify-center overflow-hidden rounded-md border-none text-base text-white after:transition-[width] after:duration-500 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 bg-black p-4 disabled:pointer-events-none"
+                          data-ut-element="button"
+                          data-state="ready"
+                        >
+                          Change Photo
+                        </Button>
+                      </div>
+                    ) : (
+                      <UploadDropzone
+                        className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black cursor-pointer"
+                        endpoint="imageUploader"
+                        onClientUploadComplete={(res) => {
+                          console.log("Files", res[0]);
+                          toast({
+                            title: "Congratulations!",
+                            description: (
+                              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                                <code className="text-white">
+                                  Photo uploaded successfully
+                                </code>
+                              </pre>
+                            ),
+                          });
+                          setUploadedImage(res[0].url);
+                        }}
+                      />
+                    )}
                   </div>
                 </FormControl>
                 <FormDescription>
@@ -455,12 +482,6 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Music</FormLabel>
-                <br />
-                <div className="pl-3">
-                  <a target="_blank" href={musicUrl} rel="noopener noreferrer">
-                    <h1 className="underline text-red-800">{musicName}</h1>
-                  </a>
-                </div>
                 <FormControl>
                   <div>
                     {!musicUrl ? (
@@ -484,25 +505,55 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                         }}
                       />
                     ) : (
-                      <UploadButton
-                        className="ut-button:bg-black ut-button:ut-readying:bg-black ut-button:ut-uploading:bg-black cursor-pointer"
-                        endpoint="musicUploader"
-                        onClientUploadComplete={(res) => {
-                          console.log("Files", res[0]);
-                          toast({
-                            title: "Congratulations!",
-                            description: (
-                              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                                <code className="text-white">
-                                  Music uploaded successfully
-                                </code>
-                              </pre>
-                            ),
-                          });
-                          setMusicUrl(res[0].url);
-                          setMusicName(res[0].name);
-                        }}
-                      />
+                      // <UploadButton
+                      //   className="ut-button:bg-black ut-button:ut-readying:bg-black ut-button:ut-uploading:bg-black cursor-pointer"
+                      //   endpoint="musicUploader"
+                      //   onClientUploadComplete={(res) => {
+                      //     console.log("Files", res[0]);
+                      //     toast({
+                      //       title: "Congratulations!",
+                      //       description: (
+                      //         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                      //           <code className="text-white">
+                      //             Music uploaded successfully
+                      //           </code>
+                      //         </pre>
+                      //       ),
+                      //     });
+                      //     setMusicUrl(res[0].url);
+                      //     setMusicName(res[0].name);
+                      //   }}
+                      // />
+                      <div
+                        className="mt-2 flex flex-col items-center justify-center rounded-lg border border-black text-center h-[245px] px-6 py-2 ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black cursor-pointer
+                      "
+                      >
+                        <div className="flex-center bg-dark-3 flex h-72 cursor-pointer flex-col overflow-hidden rounded-md bg-grey-50 items-center justify-center">
+                          <div>
+                            <a
+                              target="_blank"
+                              href={musicUrl}
+                              rel="noopener noreferrer"
+                              className="flex flex-col items-center gap-4"
+                            >
+                              <LuMusic size={32} />
+                              <h1 className="underline text-red-800 text-xl">
+                                {musicName}
+                              </h1>
+                            </a>
+                          </div>
+                        </div>
+
+                        <Button
+                          type={"button"}
+                          onClick={() => setMusicUrl("")}
+                          className="group relative mb-8 flex h-10 w-36 cursor-pointer items-center justify-center overflow-hidden rounded-md border-none text-base text-white after:transition-[width] after:duration-500 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 bg-black p-4 disabled:pointer-events-none"
+                          data-ut-element="button"
+                          data-state="ready"
+                        >
+                          Change Music
+                        </Button>
+                      </div>
                     )}
                   </div>
                 </FormControl>
