@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/nextjs";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -101,7 +101,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
 
   const form = useForm<z.infer<typeof applicantResponseSchema>>({
     mode: "onSubmit",
-    resolver: zodResolver(applicantResponseSchema.partial()),
+    resolver: zodResolver(applicantResponseSchema),
     defaultValues: prefilledData,
   });
 
@@ -407,8 +407,27 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
 
           <FormField
             control={form.control}
-            name="imageUrl"
+            name="descriptionOfAct"
             render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description Of the Act</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="enter tech notes..."
+                    {...field}
+                    className="border border-black"
+                  />
+                </FormControl>
+                <FormDescription>optional</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={() => (
               <FormItem className="w-full">
                 <FormLabel>Photo</FormLabel>
                 <FormControl>
@@ -424,12 +443,14 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                       "
                       >
                         <div className="flex-center bg-dark-3 flex h-72 cursor-pointer flex-col overflow-hidden rounded-md bg-grey-50 items-center justify-center">
-                          <img
-                            src={uploadedImage}
-                            alt=""
-                            width={250}
-                            height={250}
-                          />
+                          <Suspense fallback={<h1>Loading Image...</h1>}>
+                            <img
+                              src={uploadedImage}
+                              alt=""
+                              width={250}
+                              height={250}
+                            />
+                          </Suspense>
                         </div>
 
                         <Button
@@ -479,13 +500,14 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
           <FormField
             control={form.control}
             name="musicUrl"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Music</FormLabel>
                 <FormControl>
                   <div>
                     {!musicUrl ? (
                       <UploadDropzone
+                        // {...field}
                         className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black cursor-pointer"
                         endpoint="musicUploader"
                         onClientUploadComplete={(res) => {
