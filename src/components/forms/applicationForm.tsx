@@ -101,7 +101,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
 
   const form = useForm<z.infer<typeof applicantResponseSchema>>({
     mode: "onSubmit",
-    resolver: zodResolver(applicantResponseSchema),
+    resolver: zodResolver(applicantResponseSchema.partial()),
     defaultValues: prefilledData,
   });
 
@@ -246,14 +246,14 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
 
     toast({
       title: "You submitted your application!",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
-          <code className="text-white">
-            `${JSON.stringify(formData, null, 2)}
-          </code>
-        </pre>
-      ),
+      // description: (
+      //   <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+      //     {/* <code className="text-white">{JSON.stringify(data, null, 2)}</code> */}
+      //     {/* <code className="text-white">
+      //       `${JSON.stringify(formData, null, 2)}
+      //     </code> */}
+      //   </pre>
+      // ),
     });
 
     router.push("/applicantDashboard");
