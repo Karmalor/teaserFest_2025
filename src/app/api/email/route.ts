@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     await resend.emails.send({
         from: 'info@teaserfest.com',
         to: email,
-        subject: 'hello world',
+        subject: 'Thank you for your submission',
         react: KoalaWelcomeEmail({userFirstname: firstName})
       });
 

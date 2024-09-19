@@ -10,7 +10,6 @@ import {
   Section,
   Text,
 } from "@react-email/components";
-import Image from "next/image";
 import * as React from "react";
 
 interface KoalaWelcomeEmailProps {
@@ -31,7 +30,7 @@ export const KoalaWelcomeEmail = ({
     </Preview>
     <Body style={main}>
       <Container style={container}>
-        <div className="flex justify-center">
+        <div className="flex justify-center content-center">
           <img
             src="https://utfs.io/f/664bd7b9-10c4-4224-8c35-4aa16da64930-qr0ytm.png"
             width={170}
@@ -42,8 +41,8 @@ export const KoalaWelcomeEmail = ({
         <Text style={paragraph}>Hi {userFirstname},</Text>
         <Text style={paragraph}>
           Thank you so much for applying to perform in Teaser Festival 2025.
-          Your application is currently being reviewed and we let you know the
-          results by November 1st.
+          Your application is currently being reviewed and we will begin sending
+          decision results by November 1st.
         </Text>
         <Text style={paragraph}>
           You can stay up to date on details of the festival, as well as review
