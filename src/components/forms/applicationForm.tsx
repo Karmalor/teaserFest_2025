@@ -807,13 +807,6 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
           >
             Submit
           </Button>
-          <Button
-            type="button"
-            onClick={() => (form.getValues(), console.log("oh", values))}
-            className="ml-2"
-          >
-            Wow!
-          </Button>
         </form>
       </Form>
     </div>
