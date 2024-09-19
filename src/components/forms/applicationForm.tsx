@@ -80,7 +80,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
             <br />
             <code className="text-white">{error.message}</code>
             <br />
-            <code className="text-white">File Must be less than 4MB</code>
+            <code className="text-white">File Must be less than 16MB</code>
           </pre>
         ),
       });
@@ -445,12 +445,18 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                       >
                         <div className="flex-center bg-dark-3 flex h-72 cursor-pointer flex-col overflow-hidden rounded-md bg-grey-50 items-center justify-center">
                           <Suspense fallback={<h1>Loading Image...</h1>}>
-                            <img
-                              src={uploadedImage}
-                              alt=""
-                              width={250}
-                              height={250}
-                            />
+                            <a
+                              target="_blank"
+                              href={uploadedImage}
+                              rel="noopener noreferrer"
+                            >
+                              <img
+                                src={uploadedImage}
+                                alt=""
+                                width={250}
+                                height={250}
+                              />
+                            </a>
                           </Suspense>
                         </div>
 
