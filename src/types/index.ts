@@ -31,7 +31,6 @@ export type CreateUserParams = {
     stripeId: string;
     buyerId: string;
     amount: string;
-    applicationSubmitted: boolean
     createdAt: any
   };
   

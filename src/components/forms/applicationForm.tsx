@@ -41,6 +41,7 @@ import { Checkbox } from "../ui/checkbox";
 import { MusicUploader } from "../shared/MusicUploder";
 import Link from "next/link";
 import { LuMusic } from "react-icons/lu";
+import { metadata } from "@/app/layout";
 
 // type ApplicationFormProps = {
 //   prefilledData:
@@ -427,7 +428,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
           <FormField
             control={form.control}
             name="imageUrl"
-            render={() => (
+            render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel>Photo</FormLabel>
                 <FormControl>
@@ -464,33 +465,35 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                         </Button>
                       </div>
                     ) : (
-                      <UploadDropzone
-                        className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black cursor-pointer"
-                        endpoint="imageUploader"
-                        onClientUploadComplete={(res) => {
-                          console.log("Files", res[0]);
-                          toast({
-                            title: "Congratulations!",
-                            description: (
-                              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                                <code className="text-white">
-                                  Photo uploaded successfully
-                                </code>
-                              </pre>
-                            ),
-                          });
-                          setUploadedImage(res[0].url);
-                        }}
-                      />
+                      <div>
+                        <UploadDropzone
+                          className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black cursor-pointer"
+                          endpoint="imageUploader"
+                          onClientUploadComplete={(res) => {
+                            toast({
+                              title: "Congratulations!",
+                              description: (
+                                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                                  <code className="text-white">
+                                    Photo uploaded successfully
+                                  </code>
+                                </pre>
+                              ),
+                            });
+                            form.setValue("imageUrl", `${res[0].url}`);
+                            setUploadedImage(res[0].url);
+                          }}
+                        />
+                      </div>
                     )}
                   </div>
                 </FormControl>
                 <FormDescription>
-                  {files.length > 0 && (
+                  {/* {files.length > 0 && (
                     <div>
                       <Button onClick={handleUpload}>Upload Image</Button>
                     </div>
-                  )}
+                  )} */}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -500,7 +503,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
           <FormField
             control={form.control}
             name="musicUrl"
-            render={() => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Music</FormLabel>
                 <FormControl>
@@ -511,7 +514,6 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                         className="ut-button:bg-black ut-label:text-black ut-ready:border-solid ut-ready:border-black ut-uploading:border-solid ut-uploading:border-black cursor-pointer"
                         endpoint="musicUploader"
                         onClientUploadComplete={(res) => {
-                          console.log("Files", res[0]);
                           toast({
                             title: "Congratulations!",
                             description: (
@@ -522,6 +524,8 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                               </pre>
                             ),
                           });
+                          form.setValue("musicUrl", res[0].url);
+                          form.setValue("musicName", `${res[0].name}`);
                           setMusicUrl(res[0].url);
                           setMusicName(res[0].name);
                         }}
@@ -568,7 +572,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
 
                         <Button
                           type={"button"}
-                          onClick={() => setMusicUrl("")}
+                          onClick={() => (setMusicUrl(""), setMusicName(""))}
                           className="group relative mb-8 flex h-10 w-36 cursor-pointer items-center justify-center overflow-hidden rounded-md border-none text-base text-white after:transition-[width] after:duration-500 focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2 bg-black p-4 disabled:pointer-events-none"
                           data-ut-element="button"
                           data-state="ready"
@@ -802,6 +806,13 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
             // onClick={handleSubmitForm}
           >
             Submit
+          </Button>
+          <Button
+            type="button"
+            onClick={() => (form.getValues(), console.log("oh", values))}
+            className="ml-2"
+          >
+            Wow!
           </Button>
         </form>
       </Form>

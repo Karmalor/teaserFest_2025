@@ -30,7 +30,6 @@ export async function POST(request: Request) {
         stripeId: id,
         buyerId: metadata?.buyerId || '',
         amount: amount ? (amount / 100).toString() : '0',
-        applicationSubmitted: false,
         createdAt: new Date().toISOString().toLocaleString(),
       }
 

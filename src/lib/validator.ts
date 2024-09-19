@@ -13,8 +13,12 @@ export const applicantResponseSchema = z.object({
     preferredPronouns: z.string().optional(),
     nameOfAct: z.string().min(3),
     descriptionOfAct: z.string().optional(),
-    imageUrl: z.string(),
-    musicUrl: z.string(),
+    imageUrl: z.string().min(1, {
+      message: "Don't forget to add a photo",
+    }),
+    musicUrl: z.string().min(1, {
+      message: "Don't forget to include your music",
+    }),
     musicName: z.string().optional(),
     performanceVideo: z.string().min(3),
     techNotes: z.string().optional(),

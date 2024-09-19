@@ -24,7 +24,6 @@ export  const formSubmissionsTable = pgTable('form_submissions', {
 
 export const applicationOrdersTable = pgTable("application_orders", {
   stripeId: text('id').primaryKey(),
-  applicationSubmitted: boolean('applicationSubmitted').default(false),
   amount: text('amount'),
   buyerId: text('buyerId').references(() => usersTable.clerkId),
   createdAt: date('createdAt')
