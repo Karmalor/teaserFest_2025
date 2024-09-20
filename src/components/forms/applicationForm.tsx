@@ -61,12 +61,15 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const [musicUrl, setMusicUrl] = useState("");
   const [musicName, setMusicName] = useState("");
   // const [imageUrl, setImageUrl] = useState("")
+  const [disabled, setDisabled] = useState();
 
   useEffect(() => {
     const deata = JSON.parse(JSON.stringify(prefilledData));
     setUploadedImage(deata.imageUrl);
     setMusicName(deata.musicName);
     setMusicUrl(deata.musicUrl);
+
+    setDisabled(deata.applicationSubmitted);
   }, [prefilledData]);
 
   const { startUpload } = useUploadThing("imageUploader", {
@@ -310,7 +313,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-6">
-          <fieldset disabled>
+          <fieldset disabled={disabled}>
             <FormField
               control={form.control}
               name="stageName"
