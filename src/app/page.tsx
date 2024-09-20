@@ -38,14 +38,16 @@ export default function Home() {
               </Link>
             </div>
           ) : (
-            <Link
-              href="/sign-in"
-              className="md:absolute flex top-[600px] md:top-[520px] md:right-24 mt-8 mx-4 md:mx-0 right-0 border-[#FE3D02] border-2  px-6 z-30 bg-[#FFF0F0] justify-center rounded-sm"
-            >
-              <h1 className="text-black cursor-pointer hover:text-red-600">
-                Apply Now
-              </h1>
-            </Link>
+            <div className="flex justify-center">
+              <Link
+                href="/sign-in"
+                className="md:absolute flex top-[600px] md:top-[520px] md:right-24 mt-8 mx-4 md:mx-0 right-0 border-[#FE3D02] border-2  px-6 z-30 bg-[#FFF0F0] justify-center rounded-sm"
+              >
+                <h1 className="text-black cursor-pointer hover:text-red-600">
+                  Apply Now
+                </h1>
+              </Link>
+            </div>
           )}
           <div className="md:flex justify-between  bg-[#FFF0F0] w-full">
             <div
