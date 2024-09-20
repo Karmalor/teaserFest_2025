@@ -29,6 +29,10 @@ import { CreateApplicationParams } from "@/types";
 const ApplicationsPage = () => {
   const { user } = useUser();
   const [prefilledData, setPrefilledData] = useState<{} | null>(null);
+  const [applicationSubmitted, setApplicationSubmitted] = useState<{} | null>(
+    null
+  );
+
   const params = useParams();
 
   const applicationId = params.applicationId as string;
@@ -39,6 +43,7 @@ const ApplicationsPage = () => {
       //   then((res) => res.json());
 
       setPrefilledData(result[0].applicantResponse);
+      setApplicationSubmitted(result[0].applicationSubmitted);
     };
     fetchData();
   }, []);
@@ -60,7 +65,10 @@ const ApplicationsPage = () => {
           can leave this page and edit the information before submitting
         </p>
         {prefilledData ? (
-          <ApplicationForm prefilledData={prefilledData} />
+          <ApplicationForm
+            prefilledData={prefilledData}
+            applicationSubmitted={applicationSubmitted}
+          />
         ) : (
           <div>Loading...</div>
         )}

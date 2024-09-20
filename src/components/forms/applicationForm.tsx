@@ -51,7 +51,10 @@ import { metadata } from "@/app/layout";
 //       }
 //     | undefined;
 // };
-const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
+const ApplicationForm = (
+  { prefilledData }: { prefilledData: {} },
+  { applicationSubmitted }: { applicationSubmitted: boolean }
+) => {
   const { user } = useUser();
   const { toast } = useToast();
   const params = useParams();
@@ -61,7 +64,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
   const [musicUrl, setMusicUrl] = useState("");
   const [musicName, setMusicName] = useState("");
   // const [imageUrl, setImageUrl] = useState("")
-  const [disabled, setDisabled] = useState();
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     const deata = JSON.parse(JSON.stringify(prefilledData));
@@ -69,9 +72,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     setMusicName(deata.musicName);
     setMusicUrl(deata.musicUrl);
 
-    console.log(deata.applicationSubmitted);
-    setDisabled(deata.applicationSubmitted);
-    console.log("Disabled?", disabled);
+    setDisabled(applicationSubmitted);
   }, [prefilledData]);
 
   const { startUpload } = useUploadThing("imageUploader", {
