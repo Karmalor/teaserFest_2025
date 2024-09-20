@@ -337,6 +337,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                 <FormLabel>Legal name</FormLabel>
                 <FormControl>
                   <Input
+                    readOnly
                     placeholder="enter legal name..."
                     {...field}
                     className="border border-black"
