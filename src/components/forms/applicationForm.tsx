@@ -51,14 +51,17 @@ import { metadata } from "@/app/layout";
 //       }
 //     | undefined;
 // };
-const ApplicationForm = (
-  { prefilledData }: { prefilledData: {} },
-  { applicationSubmitted }: { applicationSubmitted: boolean }
-) => {
+const ApplicationForm = ({
+  prefilledData,
+  applicationSubmitted,
+}: {
+  prefilledData: {};
+  applicationSubmitted: any;
+}) => {
   const { user } = useUser();
   const { toast } = useToast();
   const params = useParams();
-  const [files, setFiles] = useState<File[]>([]);
+  // const [files, setFiles] = useState<File[]>([]);
   const [uploadedImage, setUploadedImage] = useState("");
   const router = useRouter();
   const [musicUrl, setMusicUrl] = useState("");
@@ -73,6 +76,7 @@ const ApplicationForm = (
     setMusicUrl(deata.musicUrl);
 
     setDisabled(applicationSubmitted);
+    console.log(applicationSubmitted);
   }, [prefilledData]);
 
   const { startUpload } = useUploadThing("imageUploader", {
