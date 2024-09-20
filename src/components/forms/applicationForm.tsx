@@ -70,6 +70,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     setMusicUrl(deata.musicUrl);
 
     setDisabled(deata.applicationSubmitted);
+    console.log("Disabled?", disabled);
   }, [prefilledData]);
 
   const { startUpload } = useUploadThing("imageUploader", {
@@ -142,45 +143,45 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     };
   }, [watch]);
 
-  const handleUpload = async (imageUrl: any) => {
-    imageUrl.preventDefault();
-    let uploadedImageUrl = imageUrl;
+  // const handleUpload = async (imageUrl: any) => {
+  //   imageUrl.preventDefault();
+  //   let uploadedImageUrl = imageUrl;
 
-    if (files.length > 0) {
-      const uploadedImages = await startUpload(files);
+  //   if (files.length > 0) {
+  //     const uploadedImages = await startUpload(files);
 
-      if (!uploadedImages) return;
+  //     if (!uploadedImages) return;
 
-      console.log("uploaded image", uploadedImages);
+  //     console.log("uploaded image", uploadedImages);
 
-      uploadedImageUrl = uploadedImages[0].url;
-      // updateFormSubmission(applicationId);
+  //     uploadedImageUrl = uploadedImages[0].url;
+  //     // updateFormSubmission(applicationId);
 
-      console.log("uploaded image URL", uploadedImageUrl);
-      setUploadedImage(uploadedImageUrl);
+  //     console.log("uploaded image URL", uploadedImageUrl);
+  //     setUploadedImage(uploadedImageUrl);
 
-      console.log("doobie", uploadedImage);
+  //     console.log("doobie", uploadedImage);
 
-      const formData = {
-        ...values,
-        applicantResponse: {
-          ...values,
-          imageUrl: uploadedImage,
-        },
-      };
+  //     const formData = {
+  //       ...values,
+  //       applicantResponse: {
+  //         ...values,
+  //         imageUrl: uploadedImage,
+  //       },
+  //     };
 
-      updateFormSubmission(applicationId, formData);
+  //     updateFormSubmission(applicationId, formData);
 
-      toast({
-        title: "Congratulations!",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">Image uploaded successfully</code>
-          </pre>
-        ),
-      });
-    }
-  };
+  //     toast({
+  //       title: "Congratulations!",
+  //       description: (
+  //         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+  //           <code className="text-white">Image uploaded successfully</code>
+  //         </pre>
+  //       ),
+  //     });
+  //   }
+  // };
 
   // const handleMusicUpload = async (musicUrl: any) => {
   //   musicUrl.preventDefault();
