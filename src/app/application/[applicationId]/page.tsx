@@ -26,7 +26,7 @@ import {
 import ApplicationForm from "@/components/forms/applicationForm";
 import { CreateApplicationParams } from "@/types";
 
-const ApplicationsPage = async () => {
+const ApplicationsPage = () => {
   const { user } = useUser();
   const [prefilledData, setPrefilledData] = useState<{} | null>(null);
   const params = useParams();
