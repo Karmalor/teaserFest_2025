@@ -310,6 +310,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-6">
+          {/* <fieldset disabled> */}
           <FormField
             control={form.control}
             name="stageName"
@@ -337,7 +338,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
                 <FormLabel>Legal name</FormLabel>
                 <FormControl>
                   <Input
-                    readOnly
+                    disabled
                     placeholder="enter legal name..."
                     {...field}
                     className="border border-black"
@@ -814,6 +815,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
           >
             Submit
           </Button>
+          {/* </fieldset> */}
         </form>
       </Form>
     </div>
