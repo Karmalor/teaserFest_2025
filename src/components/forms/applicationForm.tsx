@@ -69,6 +69,7 @@ const ApplicationForm = ({ prefilledData }: { prefilledData: {} }) => {
     setMusicName(deata.musicName);
     setMusicUrl(deata.musicUrl);
 
+    console.log(deata.applicationSubmitted);
     setDisabled(deata.applicationSubmitted);
     console.log("Disabled?", disabled);
   }, [prefilledData]);
