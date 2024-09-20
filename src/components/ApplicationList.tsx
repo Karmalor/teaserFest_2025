@@ -45,7 +45,9 @@ const ApplicationList = ({ applications }: { applications: any }) => {
             )}
           </div>
           {application.applicationSubmitted ? (
-            <h1 className="bg-gray-600 p-2 rounded-md text-white">Submitted</h1>
+            <Link href={`/application/${application.uuid}`}>
+              <Button className="bg-gray-500">Submitted</Button>
+            </Link>
           ) : (
             <Link href={`/application/${application.uuid}`}>
               <Button>Continue</Button>

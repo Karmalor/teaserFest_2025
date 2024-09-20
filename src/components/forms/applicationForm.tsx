@@ -320,7 +320,7 @@ const ApplicationForm = ({
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-6">
-          <fieldset disabled={disabled}>
+          <fieldset disabled={disabled} className="space-y-8">
             <FormField
               control={form.control}
               name="stageName"
