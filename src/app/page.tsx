@@ -86,7 +86,7 @@ export default function Home() {
                 <MuxPlayer
                   theme="classic"
                   streamType="on-demand"
-                  playbackId="VcdX65P6IlzEZyS6SUNcqGry1GZUm8padHHKpQ1CgdU"
+                  playbackId="00OrmNcvbtZY75bM800Ae00t3dGqyDG00DRsdab4NO6f45s"
                   metadataVideoTitle="TeaserFest 2025 Promo"
                   metadataViewerUserId={user?.primaryEmailAddress?.emailAddress}
                   primaryColor="#FE3D02"
