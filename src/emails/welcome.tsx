@@ -50,7 +50,7 @@ export const KoalaWelcomeEmail = ({
           the link below:
         </Text>
         <Section style={btnContainer}>
-          <Button style={button} href="https://teaser-fest-2025.vercel.app/">
+          <Button style={button} href="https://https://www.teaserfest.com/">
             More Details
           </Button>
         </Section>
