@@ -11,7 +11,6 @@ export const createUser = async (user: CreateUserParams) => {
         const newUser = await db.insert(usersTable).values(user);
 
         return JSON.parse(JSON.stringify(newUser))
-
     } catch (error) {
         handleError(error)
     }
