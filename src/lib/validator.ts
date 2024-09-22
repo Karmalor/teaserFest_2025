@@ -20,7 +20,7 @@ export const applicantResponseSchema = z.object({
       message: "Don't forget to include your music",
     }),
     musicName: z.string().optional(),
-    performanceVideo: z.string().min(3).includes('www.', {message: 'Must be a link to a video'}),
+    performanceVideo: z.string().min(3, {message: 'Must be a link to a video'}),
     techNotes: z.string().optional(),
     lightingRequests: z.string().optional(),
     soundCues: z.string().optional(),
