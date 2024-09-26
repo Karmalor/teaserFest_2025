@@ -71,7 +71,9 @@ export default function Home() {
             </div>
           </div>
           <div className="flex justify-center absolute w-full bottom-4 z-50 pointer-events-none">
-            <h1 style={{ textShadow: "#FFF0F0 1px 1px 0px" }}>- 2025 -</h1>
+            <h1 style={{ textShadow: "#FFF0F0 1px 1px 0px" }}>
+              - January 16th-19th, 2025 -
+            </h1>
           </div>
         </div>
 

@@ -40,7 +40,7 @@ const ApplicationsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result: any = await getFormSubmissionById(applicationId);
-      //   then((res) => res.json());
+      // .then((res) => res.json());
 
       setPrefilledData(result[0].applicantResponse);
       setApplicationSubmitted(result[0].applicationSubmitted);
