@@ -70,15 +70,15 @@ const page = async () => {
           </p>
           <br />
           <p>
-            Below you find the applications to be a performer in the festival.
-            You may purchase and application for $25 at the link below. You may
-            purchase multiple applications if you wish to submit multiple acts
-            to the festival. The showcases cover a wide range of styles and
-            themes, from classic live-jazz, to prop-heavy variety, to fetish.
-            Teaser Festival welcomes a wide-array of styles and acts. Your
-            application progress will be saved to your account as you work on
-            it, so you are free to return to this page later to review, finish,
-            and submit at your leisure.
+            Below is the Teaser Festival Application button. You may purchase an
+            application for $25 at the link below. You may purchase multiple
+            applications if you wish to submit multiple acts to the festival.
+            The showcases cover a wide range of styles and themes, from classic
+            live-jazz, to prop-heavy variety, to fetish. Teaser Festival
+            welcomes a wide-array of styles and acts. Your application progress
+            will be saved to your account as you work on it, so you are free to
+            return to this page later to review, finish, and submit at your
+            leisure.
           </p>
           <br />
           <p className="font-black">
