@@ -12,13 +12,14 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { dark, neobrutalism } from "@clerk/themes";
-import { LuArrowLeft } from "react-icons/lu";
+import { LuArrowLeft, LuMail } from "react-icons/lu";
 
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Link from "next/link";
 import BackButton from "@/components/navigation/BackButton";
 import HomeButton from "@/components/navigation/HomeButton";
+import Footer from "@/components/navigation/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,13 +51,20 @@ export default function RootLayout({
       <html lang="en">
         <body className={space.className}>
           <div className="flex justify-between m-4 z-50 ">
-            <div className="flex flex-row gap-2">
+            <div className="flex justify-between gap-2 m-4 z-50 ">
               <BackButton />
               <HomeButton />
             </div>
-            <UserButton />
+            <div className="flex items-center justify-between gap-4 m-4 z-50 ">
+              <a href="mailto: info@teaserfest.com">
+                <LuMail />
+              </a>
+
+              <UserButton />
+            </div>
           </div>
           {children}
+          {/* <Footer /> */}
           <Toaster />
         </body>
       </html>
