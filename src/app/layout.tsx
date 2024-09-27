@@ -50,8 +50,8 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={space.className}>
-          <div className="flex justify-between m-4 z-50 ">
-            <div className="flex justify-between gap-2 m-4 z-50 ">
+          <div className="flex items-center justify-between m-4 z-50 ">
+            <div className="flex items-center justify-between gap-2 m-4 z-50 ">
               <BackButton />
               <HomeButton />
             </div>
