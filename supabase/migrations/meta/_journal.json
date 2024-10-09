@@ -64,6 +64,13 @@
       "when": 1725383366171,
       "tag": "0008_wide_stone_men",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1728348920706,
+      "tag": "0009_wonderful_beast",
+      "breakpoints": true
     }
   ]
 }

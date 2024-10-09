@@ -1,4 +1,4 @@
-import { pgTable, text, boolean, uuid, json, jsonb, date } from 'drizzle-orm/pg-core';
+import { pgTable, text, boolean, uuid, json, jsonb, date, integer } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users_table', {
   clerkId: text('id').primaryKey(),
@@ -28,6 +28,44 @@ export const applicationOrdersTable = pgTable("application_orders", {
   buyerId: text('buyerId').references(() => usersTable.clerkId),
   createdAt: date('createdAt')
 })
+
+export const ticketOrdersTable = pgTable("ticket_orders", {
+  stripeId: text('id').primaryKey(),
+  amount: text('amount'),
+  buyerId: text('buyerId').references(() => usersTable.clerkId),
+  createdAt: date('createdAt'),
+  
+})
+
+export const ticketTypesTable = pgTable("types", {
+  uuid: uuid('id').primaryKey(),
+  showcase: text('showcase').references(() => showcaseTable.title),
+  tier: text('tier') ,
+  price: text('price'),
+  capacity: integer('capacity'),
+})
+
+export const showcaseTable = pgTable("showcase", {
+  uuid: uuid('id').primaryKey(),
+  title: text('title'),
+  description: text('description'),
+  location: text('location'),
+  imageUrl: text('photo'),
+  startDateTime: date('startDateTime'),
+  endDateTime: date('endDateTime'),
+  tickets: text('tickets'),
+  url: text('url'),
+  createdAt: date('createdAt')
+})
+
+export const ticketsTable = pgTable("showcase", {
+  uuid: uuid('id').primaryKey(),
+  tier: text('tier').references(() => ticketTypesTable.tier),
+  showcase: text('showcase').references(() => ticketTypesTable.showcase),
+  ticketHolder:  text('ticketHolder').references(() => usersTable.clerkId),
+  isComp: boolean('isComp').default(false),
+})
+
 
 export type InsertUser = typeof usersTable.$inferInsert;
 export type SelectUser = typeof usersTable.$inferSelect;

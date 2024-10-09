@@ -18,6 +18,7 @@ const nextConfig = {
         port: "",
       },
     ],
+    domains: ["utfs.io"],
   },
 };
 
