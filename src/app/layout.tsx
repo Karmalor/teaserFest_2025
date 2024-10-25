@@ -59,8 +59,12 @@ export default function RootLayout({
               <a href="mailto: info@teaserfest.com">
                 <LuMail />
               </a>
-
-              <UserButton />
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
             </div>
           </div>
           {children}

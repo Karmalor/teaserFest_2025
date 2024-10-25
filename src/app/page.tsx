@@ -44,7 +44,7 @@ export default function Home() {
                 className="md:absolute flex top-[600px] md:top-[520px] md:right-24 mt-8 mx-4 md:mx-0 right-0 border-[#FE3D02] border-2  px-6 z-30 bg-[#FFF0F0] justify-center rounded-sm"
               >
                 <h1 className="text-black cursor-pointer hover:text-red-600">
-                  Apply Now
+                  Apply to Perform Now
                 </h1>
               </Link>
             </div>
@@ -71,9 +71,14 @@ export default function Home() {
             </div>
           </div>
           <div className="flex justify-center absolute w-full bottom-4 z-50 pointer-events-none">
-            <h1 style={{ textShadow: "#FFF0F0 1px 1px 0px" }}>
-              - January 16th-19th, 2025 -
-            </h1>
+            <div className="flex flex-col justify-center items-center">
+              <h1 style={{ textShadow: "#FFF0F0 1px 1px 0px" }}>
+                - Tickets on sale soon! -
+              </h1>
+              <h1 style={{ textShadow: "#FFF0F0 1px 1px 0px" }}>
+                - January 16th-19th, 2025 -
+              </h1>
+            </div>
           </div>
         </div>
 
