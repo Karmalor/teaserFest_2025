@@ -1,4 +1,7 @@
-import { pgTable, text, boolean, uuid, json, jsonb, date, integer } from 'drizzle-orm/pg-core';
+import { pgTable, text, boolean, uuid, json, jsonb, date, integer, timestamp, pgEnum } from 'drizzle-orm/pg-core';
+import { array } from 'zod';
+
+export const rolesEnum = pgEnum("role", ["user", "admin"]);
 
 export const usersTable = pgTable('users_table', {
   clerkId: text('id').primaryKey(),
@@ -7,6 +10,7 @@ export const usersTable = pgTable('users_table', {
   firstName: text('firstName'),
   lastName: text('lastName'),
   photo: text('imageUrl'),
+  role: rolesEnum('role').default("user"),
   // orders: integer("orders").references(() => applicationOrders.id)
 });
 
@@ -15,8 +19,7 @@ export  const formSubmissionsTable = pgTable('form_submissions', {
     applicant: text('applicant').references(() => usersTable.clerkId),
     stageName: text('stageName'),
     tagline: text('tagline'),
-    // imageUrl: text('photo'),
-    applicantResponse: jsonb('applicantResponse').notNull(),
+    applicantResponse: jsonb('applicantResponse').default({}),
     applicationSubmitted: boolean('applicationSubmitted').default(false),
     submittedAt: date('submittedAt'),
     createdAt: date('createdAt')
@@ -29,20 +32,25 @@ export const applicationOrdersTable = pgTable("application_orders", {
   createdAt: date('createdAt')
 })
 
-export const ticketOrdersTable = pgTable("ticket_orders", {
-  stripeId: text('id').primaryKey(),
-  amount: text('amount'),
-  buyerId: text('buyerId').references(() => usersTable.clerkId),
-  createdAt: date('createdAt'),
+// export const ticketOrdersTable = pgTable("ticket_orders", {
+//   stripeId: text('id').primaryKey(),
+//   amount: text('amount'),
+//   buyerId: text('buyerId').references(() => usersTable.clerkId),
+//   createdAt: date('createdAt'),
   
-})
+// })
 
-export const ticketTypesTable = pgTable("types", {
-  uuid: uuid('id').primaryKey(),
-  showcase: text('showcase').references(() => showcaseTable.title),
-  tier: text('tier') ,
-  price: text('price'),
-  capacity: integer('capacity'),
+export const ticketTypesTable = pgTable("ticketTypes", {
+  id: uuid('id').primaryKey(),
+  name: text('name'),
+  // showcase: text('showcase').references(() => showcaseTable.title),
+  // tier: text('tier') ,
+  priceInCents: integer('priceInCents'),
+  // capacity: integer('capacity'),
+  description: text('description'),
+  isAvailableForPurchase: boolean('isAvailableForPurchase').default(true),
+  createdAt: timestamp('createdAt').defaultNow(),
+  updatedAt: timestamp('updatedAt').$onUpdate(()=> new Date()),
 })
 
 export const showcaseTable = pgTable("showcase", {
@@ -58,14 +66,37 @@ export const showcaseTable = pgTable("showcase", {
   createdAt: date('createdAt')
 })
 
-export const ticketsTable = pgTable("showcase", {
+export const ticketTable = pgTable("tickets", {
   uuid: uuid('id').primaryKey(),
-  tier: text('tier').references(() => ticketTypesTable.tier),
-  showcase: text('showcase').references(() => ticketTypesTable.showcase),
+  // tier: text('tier').references(() => ticketTypesTable.tier, { onDelete: 'cascade' }),
+  // showcase: text('showcase').references(() => ticketTypesTable.showcase),
   ticketHolder:  text('ticketHolder').references(() => usersTable.clerkId),
   isComp: boolean('isComp').default(false),
+  createdAt: timestamp('createdAt').defaultNow(),
+  orderId: text('orderId').references(() => ticketOrders.uuid)
 })
 
+export const productsTable = pgTable("products", {
+  uuid: uuid('id').primaryKey(),
+  name: text('name'),
+  priceInCents: integer('priceInCents'),
+  // filePath: text('filePath'),
+  // imageUrl: text('imageUrl'),
+  description: text('description'),
+  isAvailableForPurchase: boolean('isAvailableForPurchase').default(true),
+  createdAt: timestamp('createdAt').defaultNow(),
+  updatedAt: timestamp('updatedAt').$onUpdate(()=> new Date()),
+  // orders: text('orders').array().references(()=> ticketOrders.uuid)
+})
+
+export const ticketOrders = pgTable('ticket_orders', {
+  uuid: uuid('id').primaryKey(),
+  pricePaidInCents: integer('pricePaidInCents'),
+  createdAt: timestamp('createdAt').defaultNow(),
+  updatedAt: timestamp('updatedAt').$onUpdate(()=> new Date()),
+  buyer: text('buyer').references(() => usersTable.clerkId),
+  productId: text('productId').references(() => productsTable.uuid)
+})
 
 export type InsertUser = typeof usersTable.$inferInsert;
 export type SelectUser = typeof usersTable.$inferSelect;
@@ -75,3 +106,9 @@ export type SelectFormSubmission = typeof formSubmissionsTable.$inferSelect;
 
 export type InsertApplicationOrder = typeof applicationOrdersTable.$inferInsert;
 export type SelectApplicationOrder = typeof applicationOrdersTable.$inferSelect;
+
+export type InsertTicketOrders = typeof ticketOrders.$inferInsert;
+export type SelectTicketOrders = typeof ticketOrders.$inferSelect;
+
+export type InsertTicketTypes = typeof ticketTypesTable.$inferInsert;
+export type SelectTicketTypes = typeof ticketTypesTable.$inferSelect;
