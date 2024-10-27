@@ -21,11 +21,6 @@ const ShowcasePhoto = () => {
         src="/Screenshot 2024-06-25 at 2.23.06 PM.png"
         className="rounded-lg grayscale "
       />
-      <LuPlay
-        color="#FFF0F0"
-        size={24}
-        className="absolute right-2 bottom-2 z-20 pointer-events-none "
-      />
     </div>
   );
 };

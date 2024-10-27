@@ -42,7 +42,7 @@ export const applicationOrdersTable = pgTable("application_orders", {
 
 export const ticketTypesTable = pgTable("ticketTypes", {
   id: uuid('id').primaryKey(),
-  name: text('name'),
+  name: text('name').unique(),
   // showcase: text('showcase').references(() => showcaseTable.title),
   // tier: text('tier') ,
   priceInCents: integer('priceInCents'),
@@ -55,15 +55,15 @@ export const ticketTypesTable = pgTable("ticketTypes", {
 
 export const showcaseTable = pgTable("showcase", {
   uuid: uuid('id').primaryKey(),
-  title: text('title'),
+  title: text('title').notNull(),
   description: text('description'),
   location: text('location'),
   imageUrl: text('photo'),
-  startDateTime: date('startDateTime'),
-  endDateTime: date('endDateTime'),
-  tickets: text('tickets'),
+  startDateTime: timestamp('startDateTime'),
+  endDateTime: timestamp('endDateTime'),
+  // tickets: text('tickets'),
   url: text('url'),
-  createdAt: date('createdAt')
+  createdAt: timestamp('createdAt')
 })
 
 export const ticketTable = pgTable("tickets", {
@@ -112,3 +112,6 @@ export type SelectTicketOrders = typeof ticketOrders.$inferSelect;
 
 export type InsertTicketTypes = typeof ticketTypesTable.$inferInsert;
 export type SelectTicketTypes = typeof ticketTypesTable.$inferSelect;
+
+export type InsertShowcase= typeof showcaseTable.$inferInsert;
+export type SelectShowcase= typeof showcaseTable.$inferSelect;

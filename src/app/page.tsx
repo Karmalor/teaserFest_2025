@@ -66,6 +66,11 @@ export default function Home() {
               <button onClick={toggleModal}>
                 <div className="md:absolute right-24 top-28 mx-4 -m-36 md:m-0">
                   <VideoModal />
+                  <LuPlay
+                    color="#FFF0F0"
+                    size={24}
+                    className="absolute right-2 bottom-2 z-20 pointer-events-none "
+                  />
                 </div>
               </button>
             </div>
