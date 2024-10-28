@@ -1,21 +1,81 @@
+import { Button } from "@/components/ui/button";
+import { db } from "@/db";
+import { showcaseTable, ticketTypesTable } from "@/db/schema";
+import { formatCurrency } from "@/lib/formatters";
+import { eq } from "drizzle-orm";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
+import Stripe from "stripe";
 
-const PaymentSuccess = ({
-  searchParams: { amount },
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+
+const PaymentSuccess = async ({
+  searchParams,
 }: {
-  searchParams: { amount: string };
+  searchParams: { payment_intent: string };
 }) => {
-  return (
-    <main className="max-w-6xl mx-auto p-10 text-white text-center border-2 m-10">
-      <div className="mb-10">
-        <h1 className="text-4xl font-extrabold mb-2">Thank you!</h1>
-        <h2 className="text-2xl">You successfully sent</h2>
+  const paymentIntent = await stripe.paymentIntents.retrieve(
+    searchParams.payment_intent
+  );
 
-        <div className="bg-white p-2 rounded-md text-purple-500 mt-5 text-4xl font-bold">
-          ${amount}
+  if (paymentIntent.metadata.ticketId == null) return notFound();
+
+  const ticket = await db.query.ticketTypesTable.findFirst({
+    // with: {
+    //   showcase: true,
+    // },
+    where: eq(ticketTypesTable.id, paymentIntent.metadata.ticketId),
+  });
+  if (ticket == undefined) return;
+
+  const showcase = await db.query.showcaseTable.findFirst({
+    // with: {
+    //   showcase: true,
+    // },
+    where: eq(showcaseTable.uuid, paymentIntent.metadata.showcaseId),
+  });
+  if (showcase == undefined || null) return;
+
+  const isSuccess = paymentIntent.status === "succeeded";
+
+  return (
+    <>
+      <div className="max-w-5xl w-full mx-auto space-y-8">
+        <h1 className="text-4xl font-bold">
+          {isSuccess ? "Success!" : "Error!"}
+        </h1>
+        <div className=" mx-4 flex gap-4 items-center">
+          <div className="aspect-square flex-shrink-0 w-1/3 relative">
+            <Image
+              src={showcase.imageUrl}
+              fill
+              alt={showcase.title}
+              className="object-cover rounded-md"
+            />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold">{ticket.name}</h1>
+            <h1 className="text-lg">
+              {formatCurrency(ticket.priceInCents / 100)}
+            </h1>
+            <div className="w-1/2 line-clamp-3 text-muted-foreground">
+              {ticket.description}
+            </div>
+            <Button className="mt-4" size="lg" asChild>
+              {isSuccess ? (
+                <Link href={`/showcases`}>Explore More</Link>
+              ) : (
+                <Link href={`/showcases/${ticket.showcase}/detail`}>
+                  Try Again
+                </Link>
+              )}
+            </Button>
+          </div>
         </div>
       </div>
-    </main>
+    </>
   );
 };
 

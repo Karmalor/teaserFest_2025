@@ -45,12 +45,13 @@ export const ticketTypesTable = pgTable("ticketTypes", {
   name: text('name').unique(),
   // showcase: text('showcase').references(() => showcaseTable.title),
   // tier: text('tier') ,
-  priceInCents: integer('priceInCents'),
+  priceInCents: integer('priceInCents').notNull(),
   // capacity: integer('capacity'),
   description: text('description'),
   isAvailableForPurchase: boolean('isAvailableForPurchase').default(true),
   createdAt: timestamp('createdAt').defaultNow(),
   updatedAt: timestamp('updatedAt').$onUpdate(()=> new Date()),
+  showcase: uuid('showcase').references(() => showcaseTable.uuid)
 })
 
 export const showcaseTable = pgTable("showcase", {

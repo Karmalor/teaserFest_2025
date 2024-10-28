@@ -4,6 +4,7 @@ import { toast } from "@/components/ui/use-toast"
 import { db } from "@/db"
 import { productsTable, ticketOrders, ticketTable, ticketTypesTable } from "@/db/schema"
 import { eq } from "drizzle-orm"
+import { revalidatePath } from "next/cache"
 import { notFound, redirect } from "next/navigation"
 import { v4 } from "uuid"
 import { z } from "zod"
@@ -35,6 +36,9 @@ export async function addTicket(prevState: unknown, formData: FormData) {
 
     await db.insert(ticketTypesTable).values(data)
 
+    revalidatePath("/")
+    revalidatePath("/schedule")
+    revalidatePath("/showcases")
     redirect('/admin/tickets')
 }
 
@@ -55,6 +59,9 @@ export async function updateTicket(id:string , prevState: unknown, formData: For
 
     await db.update(ticketTypesTable).set(data).where(eq(ticketTypesTable.id, id))
 
+    revalidatePath("/")
+    revalidatePath("/schedule")
+    revalidatePath("/showcases")
     redirect('/admin/tickets')
 }
 
@@ -62,10 +69,18 @@ export async function toggleTicketAvailability(id: string, isAvailableForPurchas
     await db.update(ticketTypesTable)
     .set({isAvailableForPurchase: isAvailableForPurchase})
     .where(eq(ticketTypesTable.id, id))
+
+    revalidatePath("/")
+    revalidatePath("/schedule")
+    revalidatePath("/showcases")
 }
 
 export async function deleteTicket(uuid: string) {
     const ticket = await db.delete(ticketTypesTable).where(eq(ticketTypesTable.id, uuid))
     
     if(ticket == null) return notFound()
+
+    revalidatePath("/")
+    revalidatePath("/schedule")
+    revalidatePath("/showcases")
 }

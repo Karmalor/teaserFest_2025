@@ -1,17 +1,18 @@
 import ShowcaseCard, { ShowcaseCardSkeleton } from "@/components/ShowcaseCard";
 import { db } from "@/db";
 import { SelectShowcase, showcaseTable } from "@/db/schema";
+import { cache } from "@/lib/cache";
 import React, { Suspense } from "react";
 
-async function getShowcases() {
-  const showcaseList = await db
+const getShowcases = cache(() => {
+  const showcaseList = db
     .select()
     .from(showcaseTable)
     .orderBy(showcaseTable.startDateTime);
 
   console.log(showcaseList);
   return showcaseList;
-}
+}, ["/showcases", "getShowcases"]);
 
 getShowcases();
 

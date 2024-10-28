@@ -49,7 +49,7 @@ const ShowcaseCard = ({
       </CardContent>
       <CardFooter>
         <Button asChild size="lg" className="w-full">
-          <Link href={`/tickets/${uuid}/purchase`}>Get Tickets</Link>
+          <Link href={`/showcases/${uuid}/detail`}>Get Tickets</Link>
         </Button>
       </CardFooter>
     </Card>
