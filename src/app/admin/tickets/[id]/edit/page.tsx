@@ -2,7 +2,7 @@ import React from "react";
 import PageHeader from "../../../_components/PageHeader";
 import TicketForm from "../../_components/TicketForm";
 import { db } from "@/db";
-import { ticketTypesTable } from "@/db/schema";
+import { ticketTypes } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 const NewTicketPage = async ({
@@ -18,8 +18,8 @@ const NewTicketPage = async ({
 
   let ticket = await db
     .select()
-    .from(ticketTypesTable)
-    .where(eq(ticketTypesTable.id, id));
+    .from(ticketTypes)
+    .where(eq(ticketTypes.id, id));
 
   if (!ticket || ticket.length === 0) {
     return <p>Ticket not found</p>; // Handle ticket not found case

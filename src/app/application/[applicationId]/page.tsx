@@ -1,30 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/nextjs";
 import React, { useEffect, useState } from "react";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { useToast } from "@/components/ui/use-toast";
 import { useParams } from "next/navigation";
-import {
-  getFormSubmissionById,
-  updateFormSubmission,
-} from "@/lib/actions/application.actions";
+import { getFormSubmissionById } from "@/lib/actions/application.actions";
 import ApplicationForm from "@/components/forms/applicationForm";
-import { CreateApplicationParams } from "@/types";
 
 const ApplicationsPage = () => {
   const { user } = useUser();

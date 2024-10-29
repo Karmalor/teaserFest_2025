@@ -6,7 +6,6 @@ import PerformerScroller from "./_components/PerformerScroller";
 import ShowcasePhoto from "./_components/ShowcasePhoto";
 import { Button } from "@/components/ui/button";
 import { LuArrowRight, LuX } from "react-icons/lu";
-import MuxPlayer from "@mux/mux-player-react/lazy";
 import {
   Dialog,
   DialogContent,
@@ -17,7 +16,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,

@@ -33,18 +33,18 @@ export default function Home() {
                 className="md:absolute flex top-[600px] md:top-[520px] md:right-24 mt-8 mx-4 md:mx-0 right-0 border-[#FE3D02] border-2  px-6 z-30 bg-[#FFF0F0] justify-center rounded-sm"
               >
                 <h1 className="text-black cursor-pointer hover:text-red-600">
-                  {user && `Apply Now, ${user?.firstName}`}
+                  {user && `View Account, ${user?.firstName}`}
                 </h1>
               </Link>
             </div>
           ) : (
             <div className="flex justify-center">
               <Link
-                href="/sign-in"
+                href="/schedule"
                 className="md:absolute flex top-[600px] md:top-[520px] md:right-24 mt-8 mx-4 md:mx-0 right-0 border-[#FE3D02] border-2  px-6 z-30 bg-[#FFF0F0] justify-center rounded-sm"
               >
                 <h1 className="text-black cursor-pointer hover:text-red-600">
-                  Apply Now
+                  Explore
                 </h1>
               </Link>
             </div>
@@ -66,11 +66,11 @@ export default function Home() {
               <button onClick={toggleModal}>
                 <div className="md:absolute right-24 top-28 mx-4 -m-36 md:m-0">
                   <VideoModal />
-                  <LuPlay
+                  {/* <LuPlay
                     color="#FFF0F0"
                     size={24}
-                    className="absolute right-2 bottom-2 z-20 pointer-events-none "
-                  />
+                    className="absolute right-2 bottom-6 z-20 pointer-events-none"
+                  /> */}
                 </div>
               </button>
             </div>

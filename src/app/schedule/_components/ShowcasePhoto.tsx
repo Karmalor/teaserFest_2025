@@ -1,8 +1,4 @@
-import { useUser } from "@clerk/nextjs";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
-import { LuPlay, LuX } from "react-icons/lu";
+import React from "react";
 
 const ShowcasePhoto = () => {
   return (

@@ -20,7 +20,7 @@ const VideoModal = () => {
       <LuPlay
         color="#FFF0F0"
         size={24}
-        className="absolute right-2 bottom-2 z-20 pointer-events-none "
+        className="absolute right-2 bottom-2 z-20 pointer-events-none"
       />
     </div>
   );

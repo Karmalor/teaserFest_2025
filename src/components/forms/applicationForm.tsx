@@ -38,7 +38,7 @@ import {
 import { handleError } from "@/lib/utils";
 import { Textarea } from "../ui/textarea";
 import { Checkbox } from "../ui/checkbox";
-import { MusicUploader } from "../shared/MusicUploder";
+import { MusicUploader } from "../shared/MusicUploader";
 import Link from "next/link";
 import { LuMusic } from "react-icons/lu";
 import { metadata } from "@/app/layout";

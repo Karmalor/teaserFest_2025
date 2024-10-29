@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { db } from "@/db";
-import { ticketTypesTable } from "@/db/schema";
+import { ticketTypes } from "@/db/schema";
 import { LuCheckCircle2, LuMoreVertical, LuXCircle } from "react-icons/lu";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 import {
@@ -49,8 +49,8 @@ export default TicketsPage;
 async function TicketsTable() {
   const tickets = await db
     .select()
-    .from(ticketTypesTable)
-    .orderBy(desc(ticketTypesTable.createdAt));
+    .from(ticketTypes)
+    .orderBy(desc(ticketTypes.createdAt));
 
   if (tickets.length === 0) {
     return <h1>No products found</h1>;

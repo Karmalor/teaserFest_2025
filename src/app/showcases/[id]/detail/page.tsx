@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { showcaseTable, ticketTypesTable } from "@/db/schema";
+import { showcases, ticketTypes } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -13,19 +13,19 @@ const ShowcaseDetailPage = async ({
 }: {
   params: { id: string };
 }) => {
-  const showcases = await db
+  const showcaseList = await db
     .select()
-    .from(showcaseTable)
-    .where(eq(showcaseTable.uuid, id));
+    .from(showcases)
+    .where(eq(showcases.id, id));
 
   if (showcases == null) return notFound();
 
-  const showcase = showcases[0];
+  const showcase = showcaseList[0];
 
   const tickets = await db
     .select()
-    .from(ticketTypesTable)
-    .where(eq(ticketTypesTable.showcase, id));
+    .from(ticketTypes)
+    .where(eq(ticketTypes.showcase, id));
 
   if (tickets == null) return <h1>No Tickets Found</h1>;
 
@@ -37,7 +37,7 @@ const ShowcaseDetailPage = async ({
   const paymentIntent = await stripe.paymentIntents.create({
     amount: ticket.priceInCents,
     currency: "USD",
-    metadata: { ticketId: ticket.id, showcaseId: showcase.uuid },
+    metadata: { ticketId: ticket.id, showcaseId: showcase.id },
   });
 
   if (paymentIntent.client_secret == null) {

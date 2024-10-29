@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from "@/db";
-import { formSubmissionsTable, InsertFormSubmission, SelectFormSubmission } from "@/db/schema";
+import { formSubmissions, InsertFormSubmission, SelectFormSubmission } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 
@@ -10,20 +10,20 @@ export async function createFormSubmission(
     formData: InsertFormSubmission,
    ) {
 
-    await db.insert(formSubmissionsTable).values(formData)
+    await db.insert(formSubmissions).values(formData)
     
   }
 
-export async function updateFormSubmission(id: SelectFormSubmission['uuid'], formData: Partial<Omit<SelectFormSubmission, 'uuid'>>) {
-  await db.update(formSubmissionsTable).set(formData).where(eq(formSubmissionsTable.uuid, id));
+export async function updateFormSubmission(id: SelectFormSubmission['id'], formData: Partial<Omit<SelectFormSubmission, 'id'>>) {
+  await db.update(formSubmissions).set(formData).where(eq(formSubmissions.id, id));
 }
 
-export async function getFormSubmissionById(uuid: SelectFormSubmission['uuid']): Promise<
+export async function getFormSubmissionById(id: SelectFormSubmission['id']): Promise<
   Array<{
    
   }>
 > {
   
-  return db.select().from(formSubmissionsTable).where(eq(formSubmissionsTable.uuid, uuid))
+  return db.select().from(formSubmissions).where(eq(formSubmissions.id, id))
 
 }

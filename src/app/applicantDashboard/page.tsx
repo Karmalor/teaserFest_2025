@@ -1,7 +1,7 @@
 import ApplicationList from "@/components/ApplicationList";
 import { Button } from "@/components/ui/button";
 import { db } from "@/db";
-import { applicationOrdersTable, formSubmissionsTable } from "@/db/schema";
+import { formSubmissions } from "@/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
@@ -13,7 +13,7 @@ interface User {
 }
 
 interface Application {
-  uuid: string;
+  id: string;
   applicantResponse:
     | {
         nameOfAct?: string;
@@ -32,14 +32,14 @@ const page = async () => {
   const applications: Application[] = await db
 
     .select()
-    .from(formSubmissionsTable)
+    .from(formSubmissions)
     .where(
       eq(
-        formSubmissionsTable.applicant,
+        formSubmissions.applicant,
         user!.primaryEmailAddress!.emailAddress ?? ""
       )
     )
-    .orderBy(formSubmissionsTable.createdAt);
+    .orderBy(formSubmissions.createdAt);
 
   if (!applications) {
     throw new Error("Applications not found");

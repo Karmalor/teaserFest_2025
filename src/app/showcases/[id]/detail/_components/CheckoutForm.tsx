@@ -9,7 +9,6 @@ import {
 } from "@stripe/react-stripe-js";
 import React, { FormEvent, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import ShowcaseCard from "@/components/ShowcaseCard";
 import Image from "next/image";
 import { formatCurrency } from "@/lib/formatters";
 import {

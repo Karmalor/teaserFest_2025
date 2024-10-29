@@ -1,9 +1,10 @@
-import { pgTable, text, boolean, uuid, json, jsonb, date, integer, timestamp, pgEnum } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
+import { pgTable, text, boolean, uuid, json, jsonb, date, integer, timestamp, pgEnum, time } from 'drizzle-orm/pg-core';
 import { array } from 'zod';
 
 export const rolesEnum = pgEnum("role", ["user", "admin"]);
 
-export const usersTable = pgTable('users_table', {
+export const users = pgTable('users', {
   clerkId: text('id').primaryKey(),
   email: text('email').notNull().unique(),
   username: text('username'),
@@ -14,9 +15,15 @@ export const usersTable = pgTable('users_table', {
   // orders: integer("orders").references(() => applicationOrders.id)
 });
 
-export  const formSubmissionsTable = pgTable('form_submissions', {
-    uuid: uuid('uuid').primaryKey(),
-    applicant: text('applicant').references(() => usersTable.clerkId),
+export const attendees = pgTable('attendees', {
+  email: text('email').notNull().unique(),
+  firstName: text('firstName'),
+  lastName: text('lastName'),
+});
+
+export  const formSubmissions = pgTable('form_submissions', {
+    id: uuid('uuid').primaryKey(),
+    applicant: text('applicant').references(() => users.clerkId),
     stageName: text('stageName'),
     tagline: text('tagline'),
     applicantResponse: jsonb('applicantResponse').default({}),
@@ -25,60 +32,85 @@ export  const formSubmissionsTable = pgTable('form_submissions', {
     createdAt: date('createdAt')
 }) 
 
-export const applicationOrdersTable = pgTable("application_orders", {
+export const applicationOrders = pgTable("application_orders", {
   stripeId: text('id').primaryKey(),
   amount: text('amount'),
-  buyerId: text('buyerId').references(() => usersTable.clerkId),
+  buyerId: text('buyerId').references(() => users.clerkId),
   createdAt: date('createdAt')
 })
 
-// export const ticketOrdersTable = pgTable("ticket_orders", {
-//   stripeId: text('id').primaryKey(),
-//   amount: text('amount'),
-//   buyerId: text('buyerId').references(() => usersTable.clerkId),
-//   createdAt: date('createdAt'),
-  
-// })
+export const ticketOrdersTable = pgTable("ticket_orders", {
+  stripeId: text('id').primaryKey(),
+  amount: text('amount'),
+  tickets: uuid('tickets'),
+  qty: integer('qty'),
+  buyerId: uuid('buyerId'),
+  createdAt: date('createdAt'),
+})
 
-export const ticketTypesTable = pgTable("ticketTypes", {
+export const ticketTypes = pgTable("ticket_types", {
   id: uuid('id').primaryKey(),
   name: text('name').unique(),
-  // showcase: text('showcase').references(() => showcaseTable.title),
-  // tier: text('tier') ,
+  showcase: text('showcase'),
   priceInCents: integer('priceInCents').notNull(),
-  // capacity: integer('capacity'),
+  capacity: integer('capacity'),
   description: text('description'),
   isAvailableForPurchase: boolean('isAvailableForPurchase').default(true),
   createdAt: timestamp('createdAt').defaultNow(),
   updatedAt: timestamp('updatedAt').$onUpdate(()=> new Date()),
-  showcase: uuid('showcase').references(() => showcaseTable.uuid)
 })
 
-export const showcaseTable = pgTable("showcase", {
-  uuid: uuid('id').primaryKey(),
+export const showcases = pgTable("showcases", {
+  id: uuid('id').primaryKey(),
   title: text('title').notNull(),
   description: text('description'),
   location: text('location'),
   imageUrl: text('photo'),
-  startDateTime: timestamp('startDateTime'),
-  endDateTime: timestamp('endDateTime'),
-  // tickets: text('tickets'),
+  startDate: date('startDate'),
+  endDate: date('endDateTime'),
+  startTime: time('startTime'),
+  endTime: time('endTime'),
+  ticketTypes: uuid('ticketTypes'),
+  tickets: uuid('tickets'),
+  attendees: uuid('attendees'),
   url: text('url'),
-  createdAt: timestamp('createdAt')
+  createdAt: timestamp('createdAt').defaultNow(),
 })
 
-export const ticketTable = pgTable("tickets", {
-  uuid: uuid('id').primaryKey(),
+export const tickets = pgTable("tickets", {
+  id: uuid('id').primaryKey(),
   // tier: text('tier').references(() => ticketTypesTable.tier, { onDelete: 'cascade' }),
   // showcase: text('showcase').references(() => ticketTypesTable.showcase),
-  ticketHolder:  text('ticketHolder').references(() => usersTable.clerkId),
+  ticketHolder:  text('ticketHolder').references(() => attendees.email),
   isComp: boolean('isComp').default(false),
   createdAt: timestamp('createdAt').defaultNow(),
-  orderId: text('orderId').references(() => ticketOrders.uuid)
+  // orderId: text('orderId').references(() => ticketOrders.id)
 })
 
-export const productsTable = pgTable("products", {
-  uuid: uuid('id').primaryKey(),
+export const weekendPassTypes = pgTable("weekend_pass_types", {
+  id: uuid('id').primaryKey(),
+  name: text('name').unique(),
+  priceInCents: integer('priceInCents').notNull(),
+  capacity: integer('capacity'),
+  description: text('description'),
+  isAvailableForPurchase: boolean('isAvailableForPurchase').default(true),
+  createdAt: timestamp('createdAt').defaultNow(),
+  updatedAt: timestamp('updatedAt').$onUpdate(()=> new Date()),
+  showcase: uuid('showcase').references(() => showcases.id)
+})
+
+export const weekendPasses = pgTable("weekend_passes", {
+  id: uuid('id').primaryKey(),
+  // tier: text('tier').references(() => ticketTypesTable.tier, { onDelete: 'cascade' }),
+  // showcase: text('showcase').references(() => ticketTypesTable.showcase),
+  ticketHolder:  text('ticketHolder').references(() => attendees.email),
+  isComp: boolean('isComp').default(false),
+  createdAt: timestamp('createdAt').defaultNow(),
+  // orderId: text('orderId').references(() => ticketOrders.id)
+})
+
+export const products = pgTable("products", {
+  id: uuid('id').primaryKey(),
   name: text('name'),
   priceInCents: integer('priceInCents'),
   // filePath: text('filePath'),
@@ -91,28 +123,41 @@ export const productsTable = pgTable("products", {
 })
 
 export const ticketOrders = pgTable('ticket_orders', {
-  uuid: uuid('id').primaryKey(),
+  id: uuid('id').primaryKey(),
   pricePaidInCents: integer('pricePaidInCents'),
   createdAt: timestamp('createdAt').defaultNow(),
   updatedAt: timestamp('updatedAt').$onUpdate(()=> new Date()),
-  buyer: text('buyer').references(() => usersTable.clerkId),
-  productId: text('productId').references(() => productsTable.uuid)
+  buyer: text('buyer').references(() => users.clerkId),
+  productId: text('productId').references(() => products.id)
 })
 
-export type InsertUser = typeof usersTable.$inferInsert;
-export type SelectUser = typeof usersTable.$inferSelect;
+// Relations
 
-export type InsertFormSubmission = typeof formSubmissionsTable.$inferInsert;
-export type SelectFormSubmission = typeof formSubmissionsTable.$inferSelect;
+export const usersRelations = relations(attendees, ({many}) => ({
+  tickets: many(tickets)
+}))
 
-export type InsertApplicationOrder = typeof applicationOrdersTable.$inferInsert;
-export type SelectApplicationOrder = typeof applicationOrdersTable.$inferSelect;
+export const ticketRelations = relations(tickets, ({one})=> ({
+  attendees: one(attendees, {
+    fields: [tickets.ticketHolder],
+    references: [attendees.email]
+  })
+}))
+
+export type InsertUser = typeof users.$inferInsert;
+export type SelectUser = typeof users.$inferSelect;
+
+export type InsertFormSubmission = typeof formSubmissions.$inferInsert;
+export type SelectFormSubmission = typeof formSubmissions.$inferSelect;
+
+export type InsertApplicationOrder = typeof applicationOrders.$inferInsert;
+export type SelectApplicationOrder = typeof applicationOrders.$inferSelect;
 
 export type InsertTicketOrders = typeof ticketOrders.$inferInsert;
 export type SelectTicketOrders = typeof ticketOrders.$inferSelect;
 
-export type InsertTicketTypes = typeof ticketTypesTable.$inferInsert;
-export type SelectTicketTypes = typeof ticketTypesTable.$inferSelect;
+export type InsertTicketTypes = typeof ticketTypes.$inferInsert;
+export type SelectTicketTypes = typeof ticketTypes.$inferSelect;
 
-export type InsertShowcase= typeof showcaseTable.$inferInsert;
-export type SelectShowcase= typeof showcaseTable.$inferSelect;
+export type InsertShowcase= typeof showcases.$inferInsert;
+export type SelectShowcase= typeof showcases.$inferSelect;

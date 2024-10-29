@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { db } from "@/db";
-import { showcaseTable, ticketTypesTable } from "@/db/schema";
+import { showcases, ticketTypes } from "@/db/schema";
 import { formatCurrency } from "@/lib/formatters";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
@@ -22,19 +22,19 @@ const PaymentSuccess = async ({
 
   if (paymentIntent.metadata.ticketId == null) return notFound();
 
-  const ticket = await db.query.ticketTypesTable.findFirst({
+  const ticket = await db.query.ticketTypes.findFirst({
     // with: {
     //   showcase: true,
     // },
-    where: eq(ticketTypesTable.id, paymentIntent.metadata.ticketId),
+    where: eq(ticketTypes.id, paymentIntent.metadata.ticketId),
   });
   if (ticket == undefined) return;
 
-  const showcase = await db.query.showcaseTable.findFirst({
+  const showcase = await db.query.showcases.findFirst({
     // with: {
     //   showcase: true,
     // },
-    where: eq(showcaseTable.uuid, paymentIntent.metadata.showcaseId),
+    where: eq(showcases.id, paymentIntent.metadata.showcaseId),
   });
   if (showcase == undefined || null) return;
 
