@@ -67,7 +67,7 @@ export const showcases = pgTable("showcases", {
   location: text('location'),
   imageUrl: text('photo'),
   startDate: date('startDate'),
-  endDate: date('endDateTime'),
+  endDate: date('endDate'),
   startTime: time('startTime'),
   endTime: time('endTime'),
   ticketTypes: uuid('ticketTypes'),

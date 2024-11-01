@@ -1,0 +1,1 @@
+ALTER TABLE "form_submissions" ALTER COLUMN "applicantResponse" SET DATA TYPE json;

@@ -13,7 +13,7 @@ import {
   useSession,
 } from "@clerk/nextjs";
 import { dark, neobrutalism } from "@clerk/themes";
-import { LuArrowLeft, LuMail } from "react-icons/lu";
+import { LuArrowLeft, LuMail, LuShoppingCart } from "react-icons/lu";
 
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -21,6 +21,8 @@ import Link from "next/link";
 import BackButton from "@/components/navigation/BackButton";
 import HomeButton from "@/components/navigation/HomeButton";
 import Footer from "@/components/navigation/Footer";
+import { useState } from "react";
+import CartSheet from "@/components/shared/CartSheet";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -61,6 +63,7 @@ export default function RootLayout({
                 <LuMail />
               </a>
               <SignedIn>
+                <CartSheet />
                 <UserButton />
               </SignedIn>
               <SignedOut>
@@ -69,7 +72,6 @@ export default function RootLayout({
             </div>
           </div>
           {children}
-          {/* <Footer /> */}
           <Toaster />
         </body>
       </html>

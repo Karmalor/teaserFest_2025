@@ -26,7 +26,7 @@ import {
 import {
   ActiveToggleDropdownItem,
   DeleteDropdownItem,
-} from "../_components/TicketActions";
+} from "../_components/ticket.actions";
 import { Separator } from "@/components/ui/separator";
 import { asc, desc } from "drizzle-orm";
 

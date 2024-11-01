@@ -13,7 +13,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 type ShowcaseCardProps = {
-  uuid: string;
+  id: string;
   title: string;
   description: string | null;
   imageUrl: string | null;
@@ -22,7 +22,7 @@ type ShowcaseCardProps = {
 const ShowcaseCard = ({
   title,
   description,
-  uuid,
+  id,
   imageUrl,
 }: ShowcaseCardProps) => {
   return (
@@ -49,7 +49,7 @@ const ShowcaseCard = ({
       </CardContent>
       <CardFooter>
         <Button asChild size="lg" className="w-full">
-          <Link href={`/showcases/${uuid}/detail`}>Get Tickets</Link>
+          <Link href={`/showcases/${id}/detail`}>Get Tickets</Link>
         </Button>
       </CardFooter>
     </Card>

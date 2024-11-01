@@ -1,10 +1,14 @@
 import { db } from "@/db";
 import { showcases, ticketTypes } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { notFound } from "next/navigation";
-import React from "react";
+import { notFound, redirect } from "next/navigation";
+import React, { useContext, useState } from "react";
 import Stripe from "stripe";
 import CheckoutForm from "./_components/CheckoutForm";
+import { Input } from "@/components/ui/input";
+import { currentUser } from "@clerk/nextjs/server";
+import { SignUp, SignUpButton } from "@clerk/nextjs";
+// import { currentUser } from "@clerk/nextjs/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -13,6 +17,12 @@ const ShowcaseDetailPage = async ({
 }: {
   params: { id: string };
 }) => {
+  const user = await currentUser();
+
+  console.log("User", user);
+
+  if (!user) redirect("/sign-up");
+
   const showcaseList = await db
     .select()
     .from(showcases)
@@ -31,13 +41,13 @@ const ShowcaseDetailPage = async ({
 
   const ticket = tickets[0];
 
-  console.log("Showcase", showcase);
-  console.log("Tickets", tickets);
-
   const paymentIntent = await stripe.paymentIntents.create({
     amount: ticket.priceInCents,
     currency: "USD",
-    metadata: { ticketId: ticket.id, showcaseId: showcase.id },
+    metadata: {
+      ticketId: ticket.id,
+      showcaseId: showcase.id,
+    },
   });
 
   if (paymentIntent.client_secret == null) {
@@ -45,11 +55,17 @@ const ShowcaseDetailPage = async ({
   }
 
   return (
-    <CheckoutForm
-      showcase={showcase}
-      ticket={ticket}
-      clientSecret={paymentIntent.client_secret}
-    />
+    <>
+      {/* <Input onChange={(event) => setCustomer(event.target.value)} /> */}
+
+      <CheckoutForm
+        showcase={showcase}
+        ticket={ticket}
+        clientSecret={paymentIntent.client_secret}
+        // firstName={firstName}
+        firstName={user?.firstName}
+      />
+    </>
   );
 };
 

@@ -5,10 +5,7 @@ import { cache } from "@/lib/cache";
 import React, { Suspense } from "react";
 
 const getShowcases = cache(() => {
-  const showcaseList = db
-    .select()
-    .from(showcases)
-    .orderBy(showcases.startDateTime);
+  const showcaseList = db.select().from(showcases).orderBy(showcases.startDate);
 
   console.log(showcaseList);
   return showcaseList;

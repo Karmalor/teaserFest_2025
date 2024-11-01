@@ -6,6 +6,7 @@ import { v4 } from 'uuid'
 import { db } from '@/db'
 import { eq } from 'drizzle-orm'
 import { ticketTypes, users } from '@/db/schema'
+import { metadata } from '@/app/layout'
 
 
 export async function POST(request: Request) {
@@ -60,14 +61,18 @@ export async function POST(request: Request) {
     if(eventType === 'charge.succeeded'){
       const charge = event.data.object
       const ticketId = charge.metadata.ticketId
-      const showcaseId = charge.metadata.howcaseId
+      const showcaseId = charge.metadata.showcaseId
       const email = charge.billing_details.email
+      const name = charge.customer?.toString
       const pricePaidInCents = charge.amount
 
       const ticket = await db.query.ticketTypes.findFirst({where: eq(ticketTypes.id, ticketId)})
       if(ticket == null || email == null) return new NextResponse('Bad Request', {status: 400})
 
-      db.insert(users).values({clerkId: metadata?.buyerId, }).onConflictDoUpdate({
+      db.insert(users).values()
+      
+      
+      values({clerkId: metadata?.buyerId, }).onConflictDoUpdate({
         target: users.clerkId,
         set: { orders: 'Super John' },
       });
