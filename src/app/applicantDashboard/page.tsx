@@ -81,9 +81,14 @@ const page = async () => {
             leisure.
           </p>
           <br />
-          <p className="font-black">
-            All applications must be submitted by October 31st, 2024
+          <p className="font-black flex items-center justify-center">
+            - Deadline Extended -
           </p>
+          <br />
+          <p className="font-black">
+            All applications must be submitted by November 7th, 2024
+          </p>
+
           <br />
           <p>We look forward to reviewing your act!</p>
           <br />

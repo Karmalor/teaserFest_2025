@@ -76,6 +76,9 @@ export default function Home() {
                 - Tickets on sale soon! -
               </h1>
               <h1 style={{ textShadow: "#FFF0F0 1px 1px 0px" }}>
+                - Application eadline extended - 7Nov2024 -
+              </h1>
+              <h1 style={{ textShadow: "#FFF0F0 1px 1px 0px" }}>
                 - January 16th-19th, 2025 -
               </h1>
             </div>
