@@ -23,6 +23,7 @@ import HomeButton from "@/components/navigation/HomeButton";
 import Footer from "@/components/navigation/Footer";
 import { useState } from "react";
 import CartSheet from "@/components/shared/CartSheet";
+import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,26 +54,28 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={space.className}>
-          <div className="flex items-center justify-between m-4 z-50 ">
-            <div className="flex items-center justify-between gap-2 m-4 z-50 ">
-              <BackButton />
-              <HomeButton />
+          <ShoppingCartProvider>
+            <div className="flex items-center justify-between m-4 z-50 ">
+              <div className="flex items-center justify-between gap-2 m-4 z-50 ">
+                <BackButton />
+                <HomeButton />
+              </div>
+              <div className="flex items-center justify-between gap-4 m-4 z-50 ">
+                <a href="mailto: info@teaserfest.com">
+                  <LuMail />
+                </a>
+                <SignedIn>
+                  <CartSheet />
+                  <UserButton />
+                </SignedIn>
+                <SignedOut>
+                  <SignInButton />
+                </SignedOut>
+              </div>
             </div>
-            <div className="flex items-center justify-between gap-4 m-4 z-50 ">
-              <a href="mailto: info@teaserfest.com">
-                <LuMail />
-              </a>
-              <SignedIn>
-                <CartSheet />
-                <UserButton />
-              </SignedIn>
-              <SignedOut>
-                <SignInButton />
-              </SignedOut>
-            </div>
-          </div>
-          {children}
-          <Toaster />
+            {children}
+            <Toaster />
+          </ShoppingCartProvider>
         </body>
       </html>
     </ClerkProvider>
