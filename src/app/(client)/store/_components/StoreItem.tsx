@@ -63,7 +63,7 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
                 + Add to Cart
               </Button>
               <div className="w-full flex justify-center items-center gap-4">
-                <Button disabled>+</Button>
+                <Button disabled>-</Button>
                 <h1>{quantity} in cart</h1>
                 <Button disabled>+</Button>
               </div>
@@ -74,9 +74,9 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
                 <Button className="mx-auto w-full">View Cart</Button>
               </Link>
               <div className="w-full flex justify-center items-center gap-4">
-                <Button onClick={() => increaseItemQuantity(id)}>+</Button>
-                <h1>{quantity} in cart</h1>
                 <Button onClick={() => decreaseItemQuantity(id)}>-</Button>
+                <h1>{quantity} in cart</h1>
+                <Button onClick={() => increaseItemQuantity(id)}>+</Button>
               </div>
             </div>
             // <Button className="mx-auto w-full">View Cart</Button>

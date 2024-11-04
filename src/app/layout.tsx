@@ -13,7 +13,6 @@ import {
   useSession,
 } from "@clerk/nextjs";
 import { dark, neobrutalism } from "@clerk/themes";
-import { LuArrowLeft, LuMail, LuShoppingCart } from "react-icons/lu";
 
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -24,6 +23,8 @@ import Footer from "@/components/navigation/Footer";
 import { useState } from "react";
 import CartSheet from "@/components/shared/CartSheet";
 import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
+import ShoppingCart from "@/components/shared/ShoppingCart";
+import NavBar from "@/components/navigation/NavBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -55,24 +56,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={space.className}>
           <ShoppingCartProvider>
-            <div className="flex items-center justify-between m-4 z-50 ">
-              <div className="flex items-center justify-between gap-2 m-4 z-50 ">
-                <BackButton />
-                <HomeButton />
-              </div>
-              <div className="flex items-center justify-between gap-4 m-4 z-50 ">
-                <a href="mailto: info@teaserfest.com">
-                  <LuMail />
-                </a>
-                <SignedIn>
-                  <CartSheet />
-                  <UserButton />
-                </SignedIn>
-                <SignedOut>
-                  <SignInButton />
-                </SignedOut>
-              </div>
-            </div>
+            <NavBar />
             {children}
             <Toaster />
           </ShoppingCartProvider>
