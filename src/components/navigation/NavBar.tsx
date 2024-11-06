@@ -7,8 +7,8 @@ import { LuMail, LuShoppingCart } from "react-icons/lu";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import ShoppingCart from "../shared/ShoppingCart";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
-import { Button } from "../ui/button";
-import { redirect } from "next/navigation";
+import { usePathname } from "next/navigation";
+import ExploreSelector from "./ExploreSelector";
 
 const NavBar = () => {
   const { openCart, cartQuantity } = useShoppingCart();
@@ -20,6 +20,7 @@ const NavBar = () => {
         <HomeButton />
       </div>
       <div className="flex items-center justify-between gap-4 m-4 z-50 ">
+        <ExploreSelector />
         <a href="mailto: info@teaserfest.com">
           <LuMail />
         </a>

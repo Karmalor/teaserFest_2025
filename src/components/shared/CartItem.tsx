@@ -4,7 +4,7 @@ import React from "react";
 import storeItems from "../../db/items.json";
 import { formatCurrency } from "@/lib/formatters";
 import { Button } from "../ui/button";
-import { LuMinus, LuPlus } from "react-icons/lu";
+import { LuMinus, LuPlus, LuX } from "react-icons/lu";
 
 type CartItemProps = {
   id: number;
@@ -43,7 +43,7 @@ const CartItem = ({ id, quantity }: CartItemProps) => {
                 <button>
                   <LuMinus onClick={() => decreaseItemQuantity(id)} />
                 </button>
-                <p className="text-gray-500">QTY: {quantity}</p>
+                <p className="text-gray-500">qty: {quantity}</p>
                 <button>
                   <LuPlus onClick={() => increaseItemQuantity(id)} />
                 </button>
@@ -52,18 +52,29 @@ const CartItem = ({ id, quantity }: CartItemProps) => {
                 {formatCurrency(item!.price / 100)}
               </p>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-2">
               <p className="text-gray-500">
                 {formatCurrency((item!.price * quantity) / 100)}
               </p>
-
-              <button
-                //   onClick={() => removeItem(entry.id)}
-                className="font-medium text-primary hover:text-primary/80 text-red-700"
-                onClick={() => removeFromCart(item!.id)}
-              >
-                Remove
-              </button>
+              <div className="flex items-center">
+                <div className="flex items-start justify-end text-end">
+                  <button
+                    //   onClick={() => removeItem(entry.id)}
+                    className="font-medium text-primary hover:text-primary/80 text-red-700 hidden md:flex"
+                    onClick={() => removeFromCart(item!.id)}
+                  >
+                    <LuX size={18} className="content-end" />
+                    Remove
+                  </button>
+                </div>
+                <button
+                  //   onClick={() => removeItem(entry.id)}
+                  className="font-medium text-primary hover:text-primary/80 text-red-700 flex md:hidden"
+                  onClick={() => removeFromCart(item!.id)}
+                >
+                  <LuX />
+                </button>
+              </div>
             </div>
           </div>
         </div>

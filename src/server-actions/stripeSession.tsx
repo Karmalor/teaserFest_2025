@@ -28,11 +28,27 @@ export const postStripeSession = async ({
 
   const user = await currentUser();
 
+  // const coupon = await stripe.coupons.create({
+  //   percent_off: 20,
+  //   duration: "once",
+  // });
+
+  // const promotionCode = await stripe.promotionCodes.create({
+  //   coupon: "rIpMeUUd",
+  //   code: "VIPCODE",
+  // });
+
   const session = await stripe.checkout.sessions.create({
     ui_mode: "embedded",
     line_items: productsArray,
     mode: "payment",
     return_url: returnUrl,
+    allow_promotion_codes: true,
+    // discounts: [
+    //   {
+    //     coupon: "",
+    //   },
+    // ],
     custom_fields: [
       {
         key: "firstName",
