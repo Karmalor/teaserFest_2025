@@ -42,7 +42,7 @@ export const KoalaWelcomeEmail = ({
         <Text style={paragraph}>
           Thank you so much for applying to perform in Teaser Festival 2025.
           Your application is currently being reviewed and we will begin sending
-          decision results by November 1st.
+          decision results by November 15th.
         </Text>
         <Text style={paragraph}>
           You can stay up to date on details of the festival, as well as review

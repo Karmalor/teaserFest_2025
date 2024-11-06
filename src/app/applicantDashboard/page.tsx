@@ -86,7 +86,7 @@ const page = async () => {
           </p>
           <br />
           <p className="font-black">
-            All applications must be submitted by November 7th, 2024
+            All applications must be submitted by November 15th, 2024
           </p>
 
           <br />
