@@ -14,13 +14,13 @@ const CheckoutPage = () => {
 
   const amount = cartItems.reduce((total, cartItem) => {
     const item = storeItems.find((i) => i.id === cartItem.id);
-    return Number(total + (item?.price || 0) * cartItem.quantity * 100);
+    return Number(total + (item?.price || 0) * cartItem.quantity);
   }, 0);
 
-  const amount2 = storeItems[0].price * cartItems[0].quantity * 100;
-  if (!amount || !cartItems) return;
+  // const amount2 = storeItems[0].price * cartItems[0].quantity * 100;
+  // if (!amount || !cartItems) return;
 
-  console.log(amount2);
+  console.log("Amount", amount);
 
   let productos = [];
 
@@ -38,6 +38,10 @@ const CheckoutPage = () => {
       quantity: element.quantity,
     });
   }
+
+  const appFee = Math.floor(amount * 0.03);
+
+  console.log("appFee", appFee);
 
   //   const products = storeItems.map((item) => ({
   //     price_data: {
@@ -60,6 +64,7 @@ const CheckoutPage = () => {
           quantity={1}
           imgUrl={storeItems[0].imgUrl}
           productsArray={productos as []}
+          appFee={appFee}
         />
       </div>
     </main>

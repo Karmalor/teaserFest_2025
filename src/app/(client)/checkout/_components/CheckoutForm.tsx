@@ -9,7 +9,10 @@ import {
 import { postStripeSession } from "@/server-actions/stripeSession";
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
+  {
+    stripeAccount: process.env.NEXT_PUBLIC_STRIPE_CLIENT_ID as string,
+  }
 );
 
 type CheckoutFormProps = {
@@ -18,6 +21,7 @@ type CheckoutFormProps = {
   quantity: number;
   imgUrl: string;
   productsArray: [];
+  appFee: number;
 };
 
 export const CheckoutForm = ({
@@ -26,6 +30,7 @@ export const CheckoutForm = ({
   quantity,
   imgUrl,
   productsArray,
+  appFee,
 }: CheckoutFormProps) => {
   const fetchClientSecret = useCallback(async () => {
     const stripeResponse = await postStripeSession({
@@ -34,6 +39,7 @@ export const CheckoutForm = ({
       quantity,
       imgUrl,
       productsArray,
+      appFee,
     });
 
     return stripeResponse.clientSecret;

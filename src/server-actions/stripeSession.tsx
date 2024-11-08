@@ -6,6 +6,8 @@ import { Stripe } from "stripe";
 
 const apiKey = process.env.STRIPE_SECRET_KEY as string;
 
+const connectedAccount = process.env.NEXT_PUBLIC_STRIPE_CLIENT_ID as string;
+
 const stripe = new Stripe(apiKey);
 
 interface NewSessionOptions {
@@ -14,6 +16,7 @@ interface NewSessionOptions {
   quantity: number;
   imgUrl: string;
   productsArray: [];
+  appFee: number;
 }
 
 export const postStripeSession = async ({
@@ -22,9 +25,12 @@ export const postStripeSession = async ({
   quantity,
   imgUrl,
   productsArray,
+  appFee,
 }: NewSessionOptions) => {
   const returnUrl =
     "http://localhost:3000/checkout-return?session_id={CHECKOUT_SESSION_ID}";
+
+  // const returnUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/checkout-return`;
 
   const user = await currentUser();
 
@@ -38,42 +44,53 @@ export const postStripeSession = async ({
   //   code: "VIPCODE",
   // });
 
-  const session = await stripe.checkout.sessions.create({
-    ui_mode: "embedded",
-    line_items: productsArray,
-    mode: "payment",
-    return_url: returnUrl,
-    allow_promotion_codes: true,
-    // discounts: [
-    //   {
-    //     coupon: "",
-    //   },
-    // ],
-    custom_fields: [
-      {
-        key: "firstName",
-        label: {
-          type: "custom",
-          custom: `Ticketholder's First Name`,
-        },
-        text: {
-          default_value: user?.firstName,
-        },
-        type: "text",
+  const session = await stripe.checkout.sessions.create(
+    {
+      ui_mode: "embedded",
+      line_items: productsArray,
+      mode: "payment",
+      payment_intent_data: {
+        application_fee_amount: appFee,
       },
-      {
-        key: "lastName",
-        label: {
-          type: "custom",
-          custom: `Ticketholder's Last Name`,
-        },
-        text: {
-          default_value: user?.lastName,
-        },
-        type: "text",
+      metadata: {
+        appFee,
       },
-    ],
-  });
+      return_url: returnUrl,
+      allow_promotion_codes: true,
+      // discounts: [
+      //   {
+      //     coupon: "",
+      //   },
+      // ],
+      custom_fields: [
+        {
+          key: "firstName",
+          label: {
+            type: "custom",
+            custom: `Ticketholder's First Name`,
+          },
+          text: {
+            default_value: user?.firstName,
+          },
+          type: "text",
+        },
+        {
+          key: "lastName",
+          label: {
+            type: "custom",
+            custom: `Ticketholder's Last Name`,
+          },
+          text: {
+            default_value: user?.lastName,
+          },
+          type: "text",
+        },
+      ],
+    },
+    {
+      stripeAccount: connectedAccount,
+    }
+  );
 
   if (!session.client_secret)
     throw new Error("Error initiating Stripe session");
