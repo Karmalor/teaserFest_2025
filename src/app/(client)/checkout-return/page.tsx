@@ -54,26 +54,6 @@ const PurchaseSuccessPage = async ({
   console.log(purchasedProducts);
 
   return (
-    // <div className="flex justify-center mt-16 gap-2 flex-col ml-24">
-    //   <div>
-    //     <h1>{checkoutSession.custom_fields[0].text?.value}</h1>
-    //     <h1>{checkoutSession.custom_fields[1].text?.value}</h1>
-    //   </div>
-    //   <br />
-    //   <div className="flex flex-col">
-    //     {lineItems.data.map((item) => (
-    //       <h1>
-    //         - {item.quantity}x: {item.description}
-    //       </h1>
-    //     ))}
-
-    //     <div className="flex font-bold mt-4">
-    //       <h1 className="mr-2">Total:</h1>
-    //       <h1>{formatCurrency((checkoutSession.amount_total || 0) / 100)}</h1>
-    //     </div>
-    //   </div>
-    // </div>
-
     <div
       className="mb-16 m-0 min-h-full w-full"
       // style={{
