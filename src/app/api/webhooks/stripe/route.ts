@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       }
 
       const application = {
-        uuid: v4(),
+        id: v4(),
         applicant: metadata?.applicant || '',
         stageName: "",
         tagline: "",

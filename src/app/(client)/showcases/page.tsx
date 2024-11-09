@@ -50,21 +50,19 @@ function ShowcaseGrid({ showcaseFetcher, title }: ShowcaseGridProps) {
             </>
           }
         >
-          <ShowcaseSuspense showcaseFetcher={showcaseFetcher} />
+          <ShowcaseSuspense />
         </Suspense>
       </div>
     </h1>
   );
 }
 
-async function ShowcaseSuspense({
-  showcaseFetcher,
-}: {
-  showcaseFetcher: () => Promise<SelectShowcase>[];
-}) {
-  return (await showcaseFetcher()).map((showcase, i) => (
+async function ShowcaseSuspense() {
+  const showcases = await getShowcases();
+
+  return showcases.map((showcase, i) => (
     <div key={i} className="max-w-[400px]">
-      <ShowcaseCard key={showcases.id} {...showcase} />
+      <ShowcaseCard key={showcase.id} {...showcase} />
     </div>
   ));
 }
