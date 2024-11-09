@@ -63,7 +63,7 @@ const ShowcaseDetailPage = async ({
         ticket={ticket}
         clientSecret={paymentIntent.client_secret}
         // firstName={firstName}
-        firstName={user?.firstName}
+        firstName={user.firstName as string}
       />
     </>
   );

@@ -49,7 +49,7 @@ const PaymentSuccess = async ({
         <div className=" mx-4 flex gap-4 items-center">
           <div className="aspect-square flex-shrink-0 w-1/3 relative">
             <Image
-              src={showcase.imageUrl}
+              src={showcase.imageUrl as string}
               fill
               alt={showcase.title}
               className="object-cover rounded-md"
