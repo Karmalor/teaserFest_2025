@@ -62,8 +62,8 @@ async function ShowcaseSuspense({
 }: {
   showcaseFetcher: () => Promise<SelectShowcase>[];
 }) {
-  return (await showcaseFetcher()).map((showcase) => (
-    <div className="max-w-[400px]">
+  return (await showcaseFetcher()).map((showcase, i) => (
+    <div key={i} className="max-w-[400px]">
       <ShowcaseCard key={showcases.id} {...showcase} />
     </div>
   ));

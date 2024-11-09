@@ -220,8 +220,8 @@ const PurchaseSuccessPage = async ({
               >
                 Order summary
               </h3>
-              {purchasedProducts.map((item) => (
-                <div style={{ padding: "16px 24px 16px 24px" }}>
+              {purchasedProducts.map((item, i) => (
+                <div key={i} style={{ padding: "16px 24px 16px 24px" }}>
                   <div style={{ padding: "0px 0px 0px 0px" }}>
                     <div style={{ padding: "0px 0px 0px 0px" }}>
                       <table

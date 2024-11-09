@@ -135,8 +135,8 @@ export const KoalaWelcomeEmail = ({
                 padding: "16px 24px 16px 24px",
               }}
             >
-              Hi {"{"}name{"}"}, We are preparing your package. Your tracking
-              number will be generated once the package is ready to ship.
+              Hi there, We are preparing your package. Your tracking number will
+              be generated once the package is ready to ship.
             </div>
             <div style={{ textAlign: "left", padding: "16px 24px 40px 24px" }}>
               <a
