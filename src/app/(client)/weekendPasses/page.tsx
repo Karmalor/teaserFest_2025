@@ -15,6 +15,7 @@ import Image from "next/image";
 const page = () => {
   const passData = [
     {
+      key: 1,
       id: 303,
       name: "Weekend GA",
       price: 15000,
@@ -37,6 +38,7 @@ const page = () => {
         "https://utfs.io/f/443ed477-5441-48d1-85f2-a1a56caffb52-1ut6k.jpeg",
     },
     {
+      key: 2,
       id: 202,
       name: "Weekend VIP",
       price: 35000,
@@ -70,6 +72,7 @@ const page = () => {
         "https://utfs.io/f/443ed477-5441-48d1-85f2-a1a56caffb52-1ut6k.jpeg",
     },
     {
+      key: 3,
       id: 311,
       name: "VIP Baller",
       price: 50000,
