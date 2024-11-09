@@ -163,8 +163,8 @@ const page = () => {
         </p>
       </div>
       <div className="flex flex-col lg:flex-row items-start justify-center my-4 mx-2 mb-16 z-50">
-        {passData.map((item) => (
-          <Card className="max-w-[400px] mx-auto my-2 lg:mx-2">
+        {passData.map((item, i) => (
+          <Card key={i} className="max-w-[400px] mx-auto my-2 lg:mx-2">
             <CardHeader>
               <CardTitle className="text-center text-2xl">
                 {item.name}
