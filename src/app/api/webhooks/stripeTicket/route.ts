@@ -27,6 +27,7 @@ export async function POST(req: Request) {
       const eventType = event.type
 
       console.log(event)
+      console.log("Success!")
 
     if(eventType === "charge.succeeded"){
       const charge = event.data.object

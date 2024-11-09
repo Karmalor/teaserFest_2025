@@ -8,6 +8,8 @@ import { formatCurrency } from "@/lib/formatters";
 import Link from "next/link";
 import { currentUser } from "@clerk/nextjs/server";
 import { Button } from "@/components/ui/button";
+import { check } from "drizzle-orm/mysql-core";
+import TicketReceipt from "./_components/TicketReceipt";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   stripeAccount: process.env.NEXT_PUBLIC_STRIPE_CLIENT_ID as string,
@@ -21,14 +23,32 @@ const PurchaseSuccessPage = async ({
   const user = await currentUser();
 
   const checkoutSession = await stripe.checkout.sessions.retrieve(
-    searchParams.session_id
+    searchParams.session_id,
+    {
+      expand: ["total_details.breakdown.discounts.discount"],
+    }
   );
+
+  console.log(checkoutSession.status);
 
   const lineItems = await stripe.checkout.sessions.listLineItems(
     searchParams.session_id
   );
 
-  console.log(checkoutSession);
+  const coupon =
+    checkoutSession.total_details?.breakdown?.discounts[0]?.discount?.coupon
+      .name;
+
+  const code =
+    checkoutSession?.total_details?.breakdown?.discounts[0]?.discount
+      .promotion_code;
+
+  let promoCode = { code: "" };
+
+  if (code) {
+    promoCode: await stripe.promotionCodes.retrieve(code as string);
+    return promoCode;
+  }
 
   let purchasedProducts = [];
 
@@ -51,8 +71,6 @@ const PurchaseSuccessPage = async ({
     });
   }
 
-  console.log(purchasedProducts);
-
   return (
     <div
       className="mb-16 m-0 min-h-full w-full"
@@ -71,6 +89,9 @@ const PurchaseSuccessPage = async ({
       //   width: "100%",
       // }}
     >
+      {checkoutSession.status && (
+        <TicketReceipt checkoutSuccess={checkoutSession.status} />
+      )}
       <table
         align="center"
         width="100%"
@@ -373,67 +394,77 @@ const PurchaseSuccessPage = async ({
                         }}
                       >
                         <div style={{ padding: "0px 0px 0px 0px" }}>
-                          {/* <div style={{ padding: "4px 0px 4px 0px" }}>
-                            <table
-                              align="center"
-                              width="100%"
-                              cellPadding={0}
-                              border={0}
-                              style={{
-                                tableLayout: "fixed",
-                                borderCollapse: "collapse",
-                              }}
-                            >
-                              <tbody style={{ width: "100%" }}>
-                                <tr style={{ width: "100%" }}>
-                                  <td
-                                    style={{
-                                      boxSizing: "content-box",
-                                      verticalAlign: "middle",
-                                      paddingLeft: 0,
-                                      paddingRight: 0,
-                                    }}
-                                  >
-                                    <div style={{ padding: "0px 0px 0px 0px" }}>
+                          {promoCode.code && (
+                            <div style={{ padding: "4px 0px 4px 0px" }}>
+                              <table
+                                align="center"
+                                width="100%"
+                                cellPadding={0}
+                                border={0}
+                                style={{
+                                  tableLayout: "fixed",
+                                  borderCollapse: "collapse",
+                                }}
+                              >
+                                <tbody style={{ width: "100%" }}>
+                                  <tr style={{ width: "100%" }}>
+                                    <td
+                                      style={{
+                                        boxSizing: "content-box",
+                                        verticalAlign: "middle",
+                                        paddingLeft: 0,
+                                        paddingRight: 0,
+                                      }}
+                                    >
                                       <div
-                                        style={{
-                                          color: "#808080",
-                                          fontSize: 16,
-                                          fontWeight: "normal",
-                                          textAlign: "left",
-                                          padding: "0px 0px 0px 0px",
-                                        }}
+                                        style={{ padding: "0px 0px 0px 0px" }}
                                       >
-                                        Discount (BLKFRI)
+                                        <div
+                                          style={{
+                                            color: "#808080",
+                                            fontSize: 16,
+                                            fontWeight: "normal",
+                                            textAlign: "left",
+                                            padding: "0px 0px 0px 0px",
+                                          }}
+                                        >
+                                          Discount
+                                          <br />({promoCode.code})
+                                        </div>
                                       </div>
-                                    </div>
-                                  </td>
-                                  <td
-                                    style={{
-                                      boxSizing: "content-box",
-                                      verticalAlign: "middle",
-                                      paddingLeft: 0,
-                                      paddingRight: 0,
-                                    }}
-                                  >
-                                    <div style={{ padding: "0px 0px 0px 0px" }}>
+                                    </td>
+                                    <td
+                                      style={{
+                                        boxSizing: "content-box",
+                                        verticalAlign: "middle",
+                                        paddingLeft: 0,
+                                        paddingRight: 0,
+                                      }}
+                                    >
                                       <div
-                                        style={{
-                                          fontSize: 16,
-                                          fontWeight: "bold",
-                                          textAlign: "right",
-                                          padding: "0px 0px 0px 0px",
-                                        }}
+                                        style={{ padding: "0px 0px 0px 0px" }}
                                       >
-                                        $5.00
+                                        <div
+                                          style={{
+                                            fontSize: 16,
+                                            fontWeight: "bold",
+                                            textAlign: "right",
+                                            padding: "0px 0px 0px 0px",
+                                          }}
+                                        >
+                                          {formatCurrency(
+                                            (checkoutSession.total_details
+                                              ?.amount_discount as number) / 100
+                                          )}
+                                        </div>
                                       </div>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div> */}
-                          {/* <div style={{ padding: "4px 0px 4px 0px" }}>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          )}
+                          <div style={{ padding: "4px 0px 4px 0px" }}>
                             <table
                               align="center"
                               width="100%"
@@ -485,7 +516,10 @@ const PurchaseSuccessPage = async ({
                                           padding: "0px 0px 0px 0px",
                                         }}
                                       >
-                                        $25.00
+                                        {formatCurrency(
+                                          (checkoutSession.amount_subtotal as number) /
+                                            100
+                                        )}
                                       </div>
                                     </div>
                                   </td>
@@ -493,66 +527,76 @@ const PurchaseSuccessPage = async ({
                               </tbody>
                             </table>
                           </div>
-                          <div style={{ padding: "4px 0px 4px 0px" }}>
-                            <table
-                              align="center"
-                              width="100%"
-                              cellPadding={0}
-                              border={0}
-                              style={{
-                                tableLayout: "fixed",
-                                borderCollapse: "collapse",
-                              }}
-                            >
-                              <tbody style={{ width: "100%" }}>
-                                <tr style={{ width: "100%" }}>
-                                  <td
-                                    style={{
-                                      boxSizing: "content-box",
-                                      verticalAlign: "middle",
-                                      paddingLeft: 0,
-                                      paddingRight: 0,
-                                    }}
-                                  >
-                                    <div style={{ padding: "0px 0px 0px 0px" }}>
+                          {checkoutSession.shipping_cost !== null && (
+                            <div style={{ padding: "4px 0px 4px 0px" }}>
+                              <table
+                                align="center"
+                                width="100%"
+                                cellPadding={0}
+                                border={0}
+                                style={{
+                                  tableLayout: "fixed",
+                                  borderCollapse: "collapse",
+                                }}
+                              >
+                                <tbody style={{ width: "100%" }}>
+                                  <tr style={{ width: "100%" }}>
+                                    <td
+                                      style={{
+                                        boxSizing: "content-box",
+                                        verticalAlign: "middle",
+                                        paddingLeft: 0,
+                                        paddingRight: 0,
+                                      }}
+                                    >
                                       <div
-                                        style={{
-                                          color: "#808080",
-                                          fontSize: 16,
-                                          fontWeight: "normal",
-                                          textAlign: "left",
-                                          padding: "0px 0px 0px 0px",
-                                        }}
+                                        style={{ padding: "0px 0px 0px 0px" }}
                                       >
-                                        Shipping
+                                        <div
+                                          style={{
+                                            color: "#808080",
+                                            fontSize: 16,
+                                            fontWeight: "normal",
+                                            textAlign: "left",
+                                            padding: "0px 0px 0px 0px",
+                                          }}
+                                        >
+                                          Shipping
+                                        </div>
                                       </div>
-                                    </div>
-                                  </td>
-                                  <td
-                                    style={{
-                                      boxSizing: "content-box",
-                                      verticalAlign: "middle",
-                                      paddingLeft: 0,
-                                      paddingRight: 0,
-                                    }}
-                                  >
-                                    <div style={{ padding: "0px 0px 0px 0px" }}>
+                                    </td>
+                                    <td
+                                      style={{
+                                        boxSizing: "content-box",
+                                        verticalAlign: "middle",
+                                        paddingLeft: 0,
+                                        paddingRight: 0,
+                                      }}
+                                    >
                                       <div
-                                        style={{
-                                          fontSize: 16,
-                                          fontWeight: "bold",
-                                          textAlign: "right",
-                                          padding: "0px 0px 0px 0px",
-                                        }}
+                                        style={{ padding: "0px 0px 0px 0px" }}
                                       >
-                                        $5.00
+                                        <div
+                                          style={{
+                                            fontSize: 16,
+                                            fontWeight: "bold",
+                                            textAlign: "right",
+                                            padding: "0px 0px 0px 0px",
+                                          }}
+                                        >
+                                          {formatCurrency(
+                                            ((checkoutSession.shipping_cost
+                                              .amount_total as number) || 0) /
+                                              100
+                                          )}
+                                        </div>
                                       </div>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          )}
                           <div style={{ padding: "4px 0px 4px 0px" }}>
                             <table
                               align="center"
@@ -605,14 +649,17 @@ const PurchaseSuccessPage = async ({
                                           padding: "0px 0px 0px 0px",
                                         }}
                                       >
-                                        $0.00
+                                        {formatCurrency(
+                                          (checkoutSession.total_details
+                                            ?.amount_tax as number) / 100
+                                        )}
                                       </div>
                                     </div>
                                   </td>
                                 </tr>
                               </tbody>
                             </table>
-                          </div> */}
+                          </div>
                           <div style={{ padding: "16px 0px 16px 0px" }}>
                             {/* <hr
                               style={{

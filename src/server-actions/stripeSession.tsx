@@ -27,12 +27,15 @@ export const postStripeSession = async ({
   productsArray,
   appFee,
 }: NewSessionOptions) => {
-  const returnUrl =
-    "http://localhost:3000/checkout-return?session_id={CHECKOUT_SESSION_ID}";
+  const returnUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/checkout-return?session_id={CHECKOUT_SESSION_ID}`;
 
   // const returnUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/checkout-return`;
 
   const user = await currentUser();
+
+  // if (!user) {
+  //   const user = { firstName: "" as string, lastName: "" as string };
+  // }
 
   // const coupon = await stripe.coupons.create({
   //   percent_off: 20,
@@ -48,6 +51,9 @@ export const postStripeSession = async ({
     {
       ui_mode: "embedded",
       line_items: productsArray,
+      automatic_tax: {
+        enabled: true,
+      },
       mode: "payment",
       payment_intent_data: {
         application_fee_amount: appFee,
@@ -57,11 +63,6 @@ export const postStripeSession = async ({
       },
       return_url: returnUrl,
       allow_promotion_codes: true,
-      // discounts: [
-      //   {
-      //     coupon: "",
-      //   },
-      // ],
       custom_fields: [
         {
           key: "firstName",
@@ -70,7 +71,7 @@ export const postStripeSession = async ({
             custom: `Ticketholder's First Name`,
           },
           text: {
-            default_value: user?.firstName,
+            default_value: user?.firstName as string,
           },
           type: "text",
         },
@@ -81,7 +82,7 @@ export const postStripeSession = async ({
             custom: `Ticketholder's Last Name`,
           },
           text: {
-            default_value: user?.lastName,
+            default_value: user?.lastName as string,
           },
           type: "text",
         },
