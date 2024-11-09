@@ -320,7 +320,8 @@ const PurchaseSuccessPage = async ({
                                   }}
                                 >
                                   {formatCurrency(
-                                    ((item.price || 0) / 100) * item.quantity
+                                    ((item.price || 0) / 100) *
+                                      (item.quantity || 1)
                                   )}
                                 </div>
                               </div>
