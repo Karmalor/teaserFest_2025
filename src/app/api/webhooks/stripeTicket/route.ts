@@ -31,13 +31,15 @@ export async function POST(req: Request) {
 
     if(eventType === "charge.succeeded"){
       const charge = event.data.object
-      // const productId = charge.metadata.productId
-      // const email = charge.billing_details.email
-      // const pricePaidInCents = charge.amount
-      // const appFee = charge.application_fee_amount
-      // const ticketHolderFirstName = charge.metadata.ticketHolderFirstName
-      // const ticketHolderLastName = charge.metadata.ticketHolderLastName
+      const productId = charge.metadata.productId
+      const email = charge.billing_details.email
+      const pricePaidInCents = charge.amount
+      const appFee = charge.application_fee_amount
+      const ticketHolderFirstName = charge.metadata.ticketHolderFirstName
+      const ticketHolderLastName = charge.metadata.ticketHolderLastName
     }
+
+    
     
     return new Response('', { status: 200 })
 

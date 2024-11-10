@@ -59,6 +59,15 @@ const ExploreSelector = () => {
               Festival Schedule
             </Link>
           </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link
+              href={"/attendee/tickets"}
+              onClick={() => setMenuOpen(false)}
+              className={`${pathname == "/attendee/tickets" && "underline underline-offset-4"} text-lg hover:underline underline-offset-4`}
+            >
+              My Tickets
+            </Link>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
