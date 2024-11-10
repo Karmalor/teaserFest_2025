@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from "@/db";
-import { formSubmissions, InsertFormSubmission, SelectFormSubmission } from "@/db/schema";
+import { formSubmissions, InsertFormSubmission, SelectFormSubmission, SelectTicket, tickets } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 
@@ -27,3 +27,4 @@ export async function getFormSubmissionById(id: SelectFormSubmission['id']): Pro
   return db.select().from(formSubmissions).where(eq(formSubmissions.id, id))
 
 }
+

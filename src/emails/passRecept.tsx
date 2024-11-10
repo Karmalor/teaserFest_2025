@@ -10,6 +10,7 @@ import {
   Section,
   Text,
 } from "@react-email/components";
+import { QRCodeSVG } from "qrcode.react";
 import * as React from "react";
 
 interface KoalaWelcomeEmailProps {
@@ -770,6 +771,19 @@ export const KoalaWelcomeEmail = ({
                 padding: "16px 24px 16px 24px",
               }}
             >
+              <QRCodeSVG
+                size={250}
+                value="123ybhinfrv9pubqvrojabervoabva"
+                bgColor="#FFF0F0"
+                fgColor="#000"
+                imageSettings={{
+                  height: 24,
+                  width: 36,
+                  src: "/TeaserFest Vintage Logo 2025_v9.png",
+                  excavate: true,
+                }}
+                className="w-full object-fill"
+              ></QRCodeSVG>
               If you have any questions, just reply to this email.
             </div>
           </td>

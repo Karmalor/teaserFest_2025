@@ -1,10 +1,12 @@
-// import { db } from "@/db";
-// import { tickets } from "@/db/schema";
+'use server'
 
-// export async function createTicket(
-//     formData: InsertTicket,
-//    ) {
+import { db } from "@/db";
+import { SelectTicket, tickets } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
-//     await db.insert(tickets).values(formData)
-    
-//   }
+
+export async function getTicketById(id: SelectTicket['id']): Promise<SelectTicket | undefined> 
+ 
+{
+  return db.query.tickets.findFirst({where: eq(tickets.id, id)})
+}

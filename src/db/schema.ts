@@ -79,12 +79,11 @@ export const showcases = pgTable("showcases", {
 
 export const tickets = pgTable("tickets", {
   id: uuid('id').primaryKey(),
-  // tier: text('tier').references(() => ticketTypesTable.tier, { onDelete: 'cascade' }),
-  // showcase: text('showcase').references(() => ticketTypesTable.showcase),
-  ticketHolder:  text('ticketHolder').references(() => attendees.email),
+  ticketHolder:  text('ticketHolder'),
   isComp: boolean('isComp').default(false),
   createdAt: timestamp('createdAt').defaultNow(),
-  // orderId: text('orderId').references(() => ticketOrders.id)
+  firstName: text('firstName'),
+  lastName: text('lastName')
 })
 
 export const weekendPassTypes = pgTable("weekend_pass_types", {
@@ -161,3 +160,6 @@ export type SelectTicketTypes = typeof ticketTypes.$inferSelect;
 
 export type InsertShowcase= typeof showcases.$inferInsert;
 export type SelectShowcase= typeof showcases.$inferSelect;
+
+export type InsertTicket = typeof tickets.$inferInsert;
+export type SelectTicket = typeof tickets.$inferSelect;

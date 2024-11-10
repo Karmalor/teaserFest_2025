@@ -1,43 +1,40 @@
 "use client";
 
+import QRCard from "../_components/QRCard";
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 import { useParams } from "next/navigation";
-import { QRCodeSVG } from "qrcode.react";
-// import { QRCodeCanvas } from "qrcode.react";
+import { getTicketById } from "@/lib/actions/ticket.actions";
+import { SelectTicket } from "@/db/schema";
 
-function App() {
-  const params = useParams();
+type TicketData = SelectTicket | null;
 
-  const ticketId = params.ticketId as string;
+function TicketDetailPage({ params }: { params: { ticketId: string } }) {
+  const { user } = useUser();
+  const ticketId = params.ticketId;
+  const [ticketData, setTicketData] = useState<TicketData>(null);
 
-  console.log(ticketId);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getTicketById(ticketId);
+      if (!result) return;
+      setTicketData(result);
+    };
+    fetchData();
+  }, [ticketId]);
 
   return (
-    <div className="mb-16 mt-16 mx-auto min-h-full w-1/2">
-      <header className="App-header">
-        <div className="flex justify-center">
-          <QRCodeSVG
-            value={ticketId}
-            bgColor="#FFF0F0"
-            fgColor="#000"
-            imageSettings={{
-              height: 400,
-              width: 400,
-              src: "",
-              excavate: false,
-            }}
-          ></QRCodeSVG>
-        </div>
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <p></p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        ></a>
-      </header>
+    <div className="mb-16 mt-16 mx-auto min-h-full">
+      <div className="flex justify-center">
+        {ticketData ? (
+          <QRCard ticketData={ticketData} />
+        ) : (
+          <div>Loading...</div>
+        )}
+      </div>
+      <p></p>
     </div>
   );
 }
 
-export default App;
+export default TicketDetailPage;

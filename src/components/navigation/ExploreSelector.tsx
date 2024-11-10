@@ -36,7 +36,7 @@ const ExploreSelector = () => {
             <Link
               href={"/weekendPasses"}
               onClick={() => setMenuOpen(false)}
-              className={`${pathname == "/weekendPasses" && "underline underline-offset-4"} text-lg`}
+              className={`${pathname == "/weekendPasses" && "underline underline-offset-4"} text-lg hover:underline underline-offset-4`}
             >
               Weekend Passes
             </Link>
@@ -45,7 +45,7 @@ const ExploreSelector = () => {
             <Link
               href={"/showcases"}
               onClick={() => setMenuOpen(false)}
-              className={`${pathname == "/showcases" && "underline underline-offset-4"} text-lg`}
+              className={`${pathname == "/showcases" && "underline underline-offset-4"} text-lg hover:underline underline-offset-4`}
             >
               Showcase Details
             </Link>
@@ -54,7 +54,7 @@ const ExploreSelector = () => {
             <Link
               href={"/schedule"}
               onClick={() => setMenuOpen(false)}
-              className={`${pathname == "/schedule" && "underline underline-offset-4"} text-lg`}
+              className={`${pathname == "/schedule" && "underline underline-offset-4"} text-lg hover:underline underline-offset-4`}
             >
               Festival Schedule
             </Link>
