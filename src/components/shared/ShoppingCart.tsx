@@ -33,7 +33,7 @@ const ShoppingCart = ({ isOpen, cartQuantity }: ShoppingCartProps) => {
   console.log(cartItems);
 
   return (
-    <Sheet open={isOpen} onOpenChange={closeCart}>
+    <Sheet open={isOpen} onOpenChange={closeCart} modal={false}>
       <SheetContent className="sm:max-w-lg w-[90vw] bg-[#FFF0F0]">
         <SheetHeader>
           <SheetTitle>Cart</SheetTitle>
