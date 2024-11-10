@@ -9,16 +9,12 @@ import Link from "next/link";
 
 const PurchasedTicketsPage = () => {
   const { user } = useUser();
-
-  if (!user) {
-    return <h1>No Tickets Purchased</h1>;
-  }
-
   const [purchasedTickets, setPurchasedTickets] = useState<SelectTicket[]>([]);
 
   useEffect(() => {
-    const userEmail = user?.primaryEmailAddress?.emailAddress;
+    if (!user) return;
 
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
     if (!userEmail) return;
 
     const fetchData = async () => {
@@ -37,14 +33,20 @@ const PurchasedTicketsPage = () => {
 
   return (
     <div>
-      <h1 className="text-xl m-8">Click to view ticket</h1>
-      <div className="flex flex-col sm:flex-row justify-start items-center gap-8 mx-auto sm:mx-16 mt-8">
-        {purchasedTickets.map((item, i) => (
-          <Link key={i} href={`/attendee/tickets/${item.id}`}>
-            <QRCard ticketData={item} />
-          </Link>
-        ))}
-      </div>
+      {!user ? (
+        <h1>No Tickets Purchased</h1>
+      ) : (
+        <>
+          <h1 className="text-xl m-8">Click to view ticket</h1>
+          <div className="flex flex-col sm:flex-row justify-start items-center gap-8 mx-auto sm:mx-16 mt-8">
+            {purchasedTickets.map((item, i) => (
+              <Link key={i} href={`/attendee/tickets/${item.id}`}>
+                <QRCard ticketData={item} />
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
