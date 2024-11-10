@@ -40,8 +40,8 @@ const PurchasedTicketsPage = () => {
       <h1 className="text-xl m-8">Click to view ticket</h1>
       <div className="flex flex-col sm:flex-row justify-start items-center gap-8 mx-auto sm:mx-16 mt-8">
         {purchasedTickets.map((item, i) => (
-          <Link href={`/attendee/tickets/${item.id}`}>
-            <QRCard key={i} ticketData={item} />
+          <Link key={i} href={`/attendee/tickets/${item.id}`}>
+            <QRCard ticketData={item} />
           </Link>
         ))}
       </div>
