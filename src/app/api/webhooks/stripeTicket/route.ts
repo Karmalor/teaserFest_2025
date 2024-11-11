@@ -30,12 +30,14 @@ export async function POST(req: Request) {
   
       const eventType = event.type
 
-      if(eventType === "checkout.session.async_payment_succeeded"){
+      if(eventType === "checkout.session.completed"){
         const session = event.data.object
+        if(session.payment_status !== 'paid'){
+          return
+        }
+
         const lineItems = session.line_items
-
         console.log(lineItems)
-
       }
 
     // if(eventType === "charge.succeeded"){
@@ -59,5 +61,4 @@ export async function POST(req: Request) {
   //  });
     
     return new Response('', { status: 200 })
-
   }
