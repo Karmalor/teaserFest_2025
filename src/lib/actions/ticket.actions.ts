@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { InsertTicket, SelectTicket, tickets } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-export async function createFormSubmission(
+export async function createTicket(
   ticketData: InsertTicket,
  ) {
 
@@ -12,7 +12,7 @@ export async function createFormSubmission(
   
 }
 
-export async function updateFormSubmission(id: SelectTicket['id'], formData: Partial<Omit<SelectTicket, 'id'>>) {
+export async function updateTicket(id: SelectTicket['id'], formData: Partial<Omit<SelectTicket, 'id'>>) {
 await db.update(tickets).set(formData).where(eq(tickets.id, id));
 }
 

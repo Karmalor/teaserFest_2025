@@ -8,6 +8,7 @@ import { eq } from 'drizzle-orm'
 import { ticketTypes, users } from '@/db/schema'
 import { metadata } from '@/app/layout'
 import storeItems from "../../../../db/items.json";
+import { createTicket } from '@/lib/actions/ticket.actions'
 
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, 
@@ -45,11 +46,24 @@ export async function POST(req: Request) {
 
         if(!lineItems) return
 
-        lineItems.data.forEach((lineItem, index)=>{
+        lineItems.data.forEach(async (lineItem, index)=>{
             if(lineItem.description === 'Weekend VIP'){
               for (let index = 0; index < (lineItem.quantity || 1); index++) {
-                const element = lineItem.description[index];
-                console.log("Checking", element)
+                const element = lineItem.description;
+                console.log("Checking", element, index)
+
+                const ticket = {
+                  id: v4(),
+                  ticketHolder: session.customer_details?.email,
+                  firstName: session.custom_fields[0].text?.value,
+                  lastName: session.custom_fields[0].text?.value,
+                  isComp: false,
+                  isCheckedIn: false
+              }
+          
+              console.log("Ticket", index, ticket)
+          
+              const newUser = await createTicket(ticket)
               }
             }
            })

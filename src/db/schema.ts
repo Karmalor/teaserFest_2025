@@ -83,7 +83,8 @@ export const tickets = pgTable("tickets", {
   isComp: boolean('isComp').default(false),
   createdAt: timestamp('createdAt').defaultNow(),
   firstName: text('firstName'),
-  lastName: text('lastName')
+  lastName: text('lastName'),
+  isCheckedIn: boolean('isCheckedIn')
 })
 
 export const weekendPassTypes = pgTable("weekend_pass_types", {
