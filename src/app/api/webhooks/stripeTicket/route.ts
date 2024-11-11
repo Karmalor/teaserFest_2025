@@ -46,13 +46,15 @@ export async function POST(req: Request) {
 
         if(!lineItems) return
 
-        lineItems.data.forEach(async (lineItem, index)=>{
+        let promisesToAwait:any[] = [];
+
+        lineItems.data.map(async (lineItem, index)=>{
             if(lineItem.description === 'Weekend VIP'){
               for (let index = 0; index < (lineItem.quantity || 1); index++) {
                 const element = lineItem.description;
                 console.log("Checking", element, index)
 
-                const ticket = {
+                let ticket = {
                   id: v4(),
                   ticketType: lineItem.description,
                   ticketHolder: session.customer_details?.email,
@@ -64,40 +66,44 @@ export async function POST(req: Request) {
           
               console.log("Ticket", index+1, ticket)
           
-              const newTicket = await createTicket(ticket)
+              promisesToAwait.push(await createTicket(ticket));
+              // const newTicket = await createTicket(ticket)
 
-              return NextResponse.json({ message: 'OK', user: newTicket})
+              // return NextResponse.json({ message: 'OK', ticket: newTicket})
 
               }
-
-
             }
            })
 
-        let purchasedProducts = [];
+           const responses = await Promise.all(promisesToAwait);
 
-        for (let element of lineItems.data) {
-          let item = storeItems.find((i) => i.name === element.description);
-          purchasedProducts.push({
-            price_data: {
-              currency: "usd",
-              unit_amount: item!.price,
-              product_data: {
-                name: item!.name,
-                images: [item!.imgUrl],
-              },
-            },
-            quantity: element.quantity,
-            name: item?.name,
-            price: item?.price,
-            description: item?.description,
-            imgUrl: item?.imgUrl,
-          });
-        }
+           if (responses) {
+            console.log("Tickets created in database")
+          }
+        // let purchasedProducts = [];
+
+        // for (let element of lineItems.data) {
+        //   let item = storeItems.find((i) => i.name === element.description);
+        //   purchasedProducts.push({
+        //     price_data: {
+        //       currency: "usd",
+        //       unit_amount: item!.price,
+        //       product_data: {
+        //         name: item!.name,
+        //         images: [item!.imgUrl],
+        //       },
+        //     },
+        //     quantity: element.quantity,
+        //     name: item?.name,
+        //     price: item?.price,
+        //     description: item?.description,
+        //     imgUrl: item?.imgUrl,
+        //   });
+        // }
 
         
 
-        console.log("These are the Line Items part 2", purchasedProducts)
+        // console.log("These are the Line Items part 2", purchasedProducts)
 
       }
 
