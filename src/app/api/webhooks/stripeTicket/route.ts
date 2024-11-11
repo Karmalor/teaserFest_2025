@@ -54,6 +54,7 @@ export async function POST(req: Request) {
 
                 const ticket = {
                   id: v4(),
+                  ticketType: lineItem.description,
                   ticketHolder: session.customer_details?.email,
                   firstName: session.custom_fields[0].text?.value,
                   lastName: session.custom_fields[0].text?.value,
@@ -61,10 +62,15 @@ export async function POST(req: Request) {
                   isCheckedIn: false
               }
           
-              console.log("Ticket", index, ticket)
+              console.log("Ticket", index+1, ticket)
           
-              const newUser = await createTicket(ticket)
+              const newTicket = await createTicket(ticket)
+
+              return NextResponse.json({ message: 'OK', user: newTicket})
+
               }
+
+
             }
            })
 

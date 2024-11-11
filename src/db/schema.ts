@@ -79,6 +79,7 @@ export const showcases = pgTable("showcases", {
 
 export const tickets = pgTable("tickets", {
   id: uuid('id').primaryKey(),
+  ticketType: text('ticketType'),
   ticketHolder:  text('ticketHolder'),
   isComp: boolean('isComp').default(false),
   createdAt: timestamp('createdAt').defaultNow(),
