@@ -34,14 +34,25 @@ export async function POST(req: Request) {
 
       if(eventType === "checkout.session.completed"){
         const session = event.data.object
+
         if(session.payment_status !== 'paid'){
           return
         }
 
-        const lineItems = session.line_items
+        const lineItems = await stripe.checkout.sessions.listLineItems(session.id)
+        
         console.log("These are the Line Items",lineItems)
 
         if(!lineItems) return
+
+        lineItems.data.forEach((lineItem, index)=>{
+            if(lineItem.description === 'Weekend VIP'){
+              for (let index = 0; index < (lineItem.quantity || 1); index++) {
+                const element = lineItem.description[index];
+                console.log("Checking", element)
+              }
+            }
+           })
 
         let purchasedProducts = [];
 
@@ -63,6 +74,8 @@ export async function POST(req: Request) {
             imgUrl: item?.imgUrl,
           });
         }
+
+        
 
         console.log("These are the Line Items part 2", purchasedProducts)
 

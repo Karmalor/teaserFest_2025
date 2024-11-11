@@ -34,6 +34,11 @@ const CheckoutPage = () => {
           name: item!.name,
           images: [item!.imgUrl],
         },
+        adjustable_quantity: {
+          enabled: true,
+          minimum: 1,
+          maximum: 100,
+        },
       },
       quantity: element.quantity,
     });

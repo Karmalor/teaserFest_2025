@@ -60,6 +60,7 @@ export const postStripeSession = async ({
       },
       metadata: {
         appFee,
+        user: user?.primaryEmailAddress?.emailAddress as string,
       },
       return_url: returnUrl,
       allow_promotion_codes: true,
