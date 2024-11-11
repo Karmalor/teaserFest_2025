@@ -7,8 +7,6 @@ import React, { useEffect } from "react";
 const TicketReceipt = ({ checkoutSuccess }: { checkoutSuccess: string }) => {
   const { emptyCart } = useShoppingCart();
 
-  console.log("checkuy", checkoutSuccess);
-
   useEffect(() => {
     if (checkoutSuccess === "complete") {
       emptyCart();

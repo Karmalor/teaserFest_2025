@@ -7,6 +7,8 @@ import { db } from '@/db'
 import { eq } from 'drizzle-orm'
 import { ticketTypes, users } from '@/db/schema'
 import { metadata } from '@/app/layout'
+import storeItems from "../../../../db/items.json";
+
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, 
   {
@@ -37,7 +39,33 @@ export async function POST(req: Request) {
         }
 
         const lineItems = session.line_items
-        console.log(lineItems)
+        console.log("These are the Line Items",lineItems)
+
+        if(!lineItems) return
+
+        let purchasedProducts = [];
+
+        for (let element of lineItems.data) {
+          let item = storeItems.find((i) => i.name === element.description);
+          purchasedProducts.push({
+            price_data: {
+              currency: "usd",
+              unit_amount: item!.price,
+              product_data: {
+                name: item!.name,
+                images: [item!.imgUrl],
+              },
+            },
+            quantity: element.quantity,
+            name: item?.name,
+            price: item?.price,
+            description: item?.description,
+            imgUrl: item?.imgUrl,
+          });
+        }
+
+        console.log("These are the Line Items part 2", purchasedProducts)
+
       }
 
     // if(eventType === "charge.succeeded"){
