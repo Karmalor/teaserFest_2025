@@ -8,7 +8,11 @@ import { eq } from 'drizzle-orm'
 import { ticketTypes, users } from '@/db/schema'
 import { metadata } from '@/app/layout'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, 
+  {
+    stripeAccount: process.env.NEXT_PUBLIC_STRIPE_CLIENT_ID as string,
+  }
+)
 
 
 export async function POST(req: Request) {
@@ -26,20 +30,33 @@ export async function POST(req: Request) {
   
       const eventType = event.type
 
-      console.log(event)
-      console.log("Success!")
+      if(eventType === "checkout.session.async_payment_succeeded"){
+        const session = event.data.object
+        const lineItems = session.line_items
 
-    if(eventType === "charge.succeeded"){
-      const charge = event.data.object
-      const productId = charge.metadata.productId
-      const email = charge.billing_details.email
-      const pricePaidInCents = charge.amount
-      const appFee = charge.application_fee_amount
-      const ticketHolderFirstName = charge.metadata.ticketHolderFirstName
-      const ticketHolderLastName = charge.metadata.ticketHolderLastName
-    }
+        console.log(lineItems)
 
-    
+      }
+
+    // if(eventType === "charge.succeeded"){
+      
+
+    //   const charge = event.data.object
+    //   const paymentIntent =charge.payment_intent
+    //   const productId = charge.metadata.productId
+    //   const email = charge.billing_details.email
+    //   const pricePaidInCents = charge.amount
+    //   const appFee = charge.application_fee_amount
+    //   const ticketHolderFirstName = charge.metadata.ticketHolderFirstName
+    //   const ticketHolderLastName = charge.metadata.ticketHolderLastName
+    //   const products = charge.payment_intent
+    //   const lineItems = await stripe.paymentIntents.retrieve(paymentIntent as string)
+    //   lineItems.
+    // }
+
+  //   .forEach((val, index)=>{
+      
+  //  });
     
     return new Response('', { status: 200 })
 

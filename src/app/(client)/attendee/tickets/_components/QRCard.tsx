@@ -36,14 +36,14 @@ const QRCard = ({ ticketData }: QRCodeProps) => {
           ></QRCodeSVG>
         </CardTitle>
         <CardDescription>
-          <a
+          {/* <a
             className="App-link"
             href="https://reactjs.org"
             target="_blank"
             rel="noopener noreferrer"
-          >
-            Description
-          </a>
+          > */}
+          Description
+          {/* </a> */}
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -29,8 +29,6 @@ const PurchasedTicketsPage = () => {
     fetchData();
   }, [user]);
 
-  console.log(purchasedTickets);
-
   return (
     <div>
       {!user ? (
@@ -47,6 +45,7 @@ const PurchasedTicketsPage = () => {
           </div>
         </>
       )}
+      <div></div>
     </div>
   );
 };
