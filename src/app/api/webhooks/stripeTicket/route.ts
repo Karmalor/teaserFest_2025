@@ -5,7 +5,7 @@ import { createFormSubmission } from '@/lib/actions/application.actions'
 import { v4 } from 'uuid'
 import { db } from '@/db'
 import { eq } from 'drizzle-orm'
-import { ticketTypes, users } from '@/db/schema'
+import { SelectTicket, tickets, ticketTypes, users } from '@/db/schema'
 import { metadata } from '@/app/layout'
 import storeItems from "../../../../db/items.json";
 import { createTicket } from '@/lib/actions/ticket.actions'
@@ -46,40 +46,39 @@ export async function POST(req: Request) {
 
         if(!lineItems) return
 
-        let promisesToAwait:any[] = [];
+        // let promisesToAwait:any[] = [];
+        // Initialize `newTickets` as an empty array
+let newTickets: Array<SelectTicket> = [];
 
-        lineItems.data.map(async (lineItem, index)=>{
-            if(lineItem.description === 'Weekend VIP'){
-              for (let index = 0; index < (lineItem.quantity || 1); index++) {
-                const element = lineItem.description;
-                console.log("Checking", element, index)
+lineItems.data.map((lineItem) => {
+    if (lineItem.description === 'Weekend VIP') {
+        for (let i = 0; i < (lineItem.quantity || 1); i++) {
+            newTickets.push({
+                id: v4(),
+                ticketType: lineItem.description,
+                ticketHolder: session.customer_details!.email,
+                firstName: session.custom_fields[0].text!.value,
+                lastName: session.custom_fields[1].text!.value,
+                isComp: false,
+                isCheckedIn: false,
+                createdAt: new Date()
+            });
+        }
+    }
+});
 
-                let ticket = {
-                  id: v4(),
-                  ticketType: lineItem.description,
-                  ticketHolder: session.customer_details?.email,
-                  firstName: session.custom_fields[0].text?.value,
-                  lastName: session.custom_fields[0].text?.value,
-                  isComp: false,
-                  isCheckedIn: false
-              }
-          
-              console.log("Ticket", index+1, ticket)
-          
-              promisesToAwait.push(await createTicket(ticket));
-              // const newTicket = await createTicket(ticket)
+console.log("Added to array", newTickets)
+// Call `createTicket` with the array
+const addedTickets = await db.insert(tickets).values(newTickets)
 
-              // return NextResponse.json({ message: 'OK', ticket: newTicket})
 
-              }
-            }
-           })
 
-           const responses = await Promise.all(promisesToAwait);
 
-           if (responses) {
-            console.log("Tickets created in database")
-          }
+          //  const responses = await Promise.all(promisesToAwait);
+
+          //  if (addedTickets) {
+          //   console.log("Tickets created in database")
+          // }
         // let purchasedProducts = [];
 
         // for (let element of lineItems.data) {

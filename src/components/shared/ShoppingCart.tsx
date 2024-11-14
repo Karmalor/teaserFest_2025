@@ -3,8 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import Image from "next/image";
-
 import {
   Sheet,
   SheetContent,
@@ -15,25 +13,57 @@ import {
 
 import { on } from "events";
 import { LuShoppingCart } from "react-icons/lu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 import CartItem from "./CartItem";
 import { formatCurrency } from "@/lib/formatters";
 import storeItems from "../../db/items.json";
 import Link from "next/link";
+import { getWeekendPassTypes } from "@/lib/actions/ticket.actions";
+import { usePathname, useRouter } from "next/navigation";
 
 type ShoppingCartProps = {
   isOpen: boolean;
   cartQuantity: number;
 };
 
+// Define the shape of items in passData if possible
+interface PassDataItem {
+  id: string;
+  priceInCents: number;
+}
+
 const ShoppingCart = ({ isOpen, cartQuantity }: ShoppingCartProps) => {
   const { closeCart, cartItems } = useShoppingCart();
+  const [passData, setPassData] = useState<PassDataItem[]>([]);
+  const pathname = usePathname();
+  const router = useRouter();
 
-  console.log(cartItems);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getWeekendPassTypes(); //   if (!result) return;
+      setPassData(result || []);
+      if (result) {
+      }
+    };
+    fetchData();
+  }, []);
+
+  function handleCloseCart() {
+    closeCart(); // Invoke closeCart
+    if (pathname === "/checkout") {
+      window.location.reload();
+    }
+  }
 
   return (
-    <Sheet open={isOpen} onOpenChange={closeCart} modal={false}>
+    <Sheet
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleCloseCart(); // Trigger closeCart and refresh if closing
+      }}
+      modal={false}
+    >
       <SheetContent className="sm:max-w-lg w-[90vw] bg-[#FFF0F0]">
         <SheetHeader>
           <SheetTitle>Cart</SheetTitle>
@@ -46,7 +76,7 @@ const ShoppingCart = ({ isOpen, cartQuantity }: ShoppingCartProps) => {
               ) : (
                 <>
                   {cartItems.map((item) => (
-                    <CartItem key={item.id} {...item} />
+                    <CartItem key={item.id} {...item} passData={passData} />
                   ))}
                 </>
               )}
@@ -59,8 +89,11 @@ const ShoppingCart = ({ isOpen, cartQuantity }: ShoppingCartProps) => {
                 Total{" "}
                 {formatCurrency(
                   cartItems.reduce((total, cartItem) => {
-                    const item = storeItems.find((i) => i.id === cartItem.id);
-                    return total + (item!.price / 100 || 0) * cartItem.quantity;
+                    const item = passData.find((i) => i.id === cartItem.id);
+                    return (
+                      total +
+                      (item?.priceInCents / 100 || 0) * cartItem.quantity
+                    );
                   }, 0)
                 )}
               </p>

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -6,115 +8,32 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PurchaseModal from "./_components/PurchaseModal";
 import Marquee from "react-fast-marquee";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useClerk } from "@clerk/nextjs";
+import { getWeekendPassTypes } from "@/lib/actions/ticket.actions";
+import { SelectWeekendPassType } from "@/db/schema";
 
 const page = () => {
-  const passData = [
-    {
-      key: 1,
-      id: 303,
-      name: "Weekend GA",
-      price: 15000,
-      description: "*seating at all venues not guaranteed",
-      content: [
-        // [
-        //   "This package includes general admission to the following Teaser Festival showcases: ",
-        //   <br />,
-        //   <br />,
-        //   "- Queen of the Striptease",
-        //   <br />,
-        //   "- VarieTEASE",
-        //   <br />,
-        //   "- Sensualite",
-        //   <br />,
-        //   "- Locals Only",
-        // ],
-      ],
-      imgUrl:
-        "https://utfs.io/f/443ed477-5441-48d1-85f2-a1a56caffb52-1ut6k.jpeg",
-    },
-    {
-      key: 2,
-      id: 202,
-      name: "Weekend VIP",
-      price: 35000,
-      description: "*description",
-      content: [
-        // [
-        //   "This package includes VIP admission to all of the events listed in the GA Weekend Pass column:",
-        //   <br />,
-        //   <br />,
-        //   "- Queen of the Striptease",
-        //   <br />,
-        //   "- VarieTEASE",
-        //   <br />,
-        //   "- Sensualite",
-        //   <br />,
-        //   "- Locals Only",
-        //   <br />,
-        //   <br />,
-        //   `PLUS:`,
-        //   <br />,
-        //   `- The Fetish Showcase`,
-        //   <br />,
-        //   `- The Queen's Tea Brunch`,
-        //   <br />,
-        //   `- The Performer Pool Party`,
-        // ],
-      ],
-      imgUrl:
-        "https://utfs.io/f/443ed477-5441-48d1-85f2-a1a56caffb52-1ut6k.jpeg",
-    },
-    {
-      key: 3,
-      id: 311,
-      name: "VIP Baller",
-      price: 50000,
-      description: "Card Description",
-      content: [
-        // [
-        //   "This package includes VIP admission to ALL Teaser Festival Events:",
-        //   <br />,
-        //   <br />,
-        //   "- Queen of the Striptease",
-        //   <br />,
-        //   "- VarieTEASE",
-        //   <br />,
-        //   "- Sensualite",
-        //   <br />,
-        //   "- Locals Only",
-        //   <br />,
-        //   <br />,
-        //   `PLUS:`,
-        //   <br />,
-        //   `- The Fetish Showcase`,
-        //   <br />,
-        //   `- The Queen's Tea Brunch`,
-        //   <br />,
-        //   `- The Performer Pool Party`,
-        //   <br />,
-        //   <br />,
-        //   "PLUS:",
-        //   <br />,
-        //   "- Front row reserved table seating",
-        //   <br />,
-        //   "- Table Service",
-        //   <br />,
-        //   "- Complimentary Bottle of Bubbles for the table at Queen of the Striptease and Varietease",
-        //   <br />,
-        //   "- Meet & Greet Access with Performers",
-        //   <br />,
-        //   "- Performer-only VIP party access",
-        // ],
-      ],
-      imgUrl:
-        "https://utfs.io/f/443ed477-5441-48d1-85f2-a1a56caffb52-1ut6k.jpeg",
-    },
-  ];
+  const [passData, setPassData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getWeekendPassTypes(); //   if (!result) return;
+      setPassData(result || []);
+      if (result) {
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    // console.log("Fetched", passData[0].content ?? null);
+  }, [passData]);
 
   return (
     <div
@@ -163,20 +82,23 @@ const page = () => {
       </div>
       <div className="flex flex-col lg:flex-row items-start justify-center my-4 mx-2 mb-16 z-50">
         {passData.map((item, i) => (
-          <Card key={i} className="max-w-[400px] mx-auto my-2 lg:mx-2">
+          <Card
+            key={i}
+            className="min-w-[350px] max-w-[400px] mx-auto my-2 lg:mx-2"
+          >
             <CardHeader>
               <CardTitle className="text-center text-2xl">
                 {item.name}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p>{item.content}</p>
+              {<div dangerouslySetInnerHTML={{ __html: item.content }} />}
             </CardContent>
             <CardDescription className="ml-6 mb-4">
               {item.description}
             </CardDescription>
             <CardFooter>
-              <PurchaseModal price={item.price} id={item.id} />
+              <PurchaseModal price={item.priceInCents} id={item.id} />
             </CardFooter>
           </Card>
         ))}

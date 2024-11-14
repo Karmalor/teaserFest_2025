@@ -42,14 +42,14 @@ const QRCard = ({ ticketData }: QRCodeProps) => {
             target="_blank"
             rel="noopener noreferrer"
           > */}
-          Description
+          {ticketData.firstName} {ticketData.lastName}
           {/* </a> */}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p>
-          {ticketData.firstName} {ticketData.lastName}
-        </p>
+        <h1>{ticketData.ticketType}</h1>
+        <p>The Civic Theater</p>
+        <p>Fri, 17th of January</p>
       </CardContent>
       {/* <CardFooter>
         <p>Card Footer</p>

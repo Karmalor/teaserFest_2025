@@ -1,8 +1,8 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, text, boolean, uuid, json, jsonb, date, integer, timestamp, pgEnum, time } from 'drizzle-orm/pg-core';
+import { pgTable, text, boolean, uuid, json, jsonb, date, integer, timestamp, pgEnum, time, index, uniqueIndex } from 'drizzle-orm/pg-core';
 import { array } from 'zod';
 
-export const rolesEnum = pgEnum("role", ["user", "admin"]);
+export const UserRole = pgEnum("userRole", ["user", "admin"]);
 
 export const users = pgTable('users', {
   clerkId: text('id').primaryKey(),
@@ -11,8 +11,11 @@ export const users = pgTable('users', {
   firstName: text('firstName'),
   lastName: text('lastName'),
   photo: text('imageUrl'),
-  role: rolesEnum('role').default("user"),
+  role: UserRole('userRole').default("user"),
   // orders: integer("orders").references(() => applicationOrders.id)
+}, table => {
+  return{  emailIndex: uniqueIndex("emailIndex").on(table.email)
+  }
 });
 
 export const attendees = pgTable('attendees', {
@@ -97,7 +100,9 @@ export const weekendPassTypes = pgTable("weekend_pass_types", {
   isAvailableForPurchase: boolean('isAvailableForPurchase').default(true),
   createdAt: timestamp('createdAt').defaultNow(),
   updatedAt: timestamp('updatedAt').$onUpdate(()=> new Date()),
-  showcase: uuid('showcase').references(() => showcases.id)
+  showcase: uuid('showcase'),
+  content: text('content').array(),
+  imgUrl: text("imgUrl").default("https://utfs.io/f/DUm6U8TUOYo64BRqfKidBVXmUF3OwH08zeWxkvjfTsuiDtC1")
 })
 
 export const weekendPasses = pgTable("weekend_passes", {
@@ -165,3 +170,6 @@ export type SelectShowcase= typeof showcases.$inferSelect;
 
 export type InsertTicket = typeof tickets.$inferInsert;
 export type SelectTicket = typeof tickets.$inferSelect;
+
+export type InsertWeekendPassType = typeof weekendPassTypes.$inferInsert;
+export type SelectWeekendPassType = typeof weekendPassTypes.$inferSelect;

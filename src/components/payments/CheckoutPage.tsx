@@ -12,13 +12,7 @@ import { Button } from "../ui/button";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
-const CheckoutPage = ({
-  amount,
-  buyerId,
-}: {
-  amount: number;
-  buyerId: string;
-}) => {
+const CheckoutPage = ({ amount }: { amount: number }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string>();

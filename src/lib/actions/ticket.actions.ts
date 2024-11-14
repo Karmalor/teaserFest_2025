@@ -1,8 +1,8 @@
 'use server'
 
 import { db } from "@/db";
-import { InsertTicket, SelectTicket, tickets } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { InsertTicket, SelectTicket, SelectWeekendPassType, tickets, weekendPassTypes } from "@/db/schema";
+import { asc, eq } from "drizzle-orm";
 
 export async function createTicket(
   ticketData: InsertTicket,
@@ -30,4 +30,15 @@ Array<{
  
 {
   return db.query.tickets.findMany({where: eq(tickets.ticketHolder, userEmail as string)})
+}
+
+export async function getWeekendPassTypes(): Promise<
+Array<{
+ 
+}>
+> 
+ 
+{
+  return (await db.query.weekendPassTypes.findMany(	{orderBy: [asc(weekendPassTypes.createdAt)],}
+))
 }

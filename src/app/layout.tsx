@@ -10,6 +10,7 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
+  useClerk,
   useSession,
 } from "@clerk/nextjs";
 import { dark, neobrutalism } from "@clerk/themes";
@@ -20,11 +21,12 @@ import Link from "next/link";
 import BackButton from "@/components/navigation/BackButton";
 import HomeButton from "@/components/navigation/HomeButton";
 import Footer from "@/components/navigation/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CartSheet from "@/components/shared/CartSheet";
 import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
 import ShoppingCart from "@/components/shared/ShoppingCart";
 import NavBar from "@/components/navigation/NavBar";
+import { useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 

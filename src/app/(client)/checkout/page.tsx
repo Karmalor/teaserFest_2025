@@ -2,73 +2,76 @@
 
 import { useShoppingCart } from "@/context/ShoppingCartContext";
 import { CheckoutForm } from "./_components/CheckoutForm";
-import { formatCurrency } from "@/lib/formatters";
-import storeItems from "../../../db/items.json";
+import { useEffect, useState } from "react";
+import { getWeekendPassTypes } from "@/lib/actions/ticket.actions";
 
 const CheckoutPage = () => {
-  // Here you would be getting the basked etc.
-  // We're hard-coding the oruce for simplicity
-  const priceId = "price_1PoHtNFGdjlk58ObGlvpsQVx";
-
   const { cartItems } = useShoppingCart();
+  const [passData, setPassData] = useState([]);
+  const [productArray, setProductArray] = useState([]);
+  const [isDataLoading, setIsDataLoading] = useState(true); // Manage loading state
 
-  const amount = cartItems.reduce((total, cartItem) => {
-    const item = storeItems.find((i) => i.id === cartItem.id);
-    return Number(total + (item?.price || 0) * cartItem.quantity);
-  }, 0);
+  // Fetch pass data from the database
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getWeekendPassTypes();
+        setPassData(result || []);
+      } catch (error) {
+        console.error("Failed to fetch pass data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  // const amount2 = storeItems[0].price * cartItems[0].quantity * 100;
-  // if (!amount || !cartItems) return;
+  // Populate productArray only when passData and cartItems are available
+  useEffect(() => {
+    if (!cartItems.length || !passData.length) return;
 
-  console.log("Amount", amount);
+    const productos = cartItems
+      .map((element) => {
+        const item = passData.find((i) => i.id === element.id);
+        return item
+          ? {
+              price_data: {
+                currency: "usd",
+                unit_amount: item.priceInCents,
+                product_data: {
+                  name: item.name,
+                  images: [item.imgUrl],
+                },
+              },
+              quantity: element.quantity,
+            }
+          : null;
+      })
+      .filter(Boolean); // Filter out any null values
 
-  let productos = [];
+    setProductArray(productos);
+    setIsDataLoading(false); // Mark data as loaded once `productArray` is populated
+  }, [passData, cartItems]);
 
-  for (let element of cartItems) {
-    let item = storeItems.find((i) => i.id === element.id);
-    productos.push({
-      price_data: {
-        currency: "usd",
-        unit_amount: item!.price,
-        product_data: {
-          name: item!.name,
-          images: [item!.imgUrl],
-        },
-      },
-      adjustable_quantity: {
-        enabled: true,
-        minimum: 1,
-        maximum: 100,
-      },
-      quantity: element.quantity,
-    });
-  }
+  // Calculate amount only after `productArray` is ready
+  const amount = productArray.reduce(
+    (total, item) => total + item.price_data.unit_amount * item.quantity,
+    0
+  );
 
   const appFee = Math.floor(amount * 0.03);
 
-  console.log("appFee", appFee);
-
-  //   const products = storeItems.map((item) => ({
-  //     price_data: {
-  //       currency: "usd",
-  //       unit_amount: `${storeItems[0].price * cartItems[0].quantity * 100}`,
-  //       product_data: {
-  //         name: item.name,
-  //         images: [item.imgUrl],
-  //       },
-  //     },
-  //     quantity: cartItems[0].quantity,
-  //   }));
+  // Avoid rendering CheckoutForm until `productArray` is ready
+  if (isDataLoading)
+    return <div className="w-max mx-auto my-24">Loading...</div>;
 
   return (
     <main>
       <div className="max-w-screen-lg mx-auto my-8">
         <CheckoutForm
-          priceId={priceId}
+          priceId="price_1PoHtNFGdjlk58ObGlvpsQVx"
           amount={amount}
           quantity={1}
-          imgUrl={storeItems[0].imgUrl}
-          productsArray={productos as []}
+          imgUrl={productArray[0]?.price_data?.product_data?.images[0] || ""}
+          productsArray={productArray as []}
           appFee={appFee}
         />
       </div>

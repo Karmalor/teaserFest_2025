@@ -2,10 +2,14 @@
 
 import { SelectTicket } from "@/db/schema";
 import { getTicketByUser } from "@/lib/actions/ticket.actions";
-import { useUser } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
 import React, { useEffect, useState } from "react";
 import QRCard from "./_components/QRCard";
 import Link from "next/link";
+import Image from "next/image";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import TicketScroller from "./_components/TicketScroller";
+import { Button } from "@/components/ui/button";
 
 const PurchasedTicketsPage = () => {
   const { user } = useUser();
@@ -31,21 +35,30 @@ const PurchasedTicketsPage = () => {
 
   return (
     <div>
-      {!user ? (
-        <h1>No Tickets Purchased</h1>
+      <h1 className="text-xl m-8">Click to view ticket</h1>
+      {purchasedTickets.map((ticket) => (
+        <div
+          key={ticket.id}
+          className="mx-8 sm:mx-auto w-10/12 sm:w-1/2 xl:w-1/3"
+        >
+          <Link href={`/attendee/tickets/${ticket.id}`}>
+            <TicketScroller ticket={ticket} key={ticket.id} />
+          </Link>
+        </div>
+      ))}
+      {purchasedTickets.length < 1 ? (
+        <div className="flex justify-center items-center w-full mt-8">
+          <Link href={"/showcases"}>
+            <Button>Get tickets</Button>
+          </Link>
+        </div>
       ) : (
-        <>
-          <h1 className="text-xl m-8">Click to view ticket</h1>
-          <div className="flex flex-col sm:flex-row justify-start items-center gap-8 mx-auto sm:mx-16 mt-8">
-            {purchasedTickets.map((item, i) => (
-              <Link key={i} href={`/attendee/tickets/${item.id}`}>
-                <QRCard ticketData={item} />
-              </Link>
-            ))}
-          </div>
-        </>
+        <div className="flex justify-center items-center w-full mt-8">
+          <Link href={"/showcases"}>
+            <Button>View More</Button>
+          </Link>
+        </div>
       )}
-      <div></div>
     </div>
   );
 };
