@@ -9,7 +9,7 @@
     "lint": "next lint",
     "db:push": "npx drizzle-kit push",
     "db:studio": "npx drizzle-kit studio",
-    "email": "email dev --dir src/emails"
+    "email": "cp .env.local ./node_modules/react-email && email dev --dir src/emails"
   },
   "dependencies": {
     "@clerk/elements": "^0.18.0",

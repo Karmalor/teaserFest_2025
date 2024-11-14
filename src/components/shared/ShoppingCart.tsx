@@ -105,7 +105,7 @@ const ShoppingCart = ({ isOpen, cartQuantity }: ShoppingCartProps) => {
             <div className="mt-6">
               <Link href={"/checkout"}>
                 <Button
-                  onClick={closeCart}
+                  onClick={handleCloseCart}
                   className="w-full bg-black text-white"
                 >
                   Pay now

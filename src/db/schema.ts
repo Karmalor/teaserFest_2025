@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, text, boolean, uuid, json, jsonb, date, integer, timestamp, pgEnum, time, index, uniqueIndex } from 'drizzle-orm/pg-core';
+import { pgTable, text, boolean, uuid, jsonb, date, integer, timestamp, pgEnum, time, uniqueIndex, primaryKey } from 'drizzle-orm/pg-core';
 import { array } from 'zod';
 
 export const UserRole = pgEnum("userRole", ["user", "admin"]);
@@ -137,16 +137,47 @@ export const ticketOrders = pgTable('ticket_orders', {
   productId: text('productId').references(() => products.id)
 })
 
-// Relations
+export const usersToShowcases = pgTable(
+  'users_to+_showcases',
+  {
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.clerkId),
+    showcaseId: text('showcase_id')
+      .notNull()
+      .references(() => showcases.id)
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId, t.showcaseId] }),
+  }),
+)
 
-export const usersRelations = relations(attendees, ({many}) => ({
-  tickets: many(tickets)
+// Relations
+export const usersRelations = relations(users, ({many}) => ({
+  tickets: many(tickets),
+  usersToShowcases: many(usersToShowcases),
+}))
+
+export const showcaseRelations = relations(showcases, ({many}) => ({
+  attendees: many(users),
+
+}))
+
+export const usersToShowcasesRelations = relations(usersToShowcases, ({ one}) => ({
+  showcase: one(showcases, {
+    fields: [usersToShowcases.showcaseId],
+    references: [showcases.id],
+  }),
+  user: one(users, {
+    fields: [usersToShowcases.userId],
+    references: [users.clerkId]
+  })
 }))
 
 export const ticketRelations = relations(tickets, ({one})=> ({
-  attendees: one(attendees, {
+  attendees: one(users, {
     fields: [tickets.ticketHolder],
-    references: [attendees.email]
+    references: [users.email]
   })
 }))
 

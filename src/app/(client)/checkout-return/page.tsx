@@ -72,329 +72,400 @@ const PurchaseSuccessPage = async ({
   }
 
   return (
-    <div
-      className="mb-16 m-0 min-h-full w-full"
-      // style={{
-      //   backgroundColor: "",
-      //   color: "#333333",
-      //   fontFamily:
-      //     '"Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial, sans-serif',
-      //   fontSize: 16,
-      //   fontWeight: 400,
-      //   letterSpacing: "0.15008px",
-      //   lineHeight: "1.5",
-      //   margin: 0,
-      //   padding: "32px 0",
-      //   minHeight: "100%",
-      //   width: "100%",
-      // }}
-    >
-      {checkoutSession.status && (
-        <TicketReceipt checkoutSuccess={checkoutSession.status} />
-      )}
-      <table
-        align="center"
-        width="100%"
-        style={{
-          margin: "0 auto",
-          maxWidth: 600,
-          backgroundColor: "#FFF0F0",
-          borderRadius: 8,
-          border: "1px solid #000000",
-        }}
-        role="presentation"
-        cellSpacing={0}
-        cellPadding={0}
-        border={0}
+    <div>
+      <div
+        className="mb-16 m-0 min-h-full w-full"
+        // style={{
+        //   backgroundColor: "",
+        //   color: "#333333",
+        //   fontFamily:
+        //     '"Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial, sans-serif',
+        //   fontSize: 16,
+        //   fontWeight: 400,
+        //   letterSpacing: "0.15008px",
+        //   lineHeight: "1.5",
+        //   margin: 0,
+        //   padding: "32px 0",
+        //   minHeight: "100%",
+        //   width: "100%",
+        // }}
       >
-        <tbody>
-          <tr style={{ width: "100%" }}>
-            <td>
-              <div style={{ padding: "16px 24px 24px 24px" }}>
-                <table
-                  align="center"
-                  width="100%"
-                  cellPadding={0}
-                  border={0}
-                  style={{ tableLayout: "fixed", borderCollapse: "collapse" }}
-                >
-                  <tbody style={{ width: "100%" }}>
-                    <tr style={{ width: "100%" }}>
-                      <td
-                        style={{
-                          boxSizing: "content-box",
-                          verticalAlign: "middle",
-                          paddingLeft: 0,
-                          paddingRight: 0,
-                        }}
-                      >
-                        <div style={{ padding: "0px 0px 0px 0px" }}>
-                          <h2
-                            className="font-bold text-3xl"
-                            // style={{
-                            //   fontWeight: "normal",
-                            //   textAlign: "left",
-                            //   margin: 0,
-                            //   fontSize: 24,
-                            //   padding: "0px 0px 0px 0px",
-                            // }}
-                          >
-                            Teaser Fest 2025
-                          </h2>
-                        </div>
-                      </td>
-                      <td
-                        style={{
-                          boxSizing: "content-box",
-                          verticalAlign: "middle",
-                          paddingLeft: 0,
-                          paddingRight: 0,
-                        }}
-                      >
-                        <div style={{ padding: "0px 0px 0px 0px" }}>
-                          <div
-                            style={{
-                              color: "#808080",
-                              fontSize: 14,
-                              fontWeight: "normal",
-                              textAlign: "right",
-                              padding: "0px 0px 0px 0px",
-                            }}
-                          >
-                            {/* #103571871 */}
+        {checkoutSession.status && (
+          <TicketReceipt checkoutSuccess={checkoutSession.status} />
+        )}
+        <table
+          align="center"
+          width="100%"
+          style={{
+            margin: "0 auto",
+            maxWidth: 600,
+            backgroundColor: "#FFF0F0",
+            borderRadius: 8,
+            border: "1px solid #000000",
+          }}
+          role="presentation"
+          cellSpacing={0}
+          cellPadding={0}
+          border={0}
+        >
+          <tbody>
+            <tr style={{ width: "100%" }}>
+              <td>
+                <div style={{ padding: "16px 24px 24px 24px" }}>
+                  <table
+                    align="center"
+                    width="100%"
+                    cellPadding={0}
+                    border={0}
+                    style={{ tableLayout: "fixed", borderCollapse: "collapse" }}
+                  >
+                    <tbody style={{ width: "100%" }}>
+                      <tr style={{ width: "100%" }}>
+                        <td
+                          style={{
+                            boxSizing: "content-box",
+                            verticalAlign: "middle",
+                            paddingLeft: 0,
+                            paddingRight: 0,
+                          }}
+                        >
+                          <div style={{ padding: "0px 0px 0px 0px" }}>
+                            <h2
+                              className="font-bold text-3xl"
+                              // style={{
+                              //   fontWeight: "normal",
+                              //   textAlign: "left",
+                              //   margin: 0,
+                              //   fontSize: 24,
+                              //   padding: "0px 0px 0px 0px",
+                              // }}
+                            >
+                              Teaser Fest 2025
+                            </h2>
                           </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <h3
-                style={{
-                  fontWeight: "normal",
-                  textAlign: "left",
-                  margin: 0,
-                  fontSize: 20,
-                  padding: "16px 24px 0px 24px",
-                }}
-              >
-                Thank you for your purchase!
-              </h3>
-              <div
-                style={{
-                  color: "#404040",
-                  fontSize: 16,
-                  fontWeight: "normal",
-                  textAlign: "left",
-                  padding: "16px 24px 16px 24px",
-                }}
-              >
-                Hi {checkoutSession.custom_fields[0].text?.value}, Thank you so
-                much for joining us for Teser Festival 2025!
-              </div>
-              <div
-                style={{ textAlign: "left", padding: "16px 24px 40px 24px" }}
-              >
-                {user ? (
-                  <Link
-                    href="/orders"
-                    style={{
-                      color: "#FFFFFF",
-                      fontSize: 16,
-                      fontWeight: "normal",
-                      backgroundColor: "#000000",
-                      borderRadius: 4,
-                      display: "inline-block",
-                      padding: "16px 32px",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {" "}
-                    <h1>View Account</h1>
-                  </Link>
-                ) : (
-                  <Link
-                    href="/sign-up"
-                    style={{
-                      color: "#FFFFFF",
-                      fontSize: 16,
-                      fontWeight: "normal",
-                      backgroundColor: "#000000",
-                      borderRadius: 4,
-                      display: "inline-block",
-                      padding: "16px 32px",
-                      textDecoration: "none",
-                    }}
-                  >
-                    <h1>Create your account</h1>
-                  </Link>
-                )}
-              </div>
-              <h3
-                style={{
-                  fontWeight: "normal",
-                  textAlign: "left",
-                  margin: 0,
-                  fontSize: 20,
-                  padding: "16px 24px 0px 24px",
-                }}
-              >
-                Order summary
-              </h3>
-              {purchasedProducts.map((item, i) => (
-                <div key={i} style={{ padding: "16px 24px 16px 24px" }}>
-                  <div style={{ padding: "0px 0px 0px 0px" }}>
-                    <div style={{ padding: "0px 0px 0px 0px" }}>
-                      <table
-                        align="center"
-                        width="100%"
-                        cellPadding={0}
-                        border={0}
-                        style={{
-                          tableLayout: "fixed",
-                          borderCollapse: "collapse",
-                        }}
-                      >
-                        <tbody style={{ width: "100%" }}>
-                          <tr style={{ width: "100%" }}>
-                            <td
+                        </td>
+                        <td
+                          style={{
+                            boxSizing: "content-box",
+                            verticalAlign: "middle",
+                            paddingLeft: 0,
+                            paddingRight: 0,
+                          }}
+                        >
+                          <div style={{ padding: "0px 0px 0px 0px" }}>
+                            <div
                               style={{
-                                boxSizing: "content-box",
-                                verticalAlign: "middle",
-                                paddingLeft: 0,
-                                paddingRight: "10.666666666666666px",
-                                width: 64,
+                                color: "#808080",
+                                fontSize: 14,
+                                fontWeight: "normal",
+                                textAlign: "right",
+                                padding: "0px 0px 0px 0px",
                               }}
                             >
-                              <div style={{ padding: "4px 4px 4px 4px" }}>
+                              {/* #103571871 */}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h3
+                  style={{
+                    fontWeight: "normal",
+                    textAlign: "left",
+                    margin: 0,
+                    fontSize: 20,
+                    padding: "16px 24px 0px 24px",
+                  }}
+                >
+                  Thank you for your purchase!
+                </h3>
+                <div
+                  style={{
+                    color: "#404040",
+                    fontSize: 16,
+                    fontWeight: "normal",
+                    textAlign: "left",
+                    padding: "16px 24px 16px 24px",
+                  }}
+                >
+                  Hi {checkoutSession.custom_fields[0].text?.value}, Thank you
+                  so much for joining us for Teser Festival 2025!
+                </div>
+                <div
+                  style={{ textAlign: "left", padding: "16px 24px 40px 24px" }}
+                >
+                  {user ? (
+                    <Link
+                      href="/orders"
+                      style={{
+                        color: "#FFFFFF",
+                        fontSize: 16,
+                        fontWeight: "normal",
+                        backgroundColor: "#000000",
+                        borderRadius: 4,
+                        display: "inline-block",
+                        padding: "16px 32px",
+                        textDecoration: "none",
+                      }}
+                    >
+                      {" "}
+                      <h1>View Account</h1>
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/sign-up"
+                      style={{
+                        color: "#FFFFFF",
+                        fontSize: 16,
+                        fontWeight: "normal",
+                        backgroundColor: "#000000",
+                        borderRadius: 4,
+                        display: "inline-block",
+                        padding: "16px 32px",
+                        textDecoration: "none",
+                      }}
+                    >
+                      <h1>Create your account</h1>
+                    </Link>
+                  )}
+                </div>
+                <h3
+                  style={{
+                    fontWeight: "normal",
+                    textAlign: "left",
+                    margin: 0,
+                    fontSize: 20,
+                    padding: "16px 24px 0px 24px",
+                  }}
+                >
+                  Order summary
+                </h3>
+                {purchasedProducts.map((item, i) => (
+                  <div key={i} style={{ padding: "16px 24px 16px 24px" }}>
+                    <div style={{ padding: "0px 0px 0px 0px" }}>
+                      <div style={{ padding: "0px 0px 0px 0px" }}>
+                        <table
+                          align="center"
+                          width="100%"
+                          cellPadding={0}
+                          border={0}
+                          style={{
+                            tableLayout: "fixed",
+                            borderCollapse: "collapse",
+                          }}
+                        >
+                          <tbody style={{ width: "100%" }}>
+                            <tr style={{ width: "100%" }}>
+                              <td
+                                style={{
+                                  boxSizing: "content-box",
+                                  verticalAlign: "middle",
+                                  paddingLeft: 0,
+                                  paddingRight: "10.666666666666666px",
+                                  width: 64,
+                                }}
+                              >
+                                <div style={{ padding: "4px 4px 4px 4px" }}>
+                                  <div style={{ padding: "0px 0px 0px 0px" }}>
+                                    <div
+                                      style={{
+                                        padding: "0px 0px 0px 0px",
+                                        textAlign: "left",
+                                      }}
+                                    >
+                                      <img
+                                        alt=""
+                                        src={item.imgUrl}
+                                        style={{
+                                          outline: "none",
+                                          border: "none",
+                                          textDecoration: "none",
+                                          verticalAlign: "middle",
+                                          display: "inline-block",
+                                          maxWidth: "100%",
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td
+                                style={{
+                                  boxSizing: "content-box",
+                                  verticalAlign: "middle",
+                                  paddingLeft: "5.333333333333333px",
+                                  paddingRight: "5.333333333333333px",
+                                }}
+                              >
                                 <div style={{ padding: "0px 0px 0px 0px" }}>
                                   <div
                                     style={{
-                                      padding: "0px 0px 0px 0px",
+                                      fontSize: 16,
+                                      fontWeight: "bold",
                                       textAlign: "left",
+                                      padding: "0px 0px 4px 0px",
                                     }}
                                   >
-                                    <img
-                                      alt=""
-                                      src={item.imgUrl}
-                                      style={{
-                                        outline: "none",
-                                        border: "none",
-                                        textDecoration: "none",
-                                        verticalAlign: "middle",
-                                        display: "inline-block",
-                                        maxWidth: "100%",
-                                      }}
-                                    />
+                                    {item.name} x {item.quantity}
+                                  </div>
+                                  <div
+                                    style={{
+                                      color: "#808080",
+                                      fontSize: 14,
+                                      fontWeight: "normal",
+                                      textAlign: "left",
+                                      padding: "0px 0px 0px 0px",
+                                    }}
+                                  >
+                                    {item.description}
                                   </div>
                                 </div>
-                              </div>
-                            </td>
-                            <td
-                              style={{
-                                boxSizing: "content-box",
-                                verticalAlign: "middle",
-                                paddingLeft: "5.333333333333333px",
-                                paddingRight: "5.333333333333333px",
-                              }}
-                            >
-                              <div style={{ padding: "0px 0px 0px 0px" }}>
-                                <div
-                                  style={{
-                                    fontSize: 16,
-                                    fontWeight: "bold",
-                                    textAlign: "left",
-                                    padding: "0px 0px 4px 0px",
-                                  }}
-                                >
-                                  {item.name} x {item.quantity}
+                              </td>
+                              <td
+                                style={{
+                                  boxSizing: "content-box",
+                                  verticalAlign: "middle",
+                                  paddingLeft: "10.666666666666666px",
+                                  paddingRight: 0,
+                                  width: 80,
+                                }}
+                              >
+                                <div style={{ padding: "0px 0px 0px 0px" }}>
+                                  <div
+                                    style={{
+                                      fontSize: 16,
+                                      fontWeight: "bold",
+                                      textAlign: "right",
+                                      padding: "0px 0px 0px 0px",
+                                    }}
+                                  >
+                                    {formatCurrency(
+                                      ((item.price || 0) / 100) *
+                                        (item.quantity || 1)
+                                    )}
+                                  </div>
                                 </div>
-                                <div
-                                  style={{
-                                    color: "#808080",
-                                    fontSize: 14,
-                                    fontWeight: "normal",
-                                    textAlign: "left",
-                                    padding: "0px 0px 0px 0px",
-                                  }}
-                                >
-                                  {item.description}
-                                </div>
-                              </div>
-                            </td>
-                            <td
-                              style={{
-                                boxSizing: "content-box",
-                                verticalAlign: "middle",
-                                paddingLeft: "10.666666666666666px",
-                                paddingRight: 0,
-                                width: 80,
-                              }}
-                            >
-                              <div style={{ padding: "0px 0px 0px 0px" }}>
-                                <div
-                                  style={{
-                                    fontSize: 16,
-                                    fontWeight: "bold",
-                                    textAlign: "right",
-                                    padding: "0px 0px 0px 0px",
-                                  }}
-                                >
-                                  {formatCurrency(
-                                    ((item.price || 0) / 100) *
-                                      (item.quantity || 1)
-                                  )}
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
+                ))}
+                <div style={{ padding: "8px 0px 8px 0px" }}>
+                  <hr
+                    style={{
+                      width: "100%",
+                      border: "none",
+                      borderTop: "1px solid #000000",
+                      margin: 0,
+                    }}
+                  />
                 </div>
-              ))}
-              <div style={{ padding: "8px 0px 8px 0px" }}>
-                <hr
-                  style={{
-                    width: "100%",
-                    border: "none",
-                    borderTop: "1px solid #000000",
-                    margin: 0,
-                  }}
-                />
-              </div>
 
-              <div style={{ padding: "16px 24px 16px 24px" }}>
-                <table
-                  align="center"
-                  width="100%"
-                  cellPadding={0}
-                  border={0}
-                  style={{ tableLayout: "fixed", borderCollapse: "collapse" }}
-                >
-                  <tbody style={{ width: "100%" }}>
-                    <tr style={{ width: "100%" }}>
-                      <td
-                        style={{
-                          boxSizing: "content-box",
-                          verticalAlign: "middle",
-                          paddingLeft: 0,
-                          paddingRight: 8,
-                        }}
-                      >
-                        <div style={{ padding: "0px 0px 0px 0px" }} />
-                      </td>
-                      <td
-                        style={{
-                          boxSizing: "content-box",
-                          verticalAlign: "middle",
-                          paddingLeft: 8,
-                          paddingRight: 0,
-                        }}
-                      >
-                        <div style={{ padding: "0px 0px 0px 0px" }}>
-                          {promoCode.code && (
+                <div style={{ padding: "16px 24px 16px 24px" }}>
+                  <table
+                    align="center"
+                    width="100%"
+                    cellPadding={0}
+                    border={0}
+                    style={{ tableLayout: "fixed", borderCollapse: "collapse" }}
+                  >
+                    <tbody style={{ width: "100%" }}>
+                      <tr style={{ width: "100%" }}>
+                        <td
+                          style={{
+                            boxSizing: "content-box",
+                            verticalAlign: "middle",
+                            paddingLeft: 0,
+                            paddingRight: 8,
+                          }}
+                        >
+                          <div style={{ padding: "0px 0px 0px 0px" }} />
+                        </td>
+                        <td
+                          style={{
+                            boxSizing: "content-box",
+                            verticalAlign: "middle",
+                            paddingLeft: 8,
+                            paddingRight: 0,
+                          }}
+                        >
+                          <div style={{ padding: "0px 0px 0px 0px" }}>
+                            {promoCode.code && (
+                              <div style={{ padding: "4px 0px 4px 0px" }}>
+                                <table
+                                  align="center"
+                                  width="100%"
+                                  cellPadding={0}
+                                  border={0}
+                                  style={{
+                                    tableLayout: "fixed",
+                                    borderCollapse: "collapse",
+                                  }}
+                                >
+                                  <tbody style={{ width: "100%" }}>
+                                    <tr style={{ width: "100%" }}>
+                                      <td
+                                        style={{
+                                          boxSizing: "content-box",
+                                          verticalAlign: "middle",
+                                          paddingLeft: 0,
+                                          paddingRight: 0,
+                                        }}
+                                      >
+                                        <div
+                                          style={{ padding: "0px 0px 0px 0px" }}
+                                        >
+                                          <div
+                                            style={{
+                                              color: "#808080",
+                                              fontSize: 16,
+                                              fontWeight: "normal",
+                                              textAlign: "left",
+                                              padding: "0px 0px 0px 0px",
+                                            }}
+                                          >
+                                            Discount
+                                            <br />({promoCode.code})
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td
+                                        style={{
+                                          boxSizing: "content-box",
+                                          verticalAlign: "middle",
+                                          paddingLeft: 0,
+                                          paddingRight: 0,
+                                        }}
+                                      >
+                                        <div
+                                          style={{ padding: "0px 0px 0px 0px" }}
+                                        >
+                                          <div
+                                            style={{
+                                              fontSize: 16,
+                                              fontWeight: "bold",
+                                              textAlign: "right",
+                                              padding: "0px 0px 0px 0px",
+                                            }}
+                                          >
+                                            {formatCurrency(
+                                              (checkoutSession.total_details
+                                                ?.amount_discount as number) /
+                                                100
+                                            )}
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            )}
                             <div style={{ padding: "4px 0px 4px 0px" }}>
                               <table
                                 align="center"
@@ -428,8 +499,144 @@ const PurchaseSuccessPage = async ({
                                             padding: "0px 0px 0px 0px",
                                           }}
                                         >
-                                          Discount
-                                          <br />({promoCode.code})
+                                          Subtotal
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td
+                                      style={{
+                                        boxSizing: "content-box",
+                                        verticalAlign: "middle",
+                                        paddingLeft: 0,
+                                        paddingRight: 0,
+                                      }}
+                                    >
+                                      <div
+                                        style={{ padding: "0px 0px 0px 0px" }}
+                                      >
+                                        <div
+                                          style={{
+                                            fontSize: 16,
+                                            fontWeight: "bold",
+                                            textAlign: "right",
+                                            padding: "0px 0px 0px 0px",
+                                          }}
+                                        >
+                                          {formatCurrency(
+                                            (checkoutSession.amount_subtotal as number) /
+                                              100
+                                          )}
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            {checkoutSession.shipping_cost !== null && (
+                              <div style={{ padding: "4px 0px 4px 0px" }}>
+                                <table
+                                  align="center"
+                                  width="100%"
+                                  cellPadding={0}
+                                  border={0}
+                                  style={{
+                                    tableLayout: "fixed",
+                                    borderCollapse: "collapse",
+                                  }}
+                                >
+                                  <tbody style={{ width: "100%" }}>
+                                    <tr style={{ width: "100%" }}>
+                                      <td
+                                        style={{
+                                          boxSizing: "content-box",
+                                          verticalAlign: "middle",
+                                          paddingLeft: 0,
+                                          paddingRight: 0,
+                                        }}
+                                      >
+                                        <div
+                                          style={{ padding: "0px 0px 0px 0px" }}
+                                        >
+                                          <div
+                                            style={{
+                                              color: "#808080",
+                                              fontSize: 16,
+                                              fontWeight: "normal",
+                                              textAlign: "left",
+                                              padding: "0px 0px 0px 0px",
+                                            }}
+                                          >
+                                            Shipping
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td
+                                        style={{
+                                          boxSizing: "content-box",
+                                          verticalAlign: "middle",
+                                          paddingLeft: 0,
+                                          paddingRight: 0,
+                                        }}
+                                      >
+                                        <div
+                                          style={{ padding: "0px 0px 0px 0px" }}
+                                        >
+                                          <div
+                                            style={{
+                                              fontSize: 16,
+                                              fontWeight: "bold",
+                                              textAlign: "right",
+                                              padding: "0px 0px 0px 0px",
+                                            }}
+                                          >
+                                            {formatCurrency(
+                                              ((checkoutSession.shipping_cost
+                                                .amount_total as number) || 0) /
+                                                100
+                                            )}
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            )}
+                            <div style={{ padding: "4px 0px 4px 0px" }}>
+                              <table
+                                align="center"
+                                width="100%"
+                                cellPadding={0}
+                                border={0}
+                                style={{
+                                  tableLayout: "fixed",
+                                  borderCollapse: "collapse",
+                                }}
+                              >
+                                <tbody style={{ width: "100%" }}>
+                                  <tr style={{ width: "100%" }}>
+                                    <td
+                                      style={{
+                                        boxSizing: "content-box",
+                                        verticalAlign: "middle",
+                                        paddingLeft: 0,
+                                        paddingRight: 0,
+                                      }}
+                                    >
+                                      <div
+                                        style={{ padding: "0px 0px 0px 0px" }}
+                                      >
+                                        <div
+                                          style={{
+                                            color: "#808080",
+                                            fontSize: 16,
+                                            fontWeight: "normal",
+                                            textAlign: "left",
+                                            padding: "0px 0px 0px 0px",
+                                          }}
+                                        >
+                                          Taxes
                                         </div>
                                       </div>
                                     </td>
@@ -454,7 +661,7 @@ const PurchaseSuccessPage = async ({
                                         >
                                           {formatCurrency(
                                             (checkoutSession.total_details
-                                              ?.amount_discount as number) / 100
+                                              ?.amount_tax as number) / 100
                                           )}
                                         </div>
                                       </div>
@@ -463,71 +670,16 @@ const PurchaseSuccessPage = async ({
                                 </tbody>
                               </table>
                             </div>
-                          )}
-                          <div style={{ padding: "4px 0px 4px 0px" }}>
-                            <table
-                              align="center"
-                              width="100%"
-                              cellPadding={0}
-                              border={0}
+                            <div style={{ padding: "16px 0px 16px 0px" }}>
+                              {/* <hr
                               style={{
-                                tableLayout: "fixed",
-                                borderCollapse: "collapse",
+                                width: "100%",
+                                border: "none",
+                                borderTop: "1px solid #EEEEEE",
+                                margin: 0,
                               }}
-                            >
-                              <tbody style={{ width: "100%" }}>
-                                <tr style={{ width: "100%" }}>
-                                  <td
-                                    style={{
-                                      boxSizing: "content-box",
-                                      verticalAlign: "middle",
-                                      paddingLeft: 0,
-                                      paddingRight: 0,
-                                    }}
-                                  >
-                                    <div style={{ padding: "0px 0px 0px 0px" }}>
-                                      <div
-                                        style={{
-                                          color: "#808080",
-                                          fontSize: 16,
-                                          fontWeight: "normal",
-                                          textAlign: "left",
-                                          padding: "0px 0px 0px 0px",
-                                        }}
-                                      >
-                                        Subtotal
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td
-                                    style={{
-                                      boxSizing: "content-box",
-                                      verticalAlign: "middle",
-                                      paddingLeft: 0,
-                                      paddingRight: 0,
-                                    }}
-                                  >
-                                    <div style={{ padding: "0px 0px 0px 0px" }}>
-                                      <div
-                                        style={{
-                                          fontSize: 16,
-                                          fontWeight: "bold",
-                                          textAlign: "right",
-                                          padding: "0px 0px 0px 0px",
-                                        }}
-                                      >
-                                        {formatCurrency(
-                                          (checkoutSession.amount_subtotal as number) /
-                                            100
-                                        )}
-                                      </div>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          {checkoutSession.shipping_cost !== null && (
+                            /> */}
+                            </div>
                             <div style={{ padding: "4px 0px 4px 0px" }}>
                               <table
                                 align="center"
@@ -561,7 +713,7 @@ const PurchaseSuccessPage = async ({
                                             padding: "0px 0px 0px 0px",
                                           }}
                                         >
-                                          Shipping
+                                          Total
                                         </div>
                                       </div>
                                     </td>
@@ -578,16 +730,15 @@ const PurchaseSuccessPage = async ({
                                       >
                                         <div
                                           style={{
-                                            fontSize: 16,
+                                            fontSize: 21,
                                             fontWeight: "bold",
                                             textAlign: "right",
                                             padding: "0px 0px 0px 0px",
                                           }}
                                         >
                                           {formatCurrency(
-                                            ((checkoutSession.shipping_cost
-                                              .amount_total as number) || 0) /
-                                              100
+                                            (checkoutSession.amount_total ||
+                                              0) / 100
                                           )}
                                         </div>
                                       </div>
@@ -596,150 +747,13 @@ const PurchaseSuccessPage = async ({
                                 </tbody>
                               </table>
                             </div>
-                          )}
-                          <div style={{ padding: "4px 0px 4px 0px" }}>
-                            <table
-                              align="center"
-                              width="100%"
-                              cellPadding={0}
-                              border={0}
-                              style={{
-                                tableLayout: "fixed",
-                                borderCollapse: "collapse",
-                              }}
-                            >
-                              <tbody style={{ width: "100%" }}>
-                                <tr style={{ width: "100%" }}>
-                                  <td
-                                    style={{
-                                      boxSizing: "content-box",
-                                      verticalAlign: "middle",
-                                      paddingLeft: 0,
-                                      paddingRight: 0,
-                                    }}
-                                  >
-                                    <div style={{ padding: "0px 0px 0px 0px" }}>
-                                      <div
-                                        style={{
-                                          color: "#808080",
-                                          fontSize: 16,
-                                          fontWeight: "normal",
-                                          textAlign: "left",
-                                          padding: "0px 0px 0px 0px",
-                                        }}
-                                      >
-                                        Taxes
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td
-                                    style={{
-                                      boxSizing: "content-box",
-                                      verticalAlign: "middle",
-                                      paddingLeft: 0,
-                                      paddingRight: 0,
-                                    }}
-                                  >
-                                    <div style={{ padding: "0px 0px 0px 0px" }}>
-                                      <div
-                                        style={{
-                                          fontSize: 16,
-                                          fontWeight: "bold",
-                                          textAlign: "right",
-                                          padding: "0px 0px 0px 0px",
-                                        }}
-                                      >
-                                        {formatCurrency(
-                                          (checkoutSession.total_details
-                                            ?.amount_tax as number) / 100
-                                        )}
-                                      </div>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
                           </div>
-                          <div style={{ padding: "16px 0px 16px 0px" }}>
-                            {/* <hr
-                              style={{
-                                width: "100%",
-                                border: "none",
-                                borderTop: "1px solid #EEEEEE",
-                                margin: 0,
-                              }}
-                            /> */}
-                          </div>
-                          <div style={{ padding: "4px 0px 4px 0px" }}>
-                            <table
-                              align="center"
-                              width="100%"
-                              cellPadding={0}
-                              border={0}
-                              style={{
-                                tableLayout: "fixed",
-                                borderCollapse: "collapse",
-                              }}
-                            >
-                              <tbody style={{ width: "100%" }}>
-                                <tr style={{ width: "100%" }}>
-                                  <td
-                                    style={{
-                                      boxSizing: "content-box",
-                                      verticalAlign: "middle",
-                                      paddingLeft: 0,
-                                      paddingRight: 0,
-                                    }}
-                                  >
-                                    <div style={{ padding: "0px 0px 0px 0px" }}>
-                                      <div
-                                        style={{
-                                          color: "#808080",
-                                          fontSize: 16,
-                                          fontWeight: "normal",
-                                          textAlign: "left",
-                                          padding: "0px 0px 0px 0px",
-                                        }}
-                                      >
-                                        Total
-                                      </div>
-                                    </div>
-                                  </td>
-                                  <td
-                                    style={{
-                                      boxSizing: "content-box",
-                                      verticalAlign: "middle",
-                                      paddingLeft: 0,
-                                      paddingRight: 0,
-                                    }}
-                                  >
-                                    <div style={{ padding: "0px 0px 0px 0px" }}>
-                                      <div
-                                        style={{
-                                          fontSize: 21,
-                                          fontWeight: "bold",
-                                          textAlign: "right",
-                                          padding: "0px 0px 0px 0px",
-                                        }}
-                                      >
-                                        {formatCurrency(
-                                          (checkoutSession.amount_total || 0) /
-                                            100
-                                        )}
-                                      </div>
-                                    </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              {/* <h3
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                {/* <h3
                 style={{
                   fontWeight: "normal",
                   textAlign: "left",
@@ -866,10 +880,11 @@ const PurchaseSuccessPage = async ({
               >
                 If you have any questions, just reply to this email.
               </div> */}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
