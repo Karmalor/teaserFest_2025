@@ -62,9 +62,9 @@ const QRCard = ({ ticketData }: QRCodeProps) => {
         <p>The Civic Theater</p>
         <p>Fri, 17th of January</p>
       </CardContent>
-      {/* <CardFooter>
-        <Image src={ticketData.imgUrl}/>
-      </CardFooter> */}
+      <CardFooter>
+        <CardDescription className="text-left"></CardDescription>
+      </CardFooter>
     </Card>
   );
 };

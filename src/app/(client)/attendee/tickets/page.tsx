@@ -35,7 +35,7 @@ const PurchasedTicketsPage = () => {
   }, [user]);
 
   return (
-    <div>
+    <div className="mb-16">
       <h1 className="text-xl m-8">Click to view ticket</h1>
       {purchasedTickets.map((ticket) => (
         <div
@@ -54,7 +54,7 @@ const PurchasedTicketsPage = () => {
       ) : (
         <div className="flex justify-center items-center w-full mt-8">
           <Link href={"/showcases"}>
-            <Button>View More</Button>
+            <Button>Browse more events</Button>
           </Link>
         </div>
       )}
