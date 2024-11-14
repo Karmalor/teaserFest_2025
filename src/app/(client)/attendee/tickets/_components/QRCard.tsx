@@ -35,24 +35,35 @@ const QRCard = ({ ticketData }: QRCodeProps) => {
             className="w-full object-fill"
           ></QRCodeSVG>
         </CardTitle>
-        <CardDescription>
+        <CardTitle className="text-left mb-4">
+          {!ticketData.isCheckedIn ? (
+            <>
+              <div className=" text-red-700">Not Checked In</div>
+            </>
+          ) : (
+            <>
+              <div className="text-green-700 ">Checked In</div>
+            </>
+          )}
+        </CardTitle>
+        <CardDescription className="text-left">
           {/* <a
             className="App-link"
             href="https://reactjs.org"
             target="_blank"
             rel="noopener noreferrer"
           > */}
-          {ticketData.firstName} {ticketData.lastName}
+
           {/* </a> */}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="text-left">
         <h1>{ticketData.ticketType}</h1>
         <p>The Civic Theater</p>
         <p>Fri, 17th of January</p>
       </CardContent>
       {/* <CardFooter>
-        <p>Card Footer</p>
+        <Image src={ticketData.imgUrl}/>
       </CardFooter> */}
     </Card>
   );

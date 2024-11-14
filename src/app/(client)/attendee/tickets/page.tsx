@@ -10,6 +10,7 @@ import Image from "next/image";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import TicketScroller from "./_components/TicketScroller";
 import { Button } from "@/components/ui/button";
+import TicketModal from "./_components/TicketModal";
 
 const PurchasedTicketsPage = () => {
   const { user } = useUser();
@@ -41,9 +42,7 @@ const PurchasedTicketsPage = () => {
           key={ticket.id}
           className="mx-8 sm:mx-auto w-10/12 sm:w-1/2 xl:w-1/3"
         >
-          <Link href={`/attendee/tickets/${ticket.id}`}>
-            <TicketScroller ticket={ticket} key={ticket.id} />
-          </Link>
+          <TicketModal ticket={ticket} key={ticket.id} />
         </div>
       ))}
       {purchasedTickets.length < 1 ? (

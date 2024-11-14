@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 
 type PurchaseReceiptProps = {
-  checkoutSession: string;
+  checkoutSession: {};
   user: string;
   purchasedProducts: SelectTicket[];
   promoCode: string;

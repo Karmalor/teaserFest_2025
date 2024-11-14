@@ -11,7 +11,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { LuCheckCircle2, LuMoreVertical, LuX, LuXCircle } from "react-icons/lu";
+import {
+  LuCheck,
+  LuCheckCircle2,
+  LuMoreVertical,
+  LuX,
+  LuXCircle,
+} from "react-icons/lu";
 import { formatCurrency } from "@/lib/formatters";
 import {
   DropdownMenu,
@@ -53,39 +59,36 @@ const TicketScroller = ({ ticket }: { ticket: SelectTicket }) => {
           </div>
 
           <div className="flex flex-1 items-start justify-between text-sm">
-            <div className="flex flex-col">
-              <div className="flex gap-2">
-                {/* <button>
-                  <LuMinus onClick={() => decreaseItemQuantity(id)} />
-                </button> */}
-                <p className="text-gray-500">{ticket.firstName}</p>
-                {/* <button>
-                  <LuPlus onClick={() => increaseItemQuantity(id)} />
-                </button> */}
-              </div>
+            <div className="flex flex-col mt-2 text-left">
+              <p className="text-gray-500">{ticket.firstName}</p>
               <p className="text-gray-500">The Civic Theater</p>
               <p className="text-gray-500">Fri, 18Jan</p>
             </div>
             <div className="flex gap-2">
-              {/* <p className="text-gray-500">Fri, 18Jan</p> */}
               <div className="flex items-center">
                 <div className="flex items-start justify-end text-end">
-                  <button
-                    //   onClick={() => removeItem(entry.id)}
-                    className="font-medium text-primary hover:text-primary/80 text-red-700 hidden md:flex"
-                    // onClick={() => removeFromCart(item!.id)}
-                  >
-                    {/* <LuX size={18} className="content-end" /> */}
-                    View QR Code
-                  </button>
+                  {!ticket.isCheckedIn ? (
+                    <>
+                      <div className="font-medium text-primary hover:text-primary/80 text-red-700 hidden md:flex">
+                        Not Checked In
+                      </div>
+                      <div className="font-medium text-primary hover:text-primary/80 text-red-700 flex md:hidden">
+                        <LuX />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-start justify-end text-end">
+                        <div className="font-medium text-primary hover:text-primary/80 text-green-700 hidden md:flex">
+                          Checked In
+                        </div>
+                      </div>
+                      <div className="font-medium text-primary hover:text-primary/80 text-green-700 flex md:hidden">
+                        <LuCheck />
+                      </div>
+                    </>
+                  )}
                 </div>
-                <button
-                  //   onClick={() => removeItem(entry.id)}
-                  className="font-medium text-primary hover:text-primary/80 text-red-700 flex md:hidden"
-                  // onClick={() => removeFromCart(item!.id)}
-                >
-                  <LuX />
-                </button>
               </div>
             </div>
           </div>
