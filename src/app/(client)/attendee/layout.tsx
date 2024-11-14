@@ -26,7 +26,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         children // Display children if user is signed in
       ) : (
         // Placeholder content while checking user state or during redirection
-        <h1 className="text-xl m-8">Redirecting to sign-in...</h1>
+        <h1 className="text-xl m-8">Loading...</h1>
       )}
     </div>
   );

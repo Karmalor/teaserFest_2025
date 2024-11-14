@@ -51,7 +51,6 @@ export async function POST(req: Request) {
 let newTickets: Array<SelectTicket> = [];
 
 lineItems.data.map((lineItem) => {
-    if (lineItem.description === 'Weekend VIP') {
         for (let i = 0; i < (lineItem.quantity || 1); i++) {
             newTickets.push({
                 id: v4(),
@@ -64,7 +63,7 @@ lineItems.data.map((lineItem) => {
                 createdAt: new Date()
             });
         }
-    }
+    
 });
 
 console.log("Added to array", newTickets)
