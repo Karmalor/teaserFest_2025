@@ -69,7 +69,7 @@ const page = async () => {
             scene only found in New Orleans.
           </p>
           <br />
-          <p>
+          {/* <p>
             Below is the Teaser Festival Application button. You may purchase an
             application for $25 at the link below. You may purchase multiple
             applications if you wish to submit multiple acts to the festival.
@@ -79,15 +79,13 @@ const page = async () => {
             will be saved to your account as you work on it, so you are free to
             return to this page later to review, finish, and submit at your
             leisure.
-          </p>
+          </p> */}
           <br />
-          <p className="font-black flex items-center justify-center">
+          {/* <p className="font-black flex items-center justify-center">
             - Deadline Extended -
-          </p>
+          </p> */}
           <br />
-          <p className="font-black">
-            All applications must be submitted by November 15th, 2024
-          </p>
+          <p className="font-black">Applications are now closed!</p>
 
           <br />
           <p>We look forward to reviewing your act!</p>
@@ -98,11 +96,11 @@ const page = async () => {
             <Suspense fallback={<h1>Loading...</h1>}>
               <ApplicationList applications={applications} />
             </Suspense>
-            <div className="flex pt-8 justify-center">
+            {/* <div className="flex pt-8 justify-center">
               <Link href="/payment">
                 <Button>Click to purchase an Application submission</Button>
               </Link>
-            </div>
+            </div> */}
           </div>
         ) : (
           <div>Loading application link...</div>
