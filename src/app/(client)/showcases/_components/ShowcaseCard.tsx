@@ -6,51 +6,56 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { formatCurrency } from "@/lib/formatters";
-import { Button } from "./ui/button";
-import Link from "next/link";
+} from "../../../../components/ui/card";
+import { Button } from "../../../../components/ui/button";
 import Image from "next/image";
+import { SelectShowcase } from "@/db/schema";
+import ShowcaseDetailModal from "./ShowcaseDetailModal";
 
-type ShowcaseCardProps = {
-  id: string;
-  title: string;
-  description: string | null;
-  imageUrl: string | null;
-};
-
-const ShowcaseCard = ({
-  title,
-  description,
-  id,
-  imageUrl,
-}: ShowcaseCardProps) => {
+const ShowcaseCard = ({ showcase }: { showcase: SelectShowcase }) => {
   return (
     <Card className="flex overflow-hidden flex-col rounded-sm">
       <div className="relative flex items-center justify-center w-full h-auto aspect-video">
-        {imageUrl && (
+        {showcase.imageUrl && (
           <div className="">
-            <Image
-              src={imageUrl}
-              width={500}
-              height={500}
-              alt={title}
-              className="object-cover aspect-square"
-            />
+            {showcase.imageUrl ? (
+              <Image
+                src={showcase.imageUrl}
+                width={500}
+                height={500}
+                alt={showcase.title}
+                className="object-cover aspect-square"
+              />
+            ) : (
+              <div className="bg-gray-300 w-full h-full" />
+            )}
           </div>
         )}
       </div>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>Tickets</CardDescription>
+        <CardTitle>{showcase.title}</CardTitle>
+
+        {showcase.startDate ? (
+          <>
+            <CardDescription>
+              {new Date(showcase.startDate).toLocaleDateString("en-us", {
+                dateStyle: "full",
+              })}
+            </CardDescription>
+            <CardDescription>at {showcase.location}</CardDescription>
+          </>
+        ) : (
+          <CardDescription>at {showcase.location}</CardDescription>
+        )}
       </CardHeader>
       <CardContent className="flex-grow">
-        <p className="line-clamp-4">{description}</p>
+        <p className="line-clamp-4">{showcase.description}</p>
       </CardContent>
-      <CardFooter>
-        <Button asChild size="lg" className="w-full">
+      <CardFooter className="w-full">
+        {/* <Button asChild size="lg" className="w-full">
           <Link href={`/showcases/${id}/detail`}>Get Tickets</Link>
-        </Button>
+        </Button> */}
+        <ShowcaseDetailModal {...showcase} />
       </CardFooter>
     </Card>
   );

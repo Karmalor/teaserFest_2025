@@ -198,7 +198,7 @@ const PurchaseSuccessPage = async ({
                 >
                   {user ? (
                     <Link
-                      href="/orders"
+                      href="/attendee/tickets"
                       style={{
                         color: "#FFFFFF",
                         fontSize: 16,

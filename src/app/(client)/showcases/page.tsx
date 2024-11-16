@@ -1,17 +1,26 @@
-import ShowcaseCard, { ShowcaseCardSkeleton } from "@/components/ShowcaseCard";
+import ShowcaseCard, {
+  ShowcaseCardSkeleton,
+} from "@/app/(client)/showcases/_components/ShowcaseCard";
 import { db } from "@/db";
 import { SelectShowcase, showcases } from "@/db/schema";
 import { cache } from "@/lib/cache";
 import React, { Suspense } from "react";
 
-const getShowcases = cache(() => {
+// const getShowcases = cache(() => {
+//   const showcaseList = db.select().from(showcases).orderBy(showcases.startDate);
+
+//   console.log(showcaseList);
+//   return showcaseList;
+// }, ["/showcases", "getShowcases"]);
+
+// getShowcases();
+
+const getShowcases = () => {
   const showcaseList = db.select().from(showcases).orderBy(showcases.startDate);
 
   console.log(showcaseList);
   return showcaseList;
-}, ["/showcases", "getShowcases"]);
-
-getShowcases();
+};
 
 const ShowcasesPage = () => {
   return (
@@ -61,8 +70,8 @@ async function ShowcaseSuspense() {
   const showcases = await getShowcases();
 
   return showcases.map((showcase, i) => (
-    <div key={i} className="max-w-[400px]">
-      <ShowcaseCard key={showcase.id} {...showcase} />
+    <div key={i} className="max-w-[400px] mb-16">
+      <ShowcaseCard key={showcase.id} showcase={showcase} />
     </div>
   ));
 }

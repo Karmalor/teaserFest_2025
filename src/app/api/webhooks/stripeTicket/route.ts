@@ -63,7 +63,6 @@ lineItems.data.map((lineItem) => {
                 createdAt: new Date()
             });
         }
-    
 });
 
 console.log("Added to array", newTickets)
