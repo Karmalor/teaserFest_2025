@@ -78,6 +78,7 @@ export const showcases = pgTable("showcases", {
   attendees: uuid('attendees'),
   url: text('url'),
   createdAt: timestamp('createdAt').defaultNow(),
+  pastPhotos: text('pastPhotos').array()
 })
 
 export const tickets = pgTable("tickets", {

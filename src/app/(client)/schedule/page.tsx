@@ -32,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import ShowcaseTicketsButton from "@/components/shared/ShowcaseTicketsButton";
 
 const ShowcaseSchedulePage = () => {
   const [modal, setModal] = useState(false);
@@ -61,7 +62,7 @@ const ShowcaseSchedulePage = () => {
             VARIETY!
           </p>
           <div className="mt-8">
-            <PerformerScroller />
+            <PerformerScroller pastPhotos={[]} />
           </div>
         </div>
         <div className="flex flex-col justify-between">
@@ -69,6 +70,7 @@ const ShowcaseSchedulePage = () => {
             <ShowcasePhoto />
           </div>
           <div>
+            <ShowcaseTicketsButton />
             <Dialog>
               <DialogTrigger asChild>
                 <div>
