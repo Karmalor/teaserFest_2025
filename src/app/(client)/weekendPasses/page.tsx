@@ -18,7 +18,7 @@ import { useClerk } from "@clerk/nextjs";
 import { getWeekendPassTypes } from "@/lib/actions/ticket.actions";
 import { SelectWeekendPassType } from "@/db/schema";
 
-const page = () => {
+const WeekendPassesPage = () => {
   const [passData, setPassData] = useState([]);
 
   useEffect(() => {
@@ -107,4 +107,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default WeekendPassesPage;
