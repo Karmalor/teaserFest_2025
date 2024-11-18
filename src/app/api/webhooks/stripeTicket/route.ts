@@ -69,38 +69,21 @@ console.log("Added to array", newTickets)
 // Call `createTicket` with the array
 const addedTickets = await db.insert(tickets).values(newTickets)
 
+await fetch("/api/receiptEmail", {
+  method: "POST",
+  body: JSON.stringify({
+    email: session.customer_details!.email,
+    checkoutSession: session,
+    purchasedProducts: lineItems.data
+  }),
+});
 
-
-
-          //  const responses = await Promise.all(promisesToAwait);
-
-          //  if (addedTickets) {
-          //   console.log("Tickets created in database")
-          // }
-        // let purchasedProducts = [];
-
-        // for (let element of lineItems.data) {
-        //   let item = storeItems.find((i) => i.name === element.description);
-        //   purchasedProducts.push({
-        //     price_data: {
-        //       currency: "usd",
-        //       unit_amount: item!.price,
-        //       product_data: {
-        //         name: item!.name,
-        //         images: [item!.imgUrl],
-        //       },
-        //     },
-        //     quantity: element.quantity,
-        //     name: item?.name,
-        //     price: item?.price,
-        //     description: item?.description,
-        //     imgUrl: item?.imgUrl,
-        //   });
-        // }
-
-        
-
-        // console.log("These are the Line Items part 2", purchasedProducts)
+  // await resend.email.send({
+  //   from: 'info@teaserfest.com',
+  //   to: session.customer_details!.email,
+  //   subject: "Teaser Fest 2025Order Confirmation",
+  //   react: 
+  // })
 
       }
 

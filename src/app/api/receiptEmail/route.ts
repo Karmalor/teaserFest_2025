@@ -6,14 +6,18 @@ import { PassReceiptEmail } from '@/emails/passRecept';
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(request: Request) {
-    const { ticketHolderFirstName, ticketHolderLastName, email } = await request.json()
+    const { 
+      // ticketHolderFirstName,
+      //  ticketHolderLastName,
+        email } = await request.json()
 
     await resend.emails.send({
         from: 'info@teaserfest.com',
         to: email || "karmalor@gmail.com",
         subject: 'Thank you for your order',
 
-        react: PassReceiptEmail({checkoutSession: {
+        react: PassReceiptEmail(
+          {checkoutSession: {
           status: "suceeded",
           custom_fields: [{
             text: {
