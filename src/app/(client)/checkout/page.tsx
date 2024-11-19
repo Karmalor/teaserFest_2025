@@ -4,11 +4,24 @@ import { useShoppingCart } from "@/context/ShoppingCartContext";
 import { CheckoutForm } from "./_components/CheckoutForm";
 import { useEffect, useState } from "react";
 import { getWeekendPassTypes } from "@/lib/actions/ticket.actions";
+import { SelectWeekendPassType } from "@/db/schema";
+
+interface Product {
+  price_data: {
+    currency: string;
+    unit_amount: number;
+    product_data: {
+      name: string | null;
+      images: (string | null)[];
+    };
+  };
+  quantity: number;
+}
 
 const CheckoutPage = () => {
   const { cartItems } = useShoppingCart();
-  const [passData, setPassData] = useState([]);
-  const [productArray, setProductArray] = useState([]);
+  const [passData, setPassData] = useState<SelectWeekendPassType[]>([]);
+  const [productArray, setProductArray] = useState<Product[]>([]);
   const [isDataLoading, setIsDataLoading] = useState(true); // Manage loading state
 
   // Fetch pass data from the database
@@ -43,9 +56,18 @@ const CheckoutPage = () => {
               },
               quantity: element.quantity,
             }
-          : null;
+          : {
+              price_data: {
+                currency: "",
+                unit_amount: null,
+                product_data: {
+                  name: null,
+                  images: [null],
+                },
+              },
+            };
       })
-      .filter(Boolean); // Filter out any null values
+      .filter((product): product is Product => product !== null); // Type guard
 
     setProductArray(productos);
     setIsDataLoading(false); // Mark data as loaded once `productArray` is populated

@@ -9,17 +9,17 @@ type ShoppingCartProviderProps = {
 };
 
 type CartItem = {
-  id: number;
+  id: string;
   quantity: number;
 };
 
 type ShoppingCartContext = {
   openCart: () => void;
   closeCart: () => void;
-  getItemQuantity: (id: number) => number;
-  increaseItemQuantity: (id: number) => void;
-  decreaseItemQuantity: (id: number) => void;
-  removeFromCart: (id: number) => void;
+  getItemQuantity: (id: string) => number;
+  increaseItemQuantity: (id: string) => void;
+  decreaseItemQuantity: (id: string) => void;
+  removeFromCart: (id: string) => void;
   cartQuantity: number;
   cartItems: CartItem[];
   emptyCart: () => void;
@@ -46,11 +46,11 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
-  function getItemQuantity(id: number) {
+  function getItemQuantity(id: string) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
 
-  function increaseItemQuantity(id: number) {
+  function increaseItemQuantity(id: string) {
     setCartItems((currentItems) => {
       if (currentItems.find((items) => items.id === id) == null) {
         return [...currentItems, { id, quantity: 1 }];
@@ -66,7 +66,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     });
   }
 
-  function decreaseItemQuantity(id: number) {
+  function decreaseItemQuantity(id: string) {
     setCartItems((currentItems) => {
       if (currentItems.find((items) => items.id === id)?.quantity === 1) {
         return currentItems.filter((item) => item.id !== id);
@@ -82,7 +82,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     });
   }
 
-  function removeFromCart(id: number) {
+  function removeFromCart(id: string) {
     setCartItems((currentItems) => {
       return currentItems.filter((item) => item.id !== id);
     });

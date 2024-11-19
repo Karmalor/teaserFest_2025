@@ -8,7 +8,7 @@ import { LuMinus, LuPlus, LuX } from "react-icons/lu";
 import { getWeekendPassTypes } from "@/lib/actions/ticket.actions";
 
 type CartItemProps = {
-  id: number;
+  id: string;
   quantity: number;
   passData: [];
 };

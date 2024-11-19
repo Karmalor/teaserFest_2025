@@ -32,13 +32,7 @@ Array<{
   return db.query.tickets.findMany({where: eq(tickets.ticketHolder, userEmail as string)})
 }
 
-export async function getWeekendPassTypes(): Promise<
-Array<{
- 
-}>
-> 
- 
-{
+export async function getWeekendPassTypes(): Promise<SelectWeekendPassType[]> {
   return (await db.query.weekendPassTypes.findMany(	{orderBy: [asc(weekendPassTypes.createdAt)],}
 ))
 }
