@@ -74,7 +74,7 @@ await fetch("/api/receiptEmail", {
   body: JSON.stringify({
     email: session.customer_details!.email,
     checkoutSession: session,
-    purchasedProducts: lineItems.data
+    purchasedProducts: {...lineItems.data}
   }),
 });
 

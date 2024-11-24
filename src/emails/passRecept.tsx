@@ -51,9 +51,8 @@ type PassReceiptEmailProps = {
       description: string;
     },
   ];
-  promoCode: {
-    code: string;
-  };
+
+  email: string;
 };
 
 const baseUrl = process.env.VERCEL_URL
@@ -64,7 +63,7 @@ export const PassReceiptEmail = ({
   checkoutSession,
   user,
   purchasedProducts,
-  promoCode,
+  email,
 }: PassReceiptEmailProps) => (
   <Html>
     <Head>
@@ -201,7 +200,10 @@ export const PassReceiptEmail = ({
                     }}
                   >
                     Hi {checkoutSession.custom_fields[0].text?.value}, Thank you
-                    so much for joining us for Teaser Festival 2025!
+                    so much for joining us for Teaser Festival 2025! Your
+                    tickets are securely stored at www.teaserfest.com, and can
+                    be accessed anytime. If you've purchased a weekend pass you
+                    can view all of the events that you have access to.
                   </div>
                   <div
                     style={{
@@ -392,7 +394,8 @@ export const PassReceiptEmail = ({
                             }}
                           >
                             <div style={{ padding: "0px 0px 0px 0px" }}>
-                              {promoCode.code && (
+                              {checkoutSession.total_details
+                                ?.amount_discount && (
                                 <div style={{ padding: "4px 0px 4px 0px" }}>
                                   <table
                                     align="center"
@@ -429,7 +432,7 @@ export const PassReceiptEmail = ({
                                               }}
                                             >
                                               Discount
-                                              <br />({promoCode.code})
+                                              {/* <br />({promoCode.code}) */}
                                             </div>
                                           </div>
                                         </td>
@@ -919,7 +922,7 @@ PassReceiptEmail.PreviewProps = {
   purchasedProducts: [
     {
       imgUrl: "/",
-      name: "Thing",
+      name: "Ticket",
       price: 40000,
       quantity: 1,
       description: "string;",
@@ -928,6 +931,7 @@ PassReceiptEmail.PreviewProps = {
   promoCode: {
     code: "VIP20",
   },
+  email: "karmalor@gmail.com",
 } as PassReceiptEmailProps;
 
 export default PassReceiptEmail;
