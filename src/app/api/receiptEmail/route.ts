@@ -44,7 +44,7 @@ export async function POST(request: Request) {
         // promoCode: {
         //   code: "VIP20"
         // }})
-      );
+      )})
 
       return NextResponse.json({
         status: 'Ok'

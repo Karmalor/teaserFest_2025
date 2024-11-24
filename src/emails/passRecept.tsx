@@ -41,7 +41,6 @@ type PassReceiptEmailProps = {
     };
     amount_total: number;
   };
-  user: string;
   purchasedProducts: [
     {
       imgUrl: string;
@@ -61,7 +60,6 @@ const baseUrl = process.env.VERCEL_URL
 
 export const PassReceiptEmail = ({
   checkoutSession,
-  user,
   purchasedProducts,
   email,
 }: PassReceiptEmailProps) => (
